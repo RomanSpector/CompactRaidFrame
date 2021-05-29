@@ -299,4 +299,3 @@ function lib:SpellIsSelfBuff(spellID)
 
 	return CAN_APPLY_AURA[GetSpellInfo(spellID)];
 end
-

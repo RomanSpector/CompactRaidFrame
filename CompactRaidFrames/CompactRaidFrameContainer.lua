@@ -51,8 +51,9 @@ function CompactRaidFrameContainer_OnLoad(self)
 end
 
 function CompactRaidFrameContainer_OnEvent(self, event, ...)
-	if InCombatLockdown() then 
-		return self:RegisterEvent("PLAYER_REGEN_ENABLED"); 
+	if ( InCombatLockdown() ) then
+		self:RegisterEvent("PLAYER_REGEN_ENABLED");
+		return;
 	end 
 
 	if ( event == "PARTY_MEMBERS_CHANGED" ) then

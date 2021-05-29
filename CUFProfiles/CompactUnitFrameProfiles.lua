@@ -1,20 +1,3 @@
-StaticPopupDialogs["CLICK_LINK_CLICKURL"] = {
-	text = STATIC_POPUP_CUF_TEXT,
-    button1 = "OK",
-    timeout = 0,
-	hasEditBox = true,
-	hasWideEditBox = true,
-	OnShow = function (self, data)
-		local wideEditBox = _G[this:GetName().."WideEditBox"]
-        if ( wideEditBox ) then
-            wideEditBox:SetText("https://discord.gg/wXw6pTvxMQ")
-            wideEditBox:SetFocus()
-            wideEditBox:HighlightText()
-			wideEditBox:ClearAllPoints()
-			wideEditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25)
-        end
-	end,
-};
 
 function CompactUnitFrameProfiles_OnLoad(self)
 	self:RegisterEvent("VARIABLES_LOADED");
@@ -25,28 +8,19 @@ function CompactUnitFrameProfiles_OnLoad(self)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED");
 	self:RegisterEvent("RAID_ROSTER_UPDATE");
 
-
-	StaticPopup_Show("CLICK_LINK_CLICKURL");
-
-	if ( not ROMANSPECTOR_DISCORD ) then
-		ROMANSPECTOR_DISCORD = true;
-		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join in my Discord gourp |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
-	end
-
 	--Get this working with the InterfaceOptions panel.
 	self.name = COMPACT_UNIT_FRAME_PROFILES_LABEL;
 	self.options = {
 		useCompactPartyFrames = { text = "USE_RAID_STYLE_PARTY_FRAMES" },
 	}
 
+	BlizzardOptionsPanel_OnLoad(self, CompactUnitFrameProfiles_SaveChanges, CompactUnitFrameProfiles_CancelCallback, CompactUnitFrameProfiles_DefaultCallback, CompactUnitFrameProfiles_UpdateCurrentPanel);
 	InterfaceOptions_AddCategory(self);
-	CompactUnitFrameProfiles_ValidateProfilesLoaded(self);
 end
 
 function CompactUnitFrameProfiles_OnEvent(self, event, ...)
 	--Do normal BlizzardOptionsPanel code too.
 	--BlizzardOptionsPanel_OnEvent(self, event, ...);
-	
 	if ( event == "COMPACT_UNIT_FRAME_PROFILES_LOADED" ) then
 		--HasLoadedCUFProfiles will now return true.
 		self:UnregisterEvent(event);
@@ -464,7 +438,7 @@ function CompactUnitFrameProfilesOption_OnLoad(self)
 	tinsert(self:GetParent().optionControls, self);
 end
 -------------------------
-------- Dropdown --------
+----Dropdown--------
 -------------------------
 -- Required key/value pairs:
 -- .optionName - String, name of option
@@ -489,12 +463,12 @@ end
 
 function CompactUnitFrameProfilesDropdown_Update(self)
 	UIDropDownMenu_Initialize(self, CompactUnitFrameProfilesDropdown_Initialize);
-	UIDropDownMenu_SetSelectedValue(self, GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName));
+	UIDropDownMenu_SetSelectedValue(self, GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName)); --
 end
 
 function CompactUnitFrameProfilesDropdown_Initialize(dropDown)
 	local info = UIDropDownMenu_CreateInfo();
-
+	
 	local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName);
 	for i=1, #dropDown.options do
 		local id = dropDown.options[i];
@@ -517,7 +491,7 @@ function CompactUnitFrameProfilesDropdownButton_OnClick(button, dropDown)
 	CompactUnitFrameProfiles_UpdateCurrentPanel();
 end
 ------------------------------
----------- Slider ------------
+----------Slider-------------
 ------------------------------
 function CompactUnitFrameProfilesSlider_InitializeWidget(self, optionName, minText, maxText, updateFunc)
 	self.optionName = optionName;

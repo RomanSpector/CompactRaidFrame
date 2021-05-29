@@ -1019,7 +1019,7 @@ do
                 local debuffFrame = debuffFrames[frameNum];
                 local index, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId = aura[1], aura[2], aura[3], aura[4], aura[5], aura[6], aura[7], aura[8], aura[9], aura[10], aura[11];
                 local unit = nil;
-                CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, aura[13]);
+                CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId);
                 frameNum = frameNum + 1;
                 if isBossAura then
                     --Boss auras are about twice as big as normal debuffs, so we may need to display fewer buffs
@@ -1130,7 +1130,7 @@ do
                         if not nonBossRaidDebuffs then
                             nonBossRaidDebuffs = {};
                         end
-                        tinsert(nonBossRaidDebuffs, {index, ...});
+                        tinsert(nonBossRaidDebuffs, {select(13, ...), ...});
                         numUsedDebuffs = numUsedDebuffs + 1;
                         if numUsedDebuffs == frame.maxDebuffs then
                             doneWithDebuffs = true;
@@ -1143,7 +1143,7 @@ do
                         frame["hasDispel"..debuffType] = true;
                         numUsedDispelDebuffs = numUsedDispelDebuffs + 1;
                         local dispellDebuffFrame = frame.dispelDebuffFrames[numUsedDispelDebuffs];
-                        CompactUnitFrame_UtilSetDispelDebuff(dispellDebuffFrame, debuffType, index)
+                        CompactUnitFrame_UtilSetDispelDebuff(dispellDebuffFrame, debuffType, select(13, ...))
                         if numUsedDispelDebuffs == frame.maxDispelDebuffs then
                             doneWithDispelDebuffs = true;
                         end
@@ -1531,6 +1531,7 @@ function DefaultCompactUnitFrameSetup(frame)
     local buffPos, buffRelativePoint, buffOffset = "BOTTOMRIGHT", "BOTTOMLEFT", CUF_AURA_BOTTOM_OFFSET + powerBarUsedHeight;
     frame.buffFrames[1]:ClearAllPoints();
     frame.buffFrames[1]:SetPoint(buffPos, frame, "BOTTOMRIGHT", -3, buffOffset);
+
     for i=1, #frame.buffFrames do
         if ( i > 1 ) then
             frame.buffFrames[i]:ClearAllPoints();

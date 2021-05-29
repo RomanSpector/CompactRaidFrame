@@ -924,7 +924,6 @@ end
 
 function CRF_AddToCount(isDead, assignedRole)
 	RaidInfoCounts.totalCount = RaidInfoCounts.totalCount + 1;
-	--print(RaidInfoCounts.totalCount)
 	RaidInfoCounts["totalRole"..assignedRole] = RaidInfoCounts["totalRole"..assignedRole] + 1;
 	if ( not isDead ) then
 		RaidInfoCounts.totalAlive = RaidInfoCounts.totalAlive + 1;

@@ -1,4 +1,4 @@
-local MAJOR, MINOR = "LibBetterBlizzOptions-1.0", 90000
+local MAJOR, MINOR = "LibBetterBlizzOptions-1.0", 1000000
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
 
@@ -128,6 +128,10 @@ end
 
 InterfaceOptionsFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 InterfaceOptionsFrame:SetResizable(true)
-InterfaceOptionsFrame:SetWidth(900)
+InterfaceOptionsFrame:SetSize(858, 660);
 InterfaceOptionsFrame:SetMinResize(858, 660)
 InterfaceOptionsFrame:SetToplevel(true)
+InterfaceOptionsFrame:HookScript("OnShow", function()
+	InterfaceOptionsFrame:SetSize(858, 660);
+	InterfaceOptionsFrame:SetMinResize(858, 660);
+end)

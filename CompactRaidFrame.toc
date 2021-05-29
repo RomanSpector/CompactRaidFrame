@@ -2,7 +2,7 @@
 ## Title: Compact Raid Frames
 ## Author: RomanSpector & Blizzard
 ## Notes: backport Blizzard raid frames from retail.
-## Version: 1.1.1
+## Version: 1.2.2
 ## SavedVariables: CompactRaidFrameDB
 
 

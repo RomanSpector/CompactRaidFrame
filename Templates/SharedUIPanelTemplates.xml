@@ -63,7 +63,7 @@
       </OnLoad>
     </Scripts>
   </Slider>
-
+  
   <Button name="UIPanelButtonTemplate" inherits="UIPanelButtonNoTooltipTemplate" virtual="true">
     <Scripts>
       <OnEnter>

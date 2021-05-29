@@ -1,14 +1,9 @@
---[[
-This is a demo version of the addon!
-All saved settings will be erased after the session ends or the interface is restarted, and profiles will not work.
+local CompactRaidFrame = LibStub("AceAddon-3.0"):NewAddon("CompactRaidFrame", "AceConsole-3.0", "AceEvent-3.0");
+_G["CompactRaidFrame"] = CompactRaidFrame;
+local AceDB = LibStub("AceDB-3.0");
 
-To get the full version of the addon, you can contact me in discord https://discord.gg/mQEmyP4HXZ
-
-Это демо версия аддон!
-Все сохраненные настройки будут стираться после завершения сеанса или перезагрузки интерфейса, а также не будет работать профили.
-
-Чтобы получить полную версию аддона, вы можете связаться со мной в дискорде https://discord.gg/mQEmyP4HXZ
-]]
+local PROFILES, CUF_CONFIG;
+local SAVED_PROFILE = { };
 local MAX_CUF_PROFILES = 5;
 
 local DEFAULT_PROFILE = {
@@ -58,7 +53,7 @@ local FLATTENDED_OPTIONS = {
 	["displayBorder"] = 1,
 	["displayNonBossDebuffs"] = 1,
 	["displayOnlyDispellableDebuffs"] = 0,
-	["healthText"] = 0,
+	["healthText"] = 1,
 	["frameWidth"] = 1,
 	["frameHeight"] = 1,
 	["autoActivate2Players"] = 1,
@@ -72,79 +67,272 @@ local FLATTENDED_OPTIONS = {
 	["autoActivatePvE"] = 1,
 };
 
+StaticPopupDialogs["CLICK_LINK_CLICKURL"] = {
+    text = COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT,
+    button1 = "OK",
+    timeout = 0,
+	hasEditBox = true,
+	hasWideEditBox = true,
+	OnShow = function (self, data)
+		local wideEditBox = _G[this:GetName().."WideEditBox"]
+        if ( wideEditBox ) then
+            wideEditBox:SetText("https://discord.gg/wXw6pTvxMQ")
+            wideEditBox:SetFocus()
+            wideEditBox:HighlightText()
+			wideEditBox:ClearAllPoints()
+			wideEditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25)
+        end
+	end,
+};
+
+local function GetAddonVerseion(value)
+    local num1, num2, num3 = string.match(value, "(%d+)[^%d]+(%d+)[^%d]+(%d+)");
+    return tonumber(num1..num2..num3)
+end
+
+function CompactRaidFrame:OnInitialize()
+    self.db = AceDB:New("CompactRaidFrameDB");
+	self.db.char.CUF_CONFIG = self.db.char.CUF_CONFIG or {};
+	self.db.char.profile = self.db.char.profile or {};
+	PROFILES = self.db.char.profile;
+	CUF_CONFIG = self.db.char.CUF_CONFIG;
+
+	local value = GetAddOnMetadata("WeakAuras", "Version");
+	if ( value ) then
+		local number = GetAddonVerseion(value)
+		if ( number < 321 ) then
+			StaticPopup_Show("CLICK_LINK_CLICKURL")
+		end
+	end
+
+	if ( not ROMANSPECTOR_DISCORD ) then
+		ROMANSPECTOR_DISCORD = true;
+		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join in my Discord gourp |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
+	end
+
+	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
+end
+
 function GetNumRaidProfiles()
-	return 0;
+	if ( not PROFILES ) then
+		return 0;
+	end
+
+	return #PROFILES;
 end
 
-function GetRaidProfileName()
-	return DEFAULT_CUF_PROFILE_NAME
+function GetRaidProfileName(index)
+	if ( not PROFILES or not index ) then
+		return;
+	end
+
+	if PROFILES[index] then
+		return PROFILES[index].name;
+	end
 end
 
-function RaidProfileExists()
-	return false;
+function RaidProfileExists(profile)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			return true;
+		end
+	end
 end
 
 function HasLoadedCUFProfiles()
-	return true;
+	return PROFILES and true or false;
 end
 
 function RaidProfileHasUnsavedChanges()
-	
-end
+	if not ( PROFILES and SAVED_PROFILE ) then
+		return;
+	end
 
-function CreateNewRaidProfile()
 
-end
-
-function DeleteRaidProfile()
-
-end
-
-function SaveRaidProfileCopy()
-
-end
-
-function SetRaidProfileOption(_, optionName, value)
-	DEFAULT_PROFILE[optionName] = value;
-end
-
-function GetRaidProfileOption(_, optionName)
-	return DEFAULT_PROFILE[optionName];
-end
-
-function GetRaidProfileFlattenedOptions()
-	return DEFAULT_PROFILE;
-end
-
-function SetRaidProfileSavedPosition()
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == SAVED_PROFILE.name ) then
+			for option, noIgnore in pairs(FLATTENDED_OPTIONS) do
+				if ( noIgnore == 1 and profileData[option] ~= SAVED_PROFILE[option] ) then
+					return true;
+				end
+			end
+		end
+	end
 
 end
 
-function GetRaidProfileSavedPosition()
-	return true
+function RestoreRaidProfileFromCopy()
+	if ( not SAVED_PROFILE ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == SAVED_PROFILE.name ) then
+			for option, noIgnore in pairs(FLATTENDED_OPTIONS) do
+				if ( noIgnore == 1 and profileData[option] ~= SAVED_PROFILE[option] ) then
+					profileData[option] = SAVED_PROFILE[option];
+				end
+			end
+		end
+	end
+end
+
+function CreateNewRaidProfile(name, baseOnProfile)
+	if ( not PROFILES or not name ) then
+		return;
+	end
+
+	local profile
+	if ( baseOnProfile and baseOnProfile ~= DEFAULTS ) then
+		for _, profileData in ipairs(PROFILES) do
+			if ( profileData.name == baseOnProfile ) then
+				profile = CopyTable(profileData);
+				break;
+			end
+		end
+	else
+		profile = CopyTable(DEFAULT_PROFILE);
+	end
+
+	profile.name = name;
+	table.insert(PROFILES, profile);
+end
+
+function DeleteRaidProfile(profile)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	if ( type(profile) == "number" ) then
+		table.remove(PROFILES, profile);
+	else
+		for index, profileData in ipairs(PROFILES) do
+			if ( profileData.name == profile ) then
+				table.remove(PROFILES, index);
+				break;
+			end
+		end
+	end
+end
+
+function SaveRaidProfileCopy(profile)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			SAVED_PROFILE = CopyTable(profileData);
+			break;
+		end
+	end
+end
+
+function SetRaidProfileOption(profile, optionName, value)
+	if ( not PROFILES or not profile or not optionName ) then
+		return;
+	end
+
+	for index, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			PROFILES[index][optionName] = value;
+			break;
+		end
+	end
+end
+
+function GetRaidProfileOption(profile, optionName)
+	if ( not PROFILES or not profile or not optionName ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			return profileData[optionName];
+		end
+	end
+end
+
+function GetRaidProfileFlattenedOptions(profile)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			local flattenedOptions = {};
+			for option, value in pairs(profileData) do
+				if FLATTENDED_OPTIONS[option] then
+					flattenedOptions[option] = value;
+				end
+			end
+			return flattenedOptions;
+		end
+	end
+end
+
+function SetRaidProfileSavedPosition(profile, isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			profileData.isDynamic = isDynamic;
+			profileData.topPoint = topPoint;
+			profileData.topOffset = topOffset;
+			profileData.bottomPoint = bottomPoint;
+			profileData.bottomOffset = bottomOffset;
+			profileData.leftPoint = leftPoint;
+			profileData.leftOffset = leftOffset;
+			break;
+		end
+	end
+end
+
+function GetRaidProfileSavedPosition(profile)
+	if ( not PROFILES or not profile ) then
+		return;
+	end
+
+	for _, profileData in ipairs(PROFILES) do
+		if ( profileData.name == profile ) then
+			return profileData.isDynamic, profileData.topPoint, profileData.topOffset, profileData.bottomPoint, profileData.bottomOffset, profileData.leftPoint, profileData.leftOffset;
+		end
+	end
 end
 
 function GetMaxNumCUFProfiles()
 	return MAX_CUF_PROFILES;
 end
 
-function SetActiveRaidProfile()
-
+function SetActiveRaidProfile(profile)
+	C_CVar:SetValue("C_CVAR_SET_ACTIVE_CUF_PROFILE", profile);
 end
 
 function GetActiveRaidProfile()
-	return DEFAULT_CUF_PROFILE_NAME;
+	return C_CVar:GetValue("C_CVAR_SET_ACTIVE_CUF_PROFILE");
 end
 
-C_CVar = C_CVar or {}
-function C_CVar:SetValue()
-
+C_CVar = {}
+function C_CVar:SetValue(cvar, value)
+	if not CUF_CONFIG then 
+		return;
+	end
+	CUF_CONFIG[cvar] = value;
 end
 
-function C_CVar:GetValue()
-	return "1";
+function C_CVar:GetValue(cvar)
+	if not CUF_CONFIG then 
+		return;
+	end
+	return CUF_CONFIG[cvar];
 end
 
-function C_CVar:GetCVarBool()
-	return true;
+function C_CVar:GetCVarBool(cvar)
+	return self:GetValue(cvar) == "1" and true or false
 end

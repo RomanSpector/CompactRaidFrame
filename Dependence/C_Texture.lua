@@ -22,6 +22,6 @@ function C_Texture.GetAtlasInfo( atlas )
 		bottomTexCoord 		= info[CONST_ATLAS_BOTTOM],
 		tilesHorizontally 	= info[CONST_ATLAS_TILESHORIZ],
 		tilesVertically 	= info[CONST_ATLAS_TILESVERT],
-		filename 			= string.gsub(info[CONST_ATLAS_TEXTUREPATH], "/", "\\"),
+		filename 			= info[CONST_ATLAS_TEXTUREPATH],
 	};
 end

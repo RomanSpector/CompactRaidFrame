@@ -131,13 +131,13 @@ local CONST_ATLAS_TILESVERT		= 8
 local CONST_ATLAS_TEXTUREPATH	= 9
 
 local function Method_SetAtlas( self, atlasName, useAtlasSize )
-	assert(self, "SetAtlas: not found object")
-	assert(atlasName, "SetAtlas: AtlasName must be specified")
-	assert(ATLAS_INFO_STORAGE[atlasName], "SetAtlas: Atlas named "..atlasName.." does not exist")
+	assert(self, "SetAtlas: not found object");
+	assert(atlasName, "SetAtlas: AtlasName must be specified");
+	assert(ATLAS_INFO_STORAGE[atlasName], "SetAtlas: Atlas named "..atlasName.." does not exist");
 
-	local atlas = ATLAS_INFO_STORAGE[atlasName]
+	local atlas = ATLAS_INFO_STORAGE[atlasName];
 
-	self:SetTexture(atlas[CONST_ATLAS_TEXTUREPATH] or "", atlas[CONST_ATLAS_TILESHORIZ], atlas[CONST_ATLAS_TILESVERT])
+	self:SetTexture(atlas[CONST_ATLAS_TEXTUREPATH] or "", atlas[CONST_ATLAS_TILESHORIZ], atlas[CONST_ATLAS_TILESVERT]);
 
 	if useAtlasSize then
 		self:SetWidth(atlas[CONST_ATLAS_WIDTH])

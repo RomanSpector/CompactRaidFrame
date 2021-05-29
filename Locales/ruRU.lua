@@ -5,7 +5,8 @@ end
 BUFF_STACKS_OVERFLOW = "*";
 LOST_HEALTH = "-%d";
 
-STATIC_POPUP_CUF_TEXT = "|cffbaf5aeCompactRaidFrame|r: Вы испльзуете DEMO версию аддона. В нем нельзя создавать профили и сохранять настройки. Чтобы получить полную версию аддона, свяжитесь в дискорде с автором"
+COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT = "|cffbaf5aeCompactRaidFrame|r: возможен кофликт с аддоном |cffff0000WeakAuras|r, обновите аддон до версии 3.2.1 или выше."
+
 
 AUTO_ACTIVATE_DISABLED_IN_PARTY = "Для автоматического включения необходимо использовать рейдовый интерфейс для группы.";
 

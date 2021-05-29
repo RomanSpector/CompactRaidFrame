@@ -19,9 +19,10 @@ SOUNDKIT = SOUNDKIT or {};
 SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON = "Interface\\AddOns\\CompactRaidFrame\\Media\\Sounds\\SOUNDKIT\\856.ogg";
 SOUNDKIT.IG_MAINMENU_OPTION = "Interface\\AddOns\\CompactRaidFrame\\Media\\Sounds\\SOUNDKIT\\852.ogg";
 
-InterfaceOptionsFrame:HookScript("OnShow", function()
-	InterfaceOptionsFrame:SetSize(858, 660);
-	InterfaceOptionsFrame:SetMinResize(858, 660);
+hooksecurefunc("BlizzardOptionsPanel_OnEvent", function(self, event, ...)
+	if ( self:GetName() == "CompactUnitFrameProfiles" ) then
+		CompactUnitFrameProfiles_OnEvent(self, event, ...)
+	end
 end)
 
 function PassClickToParent(self, ...)
@@ -318,16 +319,13 @@ end
 local LibGT      = LibStub:GetLibrary("LibGroupTalents-1.0");
 local LibAbsorb  = LibStub:GetLibrary("AbsorbsMonitor-1.0");
 local HealComm   = LibStub:GetLibrary("LibHealComm-4.0");
-local LibTimer   = LibStub:GetLibrary("AceTimer-3.0");
 local LibAura    = LibStub:GetLibrary("LibCUFAuras-1.0");
 local LibResComm = LibStub:GetLibrary("LibResComm-1.0");
 
 do 
 
 	local function CompactUnitFrame_FireEvent(self, event)
-		LibTimer:ScheduleTimer(function()
-			CompactUnitFrame_OnEvent(self, event, self.unit or self.displayedUnit)
-		end, 0.00);
+		CompactUnitFrame_OnEvent(self, event, self.unit or self.displayedUnit)
 	end
 
 	local function LibEventCallback(self, event, ... )
@@ -335,8 +333,6 @@ do
 		if ( not UnitExists(self.unit) ) then
 			return;
 		end
-
-		
 
 		if ( event == "LibGroupTalents_RoleChange" ) then
 			CompactUnitFrame_FireEvent(self, "PLAYER_ROLES_ASSIGNED");
@@ -475,7 +471,7 @@ function UnitGroupRoles(unit)
 end
 
 function UnitShouldDisplayName(unitToken)
-	return not unitToken;
+	return unitToken;
 end
 
 function UnitNameplateShowsWidgetsOnly(unitToken)

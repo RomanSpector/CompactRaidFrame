@@ -26,7 +26,7 @@
 
 
 
-local AM_Public, upgraded = LibStub:NewLibrary("AbsorbsMonitor-1.0", 1);
+local AM_Public, upgraded = LibStub:NewLibrary("AbsorbsMonitor-1.0", 90000);
 
 if(not AM_Public) then return; end
 

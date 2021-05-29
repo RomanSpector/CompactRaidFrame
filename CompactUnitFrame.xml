@@ -149,7 +149,7 @@
     <Layers>
       <Layer level="BACKGROUND">
         <Texture name="$parentBackground" parentKey="background" setAllPoints="true" />
-      </Layer>
+      </Layer>  
       <Layer level="BORDER">
         <Texture name="$parentHorizDivider" parentKey="horizDivider" horizTile="true" />
         <Texture name="$parentHorizTopBorder" parentKey="horizTopBorder" horizTile="true" />

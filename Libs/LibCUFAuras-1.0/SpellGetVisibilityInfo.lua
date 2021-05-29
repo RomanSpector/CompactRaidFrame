@@ -15,12 +15,12 @@ lib.spellList = {
     [GetSpellInfo(6788)] = {
         ["RAID_INCOMBAT"] = {
             hasCustom = true,
-            alwaysShowMine  = false,
+            alwaysShowMine  =  UnitClass == "PRIEST",
             showForMySpec = UnitClass == "PRIEST",
         }, 
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
-            alwaysShowMine  = false,
+            alwaysShowMine  =  UnitClass == "PRIEST",
             showForMySpec = UnitClass == "PRIEST",
         },
     },
