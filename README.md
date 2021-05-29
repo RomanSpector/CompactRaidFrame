@@ -1,4 +1,4 @@
-#Change the folder name to CompactRaidFrame
+# Change the folder name to CompactRaidFrame
 
 Join in Discord: https://discord.gg/wXw6pTvxMQ
 
