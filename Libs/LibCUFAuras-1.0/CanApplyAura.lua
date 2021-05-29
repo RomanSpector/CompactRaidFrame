@@ -25,8 +25,9 @@ CAN_APPLY_AURA["DRUID"] = {
     [GetSpellInfo(9634)]  = { canApply = true, selfBuff = true  }, -- Dire Bear Form
     [GetSpellInfo(768)]   = { canApply = true, selfBuff = true  }, -- Cat Form
     [GetSpellInfo(48451)] = { canApply = true, selfBuff = false }, -- Lifebloom
-    [GetSpellInfo(48441)] = { canApply = true, selfBuff = true  }, -- Rejuvenation
-    [GetSpellInfo(48443)] = { canApply = true, selfBuff = true  }, -- Regrowth
+    [GetSpellInfo(48441)] = { canApply = true, selfBuff = false }, -- Rejuvenation
+    [GetSpellInfo(48443)] = { canApply = true, selfBuff = false }, -- Regrowth
+    [GetSpellInfo(53251)] = { canApply = true, selfBuff = false }, -- Wild Growth
     [GetSpellInfo(61336)] = { canApply = true, selfBuff = true  }, -- Survival Instincts
     [GetSpellInfo(50334)] = { canApply = true, selfBuff = true  }, -- Berserk
     [GetSpellInfo(5229)]  = { canApply = true, selfBuff = true  }, -- Enrage
