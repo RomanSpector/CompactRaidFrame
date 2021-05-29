@@ -1,3 +1,5 @@
+#Change the folder name to CompactRaidFrame
+
 Join in Discord: https://discord.gg/wXw6pTvxMQ
 
 ![alt tag](https://cannotbetamedblog.files.wordpress.com/2019/10/dba5d-defaultframes.jpg?w=840) 
