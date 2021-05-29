@@ -1,1 +1,1 @@
-# CompactRaidFrame
+# CompactRaidFrame Demo version
