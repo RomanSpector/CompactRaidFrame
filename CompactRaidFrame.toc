@@ -1,0 +1,23 @@
+## Interface: 30300
+## Title: Compact Raid Frames
+## Author: RomanSpector & Blizzard
+## Notes: backport Blizzard raid frames from retail.
+## Version: 1.1.1
+## SavedVariables: CompactRaidFrameDB
+
+
+embeds.xml
+locales.xml
+
+Dependence\load.xml
+Templates\load.xml
+CUFProfiles\CompactUnitFrameProfiles.xml
+
+FlowContainer.lua
+CompactUnitFrame.xml
+CompactRaidGroup.xml
+CompactPartyFrame.xml
+
+CompactRaidFrames\CompactRaidFrameReservationManager.lua
+CompactRaidFrames\CompactRaidFrameContainer.xml
+CompactRaidFrames\CompactRaidFrameManager.xml
