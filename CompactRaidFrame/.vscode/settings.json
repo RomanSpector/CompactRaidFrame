@@ -1,9 +1,0 @@
-{
-    "Lua.diagnostics.disable": [
-        "undefined-global",
-        "ambiguity-1",
-        "trailing-space",
-        "unbalanced-assignments",
-        "undefined-field"
-    ]
-}
