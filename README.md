@@ -1,8 +1,8 @@
-# Open -main folder in zip and copy CompactRaidFrame folder to AddOns
+## Open -main folder in zip and copy CompactRaidFrame folder to AddOns
 
-[Download](https://github.com/RomanSpector/CompactRaidFrame/archive/refs/heads/main.zip)
+## [Download](https://github.com/RomanSpector/CompactRaidFrame/archive/refs/heads/main.zip)
 
-Join in Discord: https://discord.gg/wXw6pTvxMQ
+## [Join my Discord](https://discord.gg/wXw6pTvxMQ)
 
 ![alt tag](https://cannotbetamedblog.files.wordpress.com/2019/10/dba5d-defaultframes.jpg?w=840) 
 ![alt tag](https://addonswow.com/wp-content/themes/addonswow.com/addons/enhanced-raid-frames/screenshots/enhanced-raid-frames-scr-3.jpg) 
