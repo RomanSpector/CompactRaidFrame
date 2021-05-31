@@ -1,4 +1,6 @@
-# Change the folder name to CompactRaidFrame
+# Open -main folder in zip and copy CompactRaidFrame folder to AddOns
+
+[Download](https://github.com/RomanSpector/CompactRaidFrame/archive/refs/heads/main.zip)
 
 Join in Discord: https://discord.gg/wXw6pTvxMQ
 
