@@ -1,49 +1,95 @@
-local TickerPrototype = {};
-local TickerMetatable = {
-    __index = TickerPrototype,
-    __metatable = true,    
-};
+if not C_Timer or C_Timer._version ~= 2 then
+	local setmetatable = setmetatable
+	local type = type
+	local tinsert = table.insert
+	local tremove = table.remove
 
-C_Timer = CreateFrame("Frame", "C_Timer")
-C_Timer.schedule = {}
-C_Timer:SetScript("OnUpdate", function(self, elapsed)
-        for timestamp,callback in pairs(self.schedule) do
-            if timestamp <= GetTime() then
-                callback()
-                self.schedule[timestamp] = nil
-            end
-        end
-end)
+	C_Timer = C_Timer or {}
+	C_Timer._version = 2
 
-C_Timer.After = function(duration, callback)
-    C_Timer.schedule[GetTime() + duration] = callback
-end
+	local TickerPrototype = {}
+	local TickerMetatable = {
+		__index = TickerPrototype,
+		__metatable = true
+	}
 
-function C_Timer.NewTicker(duration, callback, iterations)
-    local ticker = setmetatable({}, TickerMetatable);
-    ticker._remainingIterations = iterations;
-    ticker._callback = function()
-        if ( not ticker._cancelled ) then
-            callback(ticker);
-            if ( not ticker._cancelled ) then
-                if ( ticker._remainingIterations ) then
-                    ticker._remainingIterations = ticker._remainingIterations - 1;
-                end
-                if ( not ticker._remainingIterations or ticker._remainingIterations > 0 ) then
-                    C_Timer.After(duration, ticker._callback);
-                end
-            end
-        end
-    end;
-    
-    C_Timer.After(duration, ticker._callback);
-    return ticker;
-end
+	local waitTable = {}
+	local waitFrame = TimerFrame or CreateFrame("Frame", "TimerFrame", UIParent)
+	waitFrame:SetScript("OnUpdate", function(self, elapsed)
+		local total = #waitTable
+		local i = 1
 
-function C_Timer.NewTimer(duration, callback)
-    return C_Timer.NewTicker(duration, callback, 1);
-end
+		while i <= total do
+			local ticker = waitTable[i]
 
-function TickerPrototype:Cancel()
-    self._cancelled = true;
+			if ticker._cancelled then
+				tremove(waitTable, i)
+				total = total - 1
+			elseif ticker._delay > elapsed then
+				ticker._delay = ticker._delay - elapsed
+				i = i + 1
+			else
+				ticker._callback(ticker)
+
+				if ticker._remainingIterations == -1 then
+					ticker._delay = ticker._duration
+					i = i + 1
+				elseif ticker._remainingIterations > 1 then
+					ticker._remainingIterations = ticker._remainingIterations - 1
+					ticker._delay = ticker._duration
+					i = i + 1
+				elseif ticker._remainingIterations == 1 then
+					tremove(waitTable, i)
+					total = total - 1
+				end
+			end
+		end
+
+		if #waitTable == 0 then
+			self:Hide()
+		end
+	end)
+
+	local function AddDelayedCall(ticker, oldTicker)
+		if oldTicker and type(oldTicker) == "table" then
+			ticker = oldTicker
+		end
+
+		tinsert(waitTable, ticker)
+		waitFrame:Show()
+	end
+
+	_G.AddDelayedCall = AddDelayedCall
+
+	local function CreateTicker(duration, callback, iterations)
+		local ticker = setmetatable({}, TickerMetatable)
+		ticker._remainingIterations = iterations or -1
+		ticker._duration = duration
+		ticker._delay = duration
+		ticker._callback = callback
+
+		AddDelayedCall(ticker)
+
+		return ticker
+	end
+
+	function C_Timer.After(duration, callback)
+		AddDelayedCall({
+			_remainingIterations = 1,
+			_delay = duration,
+			_callback = callback
+		})
+	end
+
+	function C_Timer.NewTimer(duration, callback)
+		return CreateTicker(duration, callback, 1)
+	end
+
+	function C_Timer.NewTicker(duration, callback, iterations)
+		return CreateTicker(duration, callback, iterations)
+	end
+
+	function TickerPrototype:Cancel()
+		self._cancelled = true
+	end
 end
