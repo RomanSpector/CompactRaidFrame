@@ -219,7 +219,7 @@
             _G[self:GetName().."Text"]:SetText(USE_RAID_STYLE_PARTY_FRAMES)
 
             self.setFunc = function (value)
-              C_CVar:SetValue(self.CVar, value)
+              CUF_CVar:SetValue(self.CVar, value)
               RaidOptionsFrame_UpdatePartyFrames()
               CompactRaidFrameManager_UpdateShown(CompactRaidFrameManager);
 
@@ -237,8 +237,8 @@
             self:RegisterEvent("VARIABLES_LOADED");
           </OnLoad>
           <OnEvent>
-            self.setFunc(C_CVar:GetValue(self.CVar));
-            self:SetChecked(C_CVar:GetValue(self.CVar));
+            self.setFunc(CUF_CVar:GetValue(self.CVar));
+            self:SetChecked(CUF_CVar:GetValue(self.CVar));
           </OnEvent>
         </Scripts>
       </CheckButton>

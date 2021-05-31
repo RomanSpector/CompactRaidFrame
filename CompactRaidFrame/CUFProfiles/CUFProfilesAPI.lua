@@ -311,28 +311,30 @@ function GetMaxNumCUFProfiles()
 end
 
 function SetActiveRaidProfile(profile)
-	C_CVar:SetValue("C_CVAR_SET_ACTIVE_CUF_PROFILE", profile);
+	CUF_CVar:SetValue("CUF_CVar_SET_ACTIVE_CUF_PROFILE", profile);
 end
 
 function GetActiveRaidProfile()
-	return C_CVar:GetValue("C_CVAR_SET_ACTIVE_CUF_PROFILE");
+	return CUF_CVar:GetValue("CUF_CVar_SET_ACTIVE_CUF_PROFILE");
 end
 
-C_CVar = {}
-function C_CVar:SetValue(cvar, value)
-	if not CUF_CONFIG then 
+CUF_CVar = {}
+function CUF_CVar:SetValue(cvar, value)
+	if ( not CUF_CONFIG ) then
 		return;
 	end
+
 	CUF_CONFIG[cvar] = value;
 end
 
-function C_CVar:GetValue(cvar)
-	if not CUF_CONFIG then 
+function CUF_CVar:GetValue(cvar, addon)
+	if ( not CUF_CONFIG ) then
 		return;
 	end
+
 	return CUF_CONFIG[cvar];
 end
 
-function C_CVar:GetCVarBool(cvar)
+function CUF_CVar:GetCVarBool(cvar)
 	return self:GetValue(cvar) == "1" and true or false
 end

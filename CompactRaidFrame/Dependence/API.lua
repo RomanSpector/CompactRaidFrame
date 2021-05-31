@@ -46,7 +46,7 @@ function GetNumGroupMembers()
 end
 
 function GetDisplayedAllyFrames()
-	local useCompact = C_CVar:GetCVarBool("useCompactPartyFrames");
+	local useCompact = CUF_CVar:GetCVarBool("useCompactPartyFrames");
 	if ( IsActiveBattlefieldArena() and not useCompact ) then
 		return "party";
 	elseif ( IsInGroup() and ( IsInRaid() or useCompact ) ) then
