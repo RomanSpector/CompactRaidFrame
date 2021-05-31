@@ -1,0 +1,54 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+  <Texture name="UIPanelButtonHighlightTexture" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD" virtual="true">
+    <TexCoords left="0" right="0.625" top="0" bottom="0.6875"/>
+  </Texture>
+
+  <Button name="UIPanelButtonNoTooltipTemplate" virtual="true">
+    <Size x="40" y="22"/>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <Texture parentKey="Left" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Up">
+          <Size x="12" y="22"/>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+            <Anchor point="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0" right="0.09375" top="0" bottom="0.6875"/>
+        </Texture>
+        <Texture parentKey="Right" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Up">
+          <Size x="12" y="22"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT"/>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+          <TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875"/>
+        </Texture>
+        <Texture parentKey="Middle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Up">
+          <Size x="12" y="22"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" relativeKey="$parent.Right" relativePoint="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.6875"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnLoad function="UIPanelButton_OnLoad"/>
+      <OnMouseDown function="UIPanelButton_OnMouseDown"/>
+      <OnMouseUp function="UIPanelButton_OnMouseUp"/>
+      <OnShow function="UIPanelButton_OnShow"/>
+      <OnDisable function="UIPanelButton_OnDisable"/>
+      <OnEnable function="UIPanelButton_OnEnable"/>
+    </Scripts>
+    <ButtonText name="$parentText" parentKey="Text"/>
+    <NormalFont style="GameFontNormal"/>
+    <HighlightFont style="GameFontHighlight"/>
+    <DisabledFont style="GameFontDisable"/>
+    <HighlightTexture inherits="UIPanelButtonHighlightTexture"/>
+  </Button>
+
+</Ui>

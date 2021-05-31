@@ -1,0 +1,299 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+  <Frame name="CUF_SecureHandlerStateTemplate" setAllPoints="true" inherits="SecureHandlerStateTemplate" virtual="true">
+    <Attributes>
+      <Attribute name="_onstate-foo" value="if newstate == 'show' then self:Show(); else self:Hide(); end" />
+    </Attributes>
+    <Scripts>
+      <OnLoad>
+        SecureHandler_OnLoad(self); -- Our OnLoad handler overwrites this one, so execute it now.
+        RegisterStateDriver(self, "foo", "[group:party] show; hide");
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+  <CheckButton name="UICheckButtonTemplate" virtual="true">
+    <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
+    <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
+    <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
+    <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
+    <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
+  </CheckButton>
+
+  <CheckButton name="UIRadioButtonTemplate" virtual="true">
+    <Size>
+      <AbsDimension x="16" y="16"/>
+    </Size>
+    <Layers>
+      <Layer level="BACKGROUND">
+        <FontString name="$parentText" inherits="GameFontNormalSmall" parentKey="text">
+          <Anchors>
+            <Anchor point="LEFT" relativePoint="RIGHT">
+              <Offset>
+                <AbsDimension x="5" y="0"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
+    <NormalTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton">
+      <TexCoords left="0" right="0.25" top="0" bottom="1"/>
+    </NormalTexture>
+    <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton" alphaMode="ADD">
+      <TexCoords left="0.5" right="0.75" top="0" bottom="1"/>
+    </HighlightTexture>
+    <CheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton">
+      <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
+    </CheckedTexture>
+  </CheckButton>
+
+  <Slider name="HorizontalSliderTemplate" orientation="HORIZONTAL" enableMouse="true" virtual="true" inherits="BackdropTemplate">
+    <HitRectInsets>
+      <AbsInset left="0" right="0" top="-10" bottom="-10"/>
+    </HitRectInsets>
+    <ThumbTexture parentKey="Thumb" name="$parentThumb" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-SliderBar-Button-Horizontal">
+      <Size x="32" y="32"/>
+    </ThumbTexture>
+    <Scripts>
+      <OnLoad>
+        self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
+      </OnLoad>
+    </Scripts>
+  </Slider>
+  
+  <Button name="UIPanelButtonTemplate" inherits="UIPanelButtonNoTooltipTemplate" virtual="true">
+    <Scripts>
+      <OnEnter>
+        if(self.tooltipText ~= nil) then
+          GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+          GameTooltip_SetTitle(GameTooltip, self.tooltipText);
+          GameTooltip:Show();
+        end
+      </OnEnter>
+      <OnLeave>
+        if(self.tooltipText ~= nil) then
+          GameTooltip:Hide();
+        end
+      </OnLeave>
+    </Scripts>
+  </Button>
+
+  <Frame name="DialogBorderNoCenterTemplate" useParentLevel="true" frameLevel="15" setAllPoints="true" virtual="true">
+    <Scripts>
+      <OnLoad>
+        self.layoutType = "Dialog"
+        Mixin(self, NineSlicePanelMixin)
+        self:OnLoad()
+      </OnLoad>
+    </Scripts>
+  </Frame>
+
+  <Frame name="DialogBorderDarkTemplate" inherits="DialogBorderNoCenterTemplate" virtual="true">
+    <Layers>
+      <Layer level="BACKGROUND">
+        <!-- TODO: Convert this to atlas -->
+        <Texture parentKey="Bg" file="Interface\AddOns\CompactRaidFrame\Media\DialogFrame\UI-DialogBox-Background-Dark" horizTile="true" vertTile="true">
+          <Anchors>
+            <Anchor point="TOPLEFT" x="7" y="-7"/>
+            <Anchor point="BOTTOMRIGHT" x="-7" y="7"/>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+  </Frame>
+
+  <Button name="UIPanelInfoButton" virtual="true">
+    <Size>
+      <AbsDimension x="16" y="16"/>
+    </Size>
+    <Layers>
+      <Layer level="ARTWORK">
+        <Texture name="$parentTexture" file="Interface\AddOns\CompactRaidFrame\Media\FriendsFrame\InformationIcon" parentKey="texture">
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnMouseDown>
+				self.texture:SetPoint("TOPLEFT", 1, -1);
+      </OnMouseDown>
+      <OnMouseUp>
+				self.texture:SetPoint("TOPLEFT", 0, 0);
+      </OnMouseUp>
+    </Scripts>
+    <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\FriendsFrame\InformationIcon-Highlight" alphaMode="ADD">
+      <Anchors>
+        <Anchor point="TOPLEFT" relativeTo="$parentTexture" relativePoint="TOPLEFT"/>
+      </Anchors>
+      <Color r="1" g="1" b="1" a="0.4"/>
+    </HighlightTexture>
+  </Button>
+
+  <Button name="UIMenuButtonStretchTemplate" virtual="true">
+    <Size x="40" y="26"/>
+    <Layers>
+      <Layer level="BORDER">
+        <Texture parentKey="TopLeft" name="$parentTopLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="6"/>
+          <Anchors>
+            <Anchor point="TOPLEFT"/>
+          </Anchors>
+          <TexCoords left="0" right="0.09375" top="0" bottom="0.1875"/>
+        </Texture>
+        <Texture parentKey="TopRight" name="$parentTopRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="6"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT"/>
+          </Anchors>
+          <TexCoords left="0.53125" right="0.625" top="0" bottom="0.1875"/>
+        </Texture>
+        <Texture parentKey="BottomLeft" name="$parentBottomLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="6"/>
+          <Anchors>
+            <Anchor point="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0" right="0.09375" top="0.625" bottom="0.8125"/>
+        </Texture>
+        <Texture parentKey="BottomRight" name="$parentBottomRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="6"/>
+          <Anchors>
+            <Anchor point="BOTTOMRIGHT"/>
+          </Anchors>
+          <TexCoords left="0.53125" right="0.625" top="0.625" bottom="0.8125"/>
+        </Texture>
+        <Texture parentKey="TopMiddle" name="$parentTopMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="56" y="6"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="TOPRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.1875"/>
+        </Texture>
+        <Texture parentKey="MiddleLeft" name="$parentMiddleLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="14"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT"/>
+            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPLEFT"/>
+          </Anchors>
+          <TexCoords left="0" right="0.09375" top="0.1875" bottom="0.625"/>
+        </Texture>
+        <Texture parentKey="MiddleRight" name="$parentMiddleRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="12" y="14"/>
+          <Anchors>
+            <Anchor point="TOPRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMRIGHT"/>
+            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT"/>
+          </Anchors>
+          <TexCoords left="0.53125" right="0.625" top="0.1875" bottom="0.625"/>
+        </Texture>
+        <Texture parentKey="BottomMiddle" name="$parentBottomMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="56" y="6"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="BOTTOMLEFT"/>
+          </Anchors>
+          <TexCoords left="0.09375" right="0.53125" top="0.625" bottom="0.8125"/>
+        </Texture>
+        <Texture parentKey="MiddleMiddle" name="$parentMiddleMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
+          <Size x="56" y="14"/>
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT"/>
+          </Anchors>
+          <TexCoords left="0.09375" right="0.53125" top="0.1875" bottom="0.625"/>
+        </Texture>
+      </Layer>
+    </Layers>
+    <Scripts>
+      <OnMouseDown>
+				if self:IsEnabled() ~= 0 then
+					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
+					if ( self.Icon ) then
+						if ( not self.Icon.oldPoint ) then
+							local point, relativeTo, relativePoint, x, y = self.Icon:GetPoint(1)
+							self.Icon.oldPoint = point
+							self.Icon.oldX = x
+							self.Icon.oldY = y
+						end
+						self.Icon:SetPoint(self.Icon.oldPoint, self.Icon.oldX + 1, self.Icon.oldY - 1)
+					end
+				end
+      </OnMouseDown>
+      <OnMouseUp>
+				if self:IsEnabled() ~= 0 then
+					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					if ( self.Icon ) then
+						self.Icon:SetPoint(self.Icon.oldPoint, self.Icon.oldX, self.Icon.oldY)
+					end
+				end
+      </OnMouseUp>
+      <OnShow>
+				if self:IsEnabled() ~= 0 then
+					-- we need to reset our textures just in case we were hidden before a mouse up fired
+					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				end
+      </OnShow>
+      <OnEnable>
+				self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+				self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+      </OnEnable>
+      <OnEnter>
+				if(self.tooltipText ~= nil) then
+					GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, self.newbieText)
+				end
+      </OnEnter>
+      <OnLeave>
+				if(self.tooltipText ~= nil) then
+					GameTooltip:Hide()
+				end
+      </OnLeave>
+    </Scripts>
+    <ButtonText parentKey="Text" name="$parentText">
+      <Anchors>
+        <Anchor point="CENTER" x="0" y="-1"/>
+      </Anchors>
+    </ButtonText>
+    <NormalFont style="GameFontHighlightSmall"/>
+    <HighlightFont style="GameFontHighlightSmall"/>
+    <DisabledFont style="GameFontDisableSmall"/>
+    <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Highlight" alphaMode="ADD">
+      <TexCoords left="0" right="1.0" top="0.03" bottom="0.7175"/>
+    </HighlightTexture>
+  </Button>
+
+</Ui>
