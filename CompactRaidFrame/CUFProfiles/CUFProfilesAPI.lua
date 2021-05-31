@@ -107,7 +107,7 @@ function CompactRaidFrame:OnInitialize()
 
 	if ( not ROMANSPECTOR_DISCORD ) then
 		ROMANSPECTOR_DISCORD = true;
-		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join in my Discord gourp |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
+		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join my Discord group |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
 	end
 
 	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
