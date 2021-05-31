@@ -5,7 +5,7 @@ end
 BUFF_STACKS_OVERFLOW = "*";
 LOST_HEALTH = "-%d";
 
-COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT = "|cffbaf5aeCompactRaidFrame|r: возможен кофликт с аддоном |cffff0000WeakAuras|r, обновите аддон до версии 3.2.1 или выше."
+COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT = "|cffbaf5aeCompactRaidFrame|r: возможен кофликт с аддоном |cffff0000WeakAuras|r, обновите WeakAuras до версии 3.2.1 или выше."
 
 
 AUTO_ACTIVATE_DISABLED_IN_PARTY = "Для автоматического включения необходимо использовать рейдовый интерфейс для группы.";

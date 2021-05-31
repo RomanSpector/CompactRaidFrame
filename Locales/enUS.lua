@@ -5,7 +5,7 @@ end
 BUFF_STACKS_OVERFLOW = "*";
 LOST_HEALTH = "-%d";
 
-COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT = "|cffbaf5aeCompactRaidFrame|r: There may be a conflict with the |cffff0000WeakAuras|r addon, update the addon to version 3.2.1 or later"
+COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT = "|cffbaf5aeCompactRaidFrame|r: There may be a conflict with the |cffff0000WeakAuras|r addon, update WeakAuras to version 3.2.1 or later"
 
 AUTO_ACTIVATE_DISABLED_IN_PARTY = "Raid-Style Party Frames must be enabled to auto-activate with this number of players.";
 
