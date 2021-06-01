@@ -157,6 +157,7 @@ CAN_APPLY_AURA["SHAMAN"] = {
     [GetSpellInfo(8177)]  = { canApply = true, selfBuff = false }, -- Grounding Totem
     [GetSpellInfo(32182)] = { canApply = true, selfBuff = false }, -- Heroism
     [GetSpellInfo(2825)]  = { canApply = true, selfBuff = false }, -- Bloodlust
+    [GetSpellInfo(61301)] = { canApply = true, selfBuff = false }, -- Riptide
 };
 
 CAN_APPLY_AURA["WARLOCK"] = {
