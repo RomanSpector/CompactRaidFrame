@@ -23,7 +23,6 @@ RESET_POSITION = "Сброс позиции";
 
 DONT_SAVE = "Не сохранять";
 NEW_COMPACT_UNIT_FRAME_PROFILE = "Новый профиль";
-CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE = "Новый профиль";
 DEFAULT_CUF_PROFILE_NAME = "Основной";
 USE_EXISTING_PROFILE = "Импортировать из:";
 
