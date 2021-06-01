@@ -127,7 +127,7 @@ CAN_APPLY_AURA["PRIEST"] = {
     [GetSpellInfo(15473)] = { canApply = true, selfBuff = true  }, -- Shadowform
     [GetSpellInfo(15286)] = { canApply = true, selfBuff = true  }, -- Vampiric Embrace
     [GetSpellInfo(49694)] = { canApply = true, selfBuff = true  }, -- Improved Spirit Tap
-    [GetSpellInfo(47788)] = { canApply = true, selfBuff = true  }, -- Guardian Spirit
+    [GetSpellInfo(47788)] = { canApply = true, selfBuff = false }, -- Guardian Spirit
     [GetSpellInfo(33151)] = { canApply = true, selfBuff = true  }, -- Surge of Light
     [GetSpellInfo(33151)] = { canApply = true, selfBuff = true  }, -- Inspiration
     [GetSpellInfo(7001)]  = { canApply = true, selfBuff = false }, -- Lightwell Renew
