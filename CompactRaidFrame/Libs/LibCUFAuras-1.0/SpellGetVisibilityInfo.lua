@@ -17,7 +17,7 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  =  UnitClass == "PRIEST",
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  =  UnitClass == "PRIEST",
@@ -30,12 +30,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
     -- Prayer of Spirit
     [GetSpellInfo(48074)] = {
@@ -43,12 +43,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
     -- Shadow Protection
     [GetSpellInfo(48169)] = {
@@ -56,12 +56,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
     -- Prayer of Shadow Protection
     [GetSpellInfo(48170)] = {
@@ -69,12 +69,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
     -- Prayer of Fortitude
     [GetSpellInfo(48162)] = {
@@ -82,12 +82,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
     -- Power Word: Fortitude
     [GetSpellInfo(48161)] = {
@@ -95,12 +95,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PRIEST",
-        }, 
+        },
     },
 
     --== DEATHKNIGHT ==--
@@ -110,12 +110,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "DEATHKNIGHT",
-        }, 
+        },
     },
     -- Path of Frost
     [GetSpellInfo(3714)] = {
@@ -123,12 +123,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "DEATHKNIGHT",
-        }, 
+        },
     },
 
     --== PALADIN ==--
@@ -138,12 +138,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Greater Blessing of Kings
     [GetSpellInfo(25898)] = {
@@ -151,12 +151,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Blessing of Wisdom
     [GetSpellInfo(48936)] = {
@@ -164,12 +164,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Greater Blessing of Wisdom
     [GetSpellInfo(48938)] = {
@@ -177,12 +177,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Blessing of Might
     [GetSpellInfo(48932)] = {
@@ -190,12 +190,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Greater Blessing of Might
     [GetSpellInfo(48934)] = {
@@ -203,12 +203,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
     -- Blessing of Sanctuary
     [GetSpellInfo(20911)] = {
@@ -216,12 +216,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "PALADIN",
-        }, 
+        },
     },
 
     --== DRUID ==--
@@ -231,12 +231,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "DRUID",
-        }, 
+        },
     },
     -- Gift of the Wild
     [GetSpellInfo(48470)] = {
@@ -244,12 +244,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "DRUID",
-        }, 
+        },
     },
     -- Thorns
     [GetSpellInfo(53307)] = {
@@ -257,12 +257,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "DRUID",
-        }, 
+        },
     },
 
     --== SHAMAN ==--
@@ -272,12 +272,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = true,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
     },
     -- Windfury Totem
     [GetSpellInfo(8515)] = {
@@ -285,12 +285,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
     },
     -- Grounding Totem
     [GetSpellInfo(8177)] = {
@@ -298,12 +298,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "SHAMAN",
-        }, 
+        },
     },
 
     --== WARRIOR ==--
@@ -313,12 +313,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "WARRIOR",
-        }, 
+        },
     },
     -- Commanding Shout
     [GetSpellInfo(47440)] = {
@@ -326,12 +326,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "WARRIOR",
-        }, 
+        },
     },
 
     --== MAGE ==--
@@ -341,12 +341,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
     -- Dalaran Intellect
     [GetSpellInfo(61024)] = {
@@ -354,12 +354,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
     -- Dalaran Brilliance
     [GetSpellInfo(61316)] = {
@@ -367,12 +367,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
     -- Arcane Brilliance
     [GetSpellInfo(43002)] = {
@@ -380,12 +380,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
     -- Dampen Magic
     [GetSpellInfo(43015)] = {
@@ -393,12 +393,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
     -- Focus Magic
     [GetSpellInfo(54646)] = {
@@ -406,12 +406,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "MAGE",
-        }, 
+        },
     },
 
     --== WARLOCK ==--
@@ -421,27 +421,40 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = UnitClass == "WARLOCK",
-        }, 
+        },
     },
 
     --== ANY DEBUFF SPELLS ==--
+    -- Chill of the Throne
+    [GetSpellInfo(69127)] = {
+        ["RAID_INCOMBAT"] = {
+            hasCustom = true,
+            alwaysShowMine  = false,
+            showForMySpec = false,
+        },
+        ["RAID_OUTOFCOMBAT"] = {
+            hasCustom = true,
+            alwaysShowMine  = false,
+            showForMySpec = true,
+        },
+    },
     -- Deserter
     [GetSpellInfo(26013)] = {
         ["RAID_INCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = true,
-        }, 
+        },
     },
     -- Strange Feeling
     [GetSpellInfo(31694)] = {
@@ -449,12 +462,12 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
     },
     -- Quel'Delar's Compulsion
     [GetSpellInfo(70013)] = {
@@ -462,11 +475,11 @@ lib.spellList = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
         ["RAID_OUTOFCOMBAT"] = {
             hasCustom = true,
             alwaysShowMine  = false,
             showForMySpec = false,
-        }, 
+        },
     },
 };
