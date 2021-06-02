@@ -1,6 +1,7 @@
 C_LossOfControl = C_LossOfControl or {};
 C_LossOfControl.ControlList = C_LossOfControl.ControlList or {};
 local List = C_LossOfControl.ControlList;
+local GetSpellInfo = GetSpellInfo;
 
 -- Spell        ID             Type      priority 
 List[GetSpellInfo(12826)] = {LOSS_OF_CONTROL_DISPLAY_POLYMORPH, 6}; -- Sheep
@@ -8,10 +9,13 @@ List[GetSpellInfo(51514)] = {LOSS_OF_CONTROL_DISPLAY_POLYMORPH, 6}; -- Hex
 List[GetSpellInfo(71103)] = {LOSS_OF_CONTROL_DISPLAY_POLYMORPH, 6}; -- Combobulating Spray
 List[GetSpellInfo(70410)] = {LOSS_OF_CONTROL_DISPLAY_POLYMORPH, 6}; -- Polymorph: Spider
 
-List[GetSpellInfo(14309)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Freezing Trap
+List[GetSpellInfo(14309)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Freezing Trap Effect
+List[GetSpellInfo(43415)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Freezing Trap
 List[GetSpellInfo(60210)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Freezing Arrow
 List[GetSpellInfo(49203)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Hungering Cold
 List[GetSpellInfo(66012)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Freezing Slash
+List[GetSpellInfo(48400)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Frost Tomb
+List[GetSpellInfo(67650)] = {LOSS_OF_CONTROL_DISPLAY_FREEZE, 6}; -- Arctic Breath
 
 List[GetSpellInfo(33786)] = {LOSS_OF_CONTROL_DISPLAY_CYCLONE, 7}; -- Cyclone
 
@@ -29,6 +33,7 @@ List[GetSpellInfo(13181)] = {LOSS_OF_CONTROL_DISPLAY_POSSESS, 6}; -- Gnomish Min
 
 List[GetSpellInfo(19503)] = {LOSS_OF_CONTROL_DISPLAY_CONFUSE, 6}; -- Scatter Shot
 List[GetSpellInfo(70302)] = {LOSS_OF_CONTROL_DISPLAY_CONFUSE, 6}; -- Blinding Dirt
+List[74456]               = {LOSS_OF_CONTROL_DISPLAY_CONFUSE, 6}; -- Conflagration
 
 List[GetSpellInfo(20066)] = {LOSS_OF_CONTROL_DISPLAY_INCAPACITATE, 5}; -- Repentance
 List[GetSpellInfo(1776)]  = {LOSS_OF_CONTROL_DISPLAY_INCAPACITATE, 5}; -- Gouge
@@ -71,7 +76,6 @@ List[GetSpellInfo(67677)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Waking Night
 List[GetSpellInfo(73070)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Incite Terror
 List[GetSpellInfo(48144)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Terrifying Roar
 List[GetSpellInfo(72435)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Defiling Horror
-List[GetSpellInfo(72426)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Impending Despair
 List[GetSpellInfo(36922)] = {LOSS_OF_CONTROL_DISPLAY_HORROR, 3}; -- Bellowing Roar
 
 List[42380]               = {LOSS_OF_CONTROL_DISPLAY_DISORIENT, 6}; -- Conflagration
@@ -101,6 +105,8 @@ List[GetSpellInfo(18498)] = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Gag Order
 List[GetSpellInfo(19821)] = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Arcane Bomb
 List[GetSpellInfo(55663)] = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Deafening Roar
 List[GetSpellInfo(6726)]  = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Silence
+List[GetSpellInfo(58526)] = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Azure Bindings
+List[GetSpellInfo(34190)] = {LOSS_OF_CONTROL_DISPLAY_SILENCE, 1}; -- Arcane Orb
 
 List[GetSpellInfo(53543)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Snatch
 List[GetSpellInfo(51722)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Dismantle
@@ -108,6 +114,9 @@ List[GetSpellInfo(676)]   = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Disarm
 List[GetSpellInfo(53359)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Chimera Shot
 List[GetSpellInfo(64058)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Psychic Horror
 List[GetSpellInfo(64346)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Fiery Payback
+List[GetSpellInfo(14180)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Sticky Tar
+List[GetSpellInfo(33126)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Dropped Weapon
+List[GetSpellInfo(36208)] = {LOSS_OF_CONTROL_DISPLAY_DISARM, 2}; -- Steal Weapon
 
 List[GetSpellInfo(20511)] = {LOSS_OF_CONTROL_DISPLAY_FEAR, 3}; -- Intimidating Shout
 List[GetSpellInfo(6215)]  = {LOSS_OF_CONTROL_DISPLAY_FEAR, 3}; -- Fear
@@ -119,6 +128,7 @@ List[GetSpellInfo(29544)] = {LOSS_OF_CONTROL_DISPLAY_FEAR, 3}; -- Frightening Sh
 
 List[15655]               = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Shield Slam
 List[8285]                = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Rampage
+List[68771]               = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Thundering Stomp
 List[GetSpellInfo(49802)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Maim
 List[GetSpellInfo(5918)]  = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Shadowstalker Stab
 List[GetSpellInfo(15283)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Stunning Blow
@@ -126,7 +136,6 @@ List[GetSpellInfo(36877)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Stun Forever
 List[GetSpellInfo(16075)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Throw Axe
 List[GetSpellInfo(16045)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Encage
 List[GetSpellInfo(47772)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Ice Nova
-List[GetSpellInfo(49704)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Encasing Webs
 List[GetSpellInfo(69222)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Throw Shield
 List[GetSpellInfo(48131)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Stomp
 List[GetSpellInfo(50234)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Crush
@@ -168,7 +177,19 @@ List[GetSpellInfo(35011)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Knockdown
 List[GetSpellInfo(58154)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Hammer of Injustice    
 List[GetSpellInfo(51491)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Unrelenting Strike
 List[GetSpellInfo(21749)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Thorn Volley
+List[GetSpellInfo(3635)]  = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Crystal Gaze
+List[GetSpellInfo(35313)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Hypnotic Gaze
+List[GetSpellInfo(6524)]  = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Ground Tremor
+List[GetSpellInfo(6607)]  = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Lash
+List[GetSpellInfo(47700)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Crystal Freeze
+List[GetSpellInfo(43936)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Knockdown Spin
+List[GetSpellInfo(52696)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Constricting Chains
+List[GetSpellInfo(58848)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Time Stop
+List[GetSpellInfo(72428)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Despair Stricken
+List[GetSpellInfo(69133)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Lethargy
+List[GetSpellInfo(29484)] = {LOSS_OF_CONTROL_DISPLAY_STUN, 5}; -- Web Spray
 
+List[52086]               = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Web Wrap
 List[GetSpellInfo(53548)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Pin
 List[GetSpellInfo(47698)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Crystal Chains
 List[GetSpellInfo(48179)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Crystallize
@@ -194,3 +215,6 @@ List[GetSpellInfo(55536)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Frostweave Net
 List[GetSpellInfo(13099)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Net-o-MaticК
 List[GetSpellInfo(52491)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Web Explosion
 List[GetSpellInfo(56632)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Tangled Webs
+List[GetSpellInfo(49704)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Encasing Webs
+List[GetSpellInfo(61579)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Runic Focus
+List[GetSpellInfo(71647)] = {LOSS_OF_CONTROL_DISPLAY_ROOT, 4}; -- Ice Trap
