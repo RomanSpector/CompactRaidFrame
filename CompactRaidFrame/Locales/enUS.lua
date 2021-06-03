@@ -1,7 +1,3 @@
-if not (GetLocale() == "enUS") then
-    return
-end
-
 BUFF_STACKS_OVERFLOW = "*";
 LOST_HEALTH = "-%d";
 
