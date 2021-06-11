@@ -306,7 +306,6 @@ function RaidOptionsFrame_UpdatePartyFrames()
 	if ( InCombatLockdown() ) then
 		return;
 	end
-
 	if ( GetDisplayedAllyFrames() ~= "party" ) then
 		HidePartyFrame();
 	  else

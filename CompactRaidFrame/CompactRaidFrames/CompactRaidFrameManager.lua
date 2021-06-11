@@ -52,8 +52,8 @@ function CompactRaidFrameManager_OnEvent(self, event, ...)
 	if ( event ~= "RAID_TARGET_UPDATE" and InCombatLockdown() ) then 
 		self:RegisterEvent("PLAYER_REGEN_ENABLED");
 		return;
-	end 
-	
+	end
+
 	if ( event == "PLAYER_REGEN_ENABLED" ) then
 		CompactRaidFrameManager_UpdateShown(self);
 		CompactRaidFrameManager_UpdateDisplayCounts(self);
@@ -63,6 +63,7 @@ function CompactRaidFrameManager_OnEvent(self, event, ...)
 	elseif ( event == "DISPLAY_SIZE_CHANGED" or event == "UI_SCALE_CHANGED" ) then
 		CompactRaidFrameManager_UpdateContainerBounds(self);
 	elseif ( event == "PARTY_MEMBERS_CHANGED" or event == "UPDATE_ACTIVE_BATTLEFIELD" ) then
+		RaidOptionsFrame_UpdatePartyFrames();
 		CompactRaidFrameManager_UpdateShown(self);
 		CompactRaidFrameManager_UpdateDisplayCounts(self);
 		CompactRaidFrameManager_UpdateLabel(self);
