@@ -67,43 +67,12 @@ local FLATTENDED_OPTIONS = {
 	["autoActivatePvE"] = 1,
 };
 
-StaticPopupDialogs["CLICK_LINK_CLICKURL"] = {
-    text = COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT,
-    button1 = "OK",
-    timeout = 0,
-	hasEditBox = true,
-	hasWideEditBox = true,
-	OnShow = function (self, data)
-		local wideEditBox = _G[this:GetName().."WideEditBox"]
-        if ( wideEditBox ) then
-            wideEditBox:SetText("https://discord.gg/wXw6pTvxMQ")
-            wideEditBox:SetFocus()
-            wideEditBox:HighlightText()
-			wideEditBox:ClearAllPoints()
-			wideEditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25)
-        end
-	end,
-};
-
-local function GetAddonVerseion(value)
-    local num1, num2, num3 = string.match(value, "(%d+)[^%d]+(%d+)[^%d]+(%d+)");
-    return tonumber(num1..num2..num3)
-end
-
 function CompactRaidFrame:OnInitialize()
     self.db = AceDB:New("CompactRaidFrameDB");
 	self.db.char.CUF_CONFIG = self.db.char.CUF_CONFIG or {};
 	self.db.char.profile = self.db.char.profile or {};
 	PROFILES = self.db.char.profile;
 	CUF_CONFIG = self.db.char.CUF_CONFIG;
-
-	local value = GetAddOnMetadata("WeakAuras", "Version");
-	if ( value ) then
-		local number = GetAddonVerseion(value)
-		if ( number < 321 ) then
-			StaticPopup_Show("CLICK_LINK_CLICKURL")
-		end
-	end
 
 	if ( not ROMANSPECTOR_DISCORD ) then
 		ROMANSPECTOR_DISCORD = true;

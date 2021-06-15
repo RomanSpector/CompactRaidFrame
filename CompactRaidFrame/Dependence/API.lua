@@ -517,3 +517,41 @@ function UnitAuraSlots(unit, filter, maxCount, continuationToken)
 
 	return LibAura:UnitAuraSlots(unit, filter, maxCount, continuationToken);
 end
+
+------------------------------------------------------------------------------------
+StaticPopupDialogs["CUF_CLICK_LINK_CLICKURL"] = {
+    text = COMPACT_UNIT_FRAME_STATIC_POPUP_TEXT,
+    button1 = "OK",
+    timeout = 0,
+	hasEditBox = true,
+	hasWideEditBox = true,
+	OnShow = function (self, data)
+		local wideEditBox = _G[this:GetName().."WideEditBox"]
+        if ( wideEditBox ) then
+            wideEditBox:SetText("https://discord.gg/wXw6pTvxMQ")
+            wideEditBox:SetFocus()
+            wideEditBox:HighlightText()
+			wideEditBox:ClearAllPoints()
+			wideEditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25)
+        end
+	end,
+};
+
+local function GetAddonVerseion(value)
+    local num1, num2, num3 = string.match(value, "(%d+)[^%d]+(%d+)[^%d]+(%d+)");
+    return tonumber(num1..num2..num3)
+end
+
+local VersionConflict = CreateFrame("Frame");
+VersionConflict:RegisterEvent("ADDON_LOADED");
+VersionConflict:SetScript("OnEvent", function(self, event, addon)
+	if ( addon == "WeakAuras" ) then
+		local value = GetAddOnMetadata("WeakAuras", "Version");
+		if ( value ) then
+			local number = GetAddonVerseion(value);
+			if ( number < 321 ) then
+				StaticPopup_Show("CLICK_LINK_CLICKURL");
+			end
+		end
+	end
+end)
