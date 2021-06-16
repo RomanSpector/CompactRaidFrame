@@ -125,7 +125,7 @@ function C_PvP.IsPvPMap()
     if ( not inInstance ) then
         return;
     end
-	
+
     return instanceType == "pvp" or instanceType == "arena";
 end
 
@@ -137,7 +137,7 @@ function UnitPhaseReason(unit)
 	if not ( IsInRaid() and UnitIsConnected(unit) ) then
 		return;
 	end
-	
+
 	for i = 1, MAX_RAID_MEMBERS do
 		local name, rank, subgroup, level, class, fileName, zone = GetRaidRosterInfo(i)
 		if ( not name ) then 
@@ -186,7 +186,7 @@ function UnitInOtherParty(unit)
 	if not ( IsInRaid() and UnitIsConnected(unit) ) then
 		return;
 	end
-	
+
 	for i = 1, GetRealNumRaidMembers() do
 		local name, rank, subgroup, level, class, fileName, zone = GetRaidRosterInfo(i);
 		if ( name == UnitName(unit) ) then
@@ -207,7 +207,7 @@ do
 
 	function SetEveryoneIsAssistant(enable)
 		isAssist = enable;
-		C_Timer.NewTicker(0.05,  function()
+		C_Timer.NewTicker(0.75,  function()
 			index = index + 1;
 
 			if ( index == GetRealNumRaidMembers() ) then
@@ -243,8 +243,8 @@ function CooldownFrame_Clear(self)
 	self:Hide();
 end
 
-Enum = {};
-Enum.SummonStatus = { 
+Enum = Enum or {};
+Enum.SummonStatus = {
 	None = 0,
 	Pending = 1,
 	Accepted = 2,
@@ -321,7 +321,7 @@ local HealComm   = LibStub:GetLibrary("LibHealComm-4.0");
 local LibAura    = LibStub:GetLibrary("LibCUFAuras-1.0");
 local LibResComm = LibStub:GetLibrary("LibResComm-1.0");
 
-do 
+do
 
 	local function CompactUnitFrame_FireEvent(self, event)
 		CompactUnitFrame_OnEvent(self, event, self.unit or self.displayedUnit)
@@ -402,7 +402,7 @@ do
 
 end
 
-do 
+do
 	local function LibEventCallback(self, event, ... )
 		if ( event == "LibGroupTalents_RoleChange" ) then
 			CompactRaidFrameManager_OnEvent(self, "UPDATE_ACTIVE_BATTLEFIELD");
