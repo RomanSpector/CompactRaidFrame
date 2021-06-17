@@ -259,6 +259,7 @@ end
 
 C_PartyInfo = CreateFrame("Frame", "C_PartyInfo")
 C_PartyInfo.DoCountdown = function(count)
+	if not UnitIsGroupLeader('player') and not UnitIsGroupAssistant('player') then return end
 	local timeRemaining = 1;
 	C_PartyInfo:SetScript("OnUpdate", function(self, elapsed)
 		timeRemaining = timeRemaining + elapsed;
