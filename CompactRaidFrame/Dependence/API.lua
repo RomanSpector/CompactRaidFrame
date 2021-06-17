@@ -59,23 +59,13 @@ function GetDisplayedAllyFrames()
 end
 
 function UnitIsGroupLeader(unit)
-	local index = unit:match("%d+");
-	if ( index and index == GetPartyLeaderIndex() ) then
-		return true;
-	elseif ( unit == "player" ) then
-		return GetPartyLeaderIndex()==0;
-	else
-		return false;
-	end
+	-- UnitIsPartyLeader return correctly also for raid
+	return UnitIsPartyLeader(unit) and true or false
 end
 
 function UnitIsGroupAssistant(unit)
-	for i = 1, GetRealNumRaidMembers() do 
-		local name, rank = GetRaidRosterInfo(i);
-		if ( name == UnitName(unit) ) then
-			return rank == 1;
-		end
-	end
+	-- UnitIsRaidOfficer return correctly also for party
+	return UnitIsRaidOfficer(unit) and not UnitIsGroupLeader(unit) and true or false
 end
 
 function UnitDistanceSquared(unit)
