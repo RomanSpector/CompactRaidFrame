@@ -2,6 +2,9 @@ if not (GetLocale() == "ruRU") then
     return
 end
 
+COMPACT_UNIT_FRAME_COUNTDOWN_START = "Старт через: %s"
+COMPACT_UNIT_FRAME_COUNTDOWN_NOW = "Сейчас!"
+
 BUFF_STACKS_OVERFLOW = "*";
 LOST_HEALTH = "-%d";
 

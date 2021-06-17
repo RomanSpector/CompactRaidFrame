@@ -59,23 +59,29 @@ function GetDisplayedAllyFrames()
 end
 
 function UnitIsGroupLeader(unit)
-	local index = unit:match("%d+");
-	if ( index and index == GetPartyLeaderIndex() ) then
-		return true;
-	elseif ( unit == "player" ) then
-		return GetPartyLeaderIndex()==0;
-	else
-		return false;
-	end
+	-- local index = unit:match("%d+");
+	-- if ( index and index == GetPartyLeaderIndex() ) then
+	-- 	return true;
+	-- elseif ( unit == "player" ) then
+	-- 	return GetPartyLeaderIndex()==0;
+	-- else
+	-- 	return false;
+	-- end
+
+	-- UnitIsPartyLeader return correctly also for raid
+	return UnitIsPartyLeader(unit) and true or false
 end
 
 function UnitIsGroupAssistant(unit)
-	for i = 1, GetRealNumRaidMembers() do 
-		local name, rank = GetRaidRosterInfo(i);
-		if ( name == UnitName(unit) ) then
-			return rank == 1;
-		end
-	end
+	-- for i = 1, GetRealNumRaidMembers() do 
+	-- 	local name, rank = GetRaidRosterInfo(i);
+	-- 	if ( name == UnitName(unit) ) then
+	-- 		return rank == 1;
+	-- 	end
+	-- end
+
+	-- UnitIsRaidOfficer return correctly also for party
+	return UnitIsRaidOfficer(unit) and not UnitIsGroupLeader(unit) and true or false
 end
 
 function UnitDistanceSquared(unit)
@@ -196,37 +202,6 @@ function UnitInOtherParty(unit)
 
 end
 
-do
-
-	local index = 0;
-	local isAssist = nil;
-
-	function IsEveryoneAssistant()
-		return isAssist;
-	end
-
-	function SetEveryoneIsAssistant(enable)
-		isAssist = enable;
-		C_Timer.NewTicker(0.75,  function()
-			index = index + 1;
-
-			if ( index == GetRealNumRaidMembers() ) then
-				index = 0;
-				return;
-			end
-
-			local unit = "raid"..index;
-			if ( IsEveryoneAssistant() and UnitIsConnected(unit) and not UnitIsGroupAssistant(unit) ) then
-				PromoteToAssistant(unit);
-			elseif ( not IsEveryoneAssistant() and UnitIsGroupAssistant(unit) ) then
-				DemoteAssistant(unit);
-			end
-		end,
-		GetRealNumRaidMembers());
-	end
-
-end
-
 function GetTexCoordsForRoleSmallCircle(role)
 	if ( role == "TANK" ) then
 		return 0, 19/64, 22/64, 41/64;
@@ -267,21 +242,54 @@ C_IncomingSummon.IncomingSummonStatus = function(unit)
 	return 0;
 end
 
-C_PartyInfo = CreateFrame("Frame", "C_PartyInfo")
+
+C_PartyInfo = {};
 C_PartyInfo.DoCountdown = function(count)
-	local timeRemaining = 1;
-	C_PartyInfo:SetScript("OnUpdate", function(self, elapsed)
-		timeRemaining = timeRemaining + elapsed;
-		if timeRemaining > 1 then 
-			timeRemaining = 0;
-			SendChatMessage(count > 0 and "Pull in "..count or ">> Pull Now <<", "RAID_WARNING");
-			count = count - 1;
-			if count < 0 then 
-				self:Hide();
-			end 
-		end 
-	end)
-	C_PartyInfo:Show();
+	if ( C_PartyInfo.activeCountdown ) then
+		return;
+	end
+
+	local channel = IsInRaid() and "RAID_WARNING" or "PARTY";
+	local countdown = count;
+	C_PartyInfo.activeCountdown = C_Timer.NewTicker(1, function()
+		local timer = string.format(COMPACT_UNIT_FRAME_COUNTDOWN_START, countdown);
+		local now = COMPACT_UNIT_FRAME_COUNTDOWN_NOW;
+		if ( countdown == 0 ) then
+			C_PartyInfo.activeCountdown = false;
+		end
+		SendChatMessage(countdown > 0 and timer or now, channel);
+		countdown = countdown - 1;
+	end, count + 1)
+end
+
+do
+
+	C_PartyInfo.isAllAssistant = false;
+
+	function IsEveryoneAssistant()
+		return C_PartyInfo.isAllAssistant;
+	end
+
+	function SetEveryoneIsAssistant(enable)
+		if ( C_PartyInfo.SetEveryoneIsAssistant ) then
+			C_PartyInfo.SetEveryoneIsAssistant:Cancel();
+		end
+
+		local index = 1;
+		C_PartyInfo.isAllAssistant = enable;
+		C_PartyInfo.SetEveryoneIsAssistant = C_Timer.NewTicker(0.15, function()
+			local unit = "raid"..index;
+			if ( IsEveryoneAssistant() ) then
+				PromoteToAssistant(unit);
+			else
+				DemoteAssistant(unit);
+			end
+
+			index = index + 1;
+		end,
+		GetRealNumRaidMembers());
+	end
+
 end
 
 local function HidePartyFrame()
