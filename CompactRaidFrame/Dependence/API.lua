@@ -261,11 +261,12 @@ C_PartyInfo = CreateFrame("Frame", "C_PartyInfo")
 C_PartyInfo.DoCountdown = function(count)
 	if not UnitIsGroupLeader('player') and not UnitIsGroupAssistant('player') then return end
 	local timeRemaining = 1;
+	local channel = IsInRaid() and "RAID_WARNING" or "PARTY"
 	C_PartyInfo:SetScript("OnUpdate", function(self, elapsed)
 		timeRemaining = timeRemaining + elapsed;
 		if timeRemaining > 1 then 
 			timeRemaining = 0;
-			SendChatMessage(count > 0 and "Pull in "..count or ">> Pull Now <<", "RAID_WARNING");
+			SendChatMessage(count > 0 and "Pull in "..count or ">> Pull Now <<", channel);
 			count = count - 1;
 			if count < 0 then 
 				self:Hide();
