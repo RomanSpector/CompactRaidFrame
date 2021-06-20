@@ -468,11 +468,28 @@ function GetSpecializationRole(specIndex)
 end
 
 function UnitGroupRoles(unit)
-	if ( not LibGT ) then
-		return "NONE";
+	local role;
+	-- For 3.3.5 roles are assigned only for LFG, so the API UnitGroupRolesAssigned works only for LFG
+	-- For LFG, do not need to use third-party methods to define a role that is not always defined correctly.
+	local isTank, isHealer, isDamage = UnitGroupRolesAssigned(unit);
+	if ( isTank ) then
+		role = "TANK";
+	elseif ( isHealer ) then
+		role = "HEALER";
+	elseif ( isDamage ) then
+		role = "DAMAGER";
+	else
+		-- It makes no sense to use third-party methods to define a role if the role of this class is only one.
+		local _,class = UnitClass(unit);
+		local damager = class == "HUNTER" or class == "ROGUE" or class == "MAGE" or class == "WARLOCK";
+		if ( damager ) then
+			role = "DAMAGER";
+		elseif ( LibGT ) then
+			role = LibGTConvertRole[LibGT:GetUnitRole(unit)];
+		end
 	end
 
-	return LibGTConvertRole[LibGT:GetUnitRole(unit)] or "NONE"; 
+	return role or "NONE";
 end
 
 function UnitShouldDisplayName(unitToken)
