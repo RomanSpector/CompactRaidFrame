@@ -235,14 +235,14 @@
               GameTooltip:SetText(self.tooltip, nil, nil, nil, nil, true);
               GameTooltip:Show();
             else
-              self:GetParent():GetScript("OnEnter")(self:GetParent(), motion);
+              --self:GetParent():GetScript("OnEnter")(self:GetParent(), motion);
             end
           </OnEnter>
           <OnLeave>
             if ( self.tooltip ) then
               GameTooltip:Hide();
             else
-              self:GetParent():GetScript("OnLeave")(self:GetParent(), motion);
+              --self:GetParent():GetScript("OnLeave")(self:GetParent(), motion);
             end
           </OnLeave>
         </Scripts>
