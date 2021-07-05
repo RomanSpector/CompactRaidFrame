@@ -343,7 +343,7 @@ do
 			CompactUnitFrame_FireEvent(self, "PLAYER_ROLES_ASSIGNED");
 		elseif ( event == "ResComm_ResStart" and arg3 == UnitName(self.unit) ) then
 			CompactUnitFrame_FireEvent(self, "INCOMING_RESURRECT_CHANGED");
-		elseif ( event == "ResComm_ResStart" and arg2 == UnitName(self.unit) ) then
+		elseif ( event == "ResComm_ResEnd" and arg2 == UnitName(self.unit) ) then
 			CompactUnitFrame_FireEvent(self, "INCOMING_RESURRECT_CHANGED");
 		elseif ( event == "EffectApplied" and arg3 == UnitGUID(self.unit) ) then
 			CompactUnitFrame_FireEvent(self, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED");
