@@ -60,7 +60,6 @@ function CompactUnitFrame_OnEvent(self, event, ...)
         CompactUnitFrame_UpdateWidgetSet(self);
     elseif ( event == "PLAYER_REGEN_ENABLED" or event == "PLAYER_REGEN_DISABLED" ) then
         CompactUnitFrame_UpdateAuras(self); --We filter differently based on whether the player is in Combat, so we need to update when that changes.
-        --CompactUnitFrame_UpdateAll(self);
     elseif ( event == "PLAYER_ROLES_ASSIGNED" ) then
         CompactUnitFrame_UpdateRoleIcon(self);
     elseif ( event == "READY_CHECK" ) then
@@ -281,7 +280,7 @@ end
 --Internally accessed functions
 --Update Functions
 function CompactUnitFrame_UpdateAll(frame)
-    CompactUnitFrame_UpdateInVehicle(frame);
+    --CompactUnitFrame_UpdateInVehicle(frame);
     CompactUnitFrame_UpdateVisible(frame);
     if ( UnitExists(frame.displayedUnit) ) then
         CompactUnitFrame_UpdateMaxHealth(frame);
