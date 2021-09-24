@@ -72,23 +72,24 @@ local function inCombatPriority(number, value)
 	 end
 end
 
-local function GetAuraPriority(name, spellID, unitCaster)
-	local priorityIndex = 0;
-	local lossOfControl = C_LossOfControl and C_LossOfControl.ControlList[name];
+local function SetAuraPriority(name, spellID, unitCaster)
+	local index = 0;
+	local lossOfControl = C_LossOfControl.ControlList[name];
 
-	local hasCustom, alwaysShowMine, showForMySpec =  lib:SpellGetVisibilityInfo(spellID, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
-    
-	if ( CAN_APPLY_AURA[name] and not CAN_APPLY_AURA[name].selfBuff ) then
-		priorityIndex = inCombatPriority(1, UnitAffectingCombat("player"));
+	local hasCustom, alwaysShowMine, showForMySpec = lib:SpellGetVisibilityInfo(spellID, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+	local canApplyAura = CAN_APPLY_AURA[name];
+
+	if ( canApplyAura ) then
+		index = inCombatPriority(1, UnitAffectingCombat("player") and not CAN_APPLY_AURA[name].selfBuff);
 	end
-	if ( hasCustom ) then
-		priorityIndex = inCombatPriority(1, showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle")));
+	if ( hasCustom and canApplyAura ) then
+		index = inCombatPriority(1, showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle")));
 	end
 	if ( lossOfControl ) then
-		priorityIndex = lossOfControl[2];
+		index = lossOfControl[2];
 	end
 
-	return priorityIndex;
+	return index;
 end
 
 function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
@@ -99,7 +100,7 @@ function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
 	tinsert(self.CASHE[dstGUID], #self.CASHE[dstGUID] + 1, {
 		index = index,
         filterType = filterType,
-		priorityIndex = GetAuraPriority(name, spellID, unitCaster),
+		priorityIndex = SetAuraPriority(name, spellID, unitCaster),
 		name = name,
 		texture = texture,
 		stackCount = stackCount,
