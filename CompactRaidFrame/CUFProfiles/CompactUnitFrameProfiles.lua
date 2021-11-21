@@ -610,6 +610,7 @@ CUFProfileActionTable = {
 	sortBy = CompactUnitFrameProfiles_GenerateRaidManagerSetting("SortMode"),
 	displayPets = CompactUnitFrameProfiles_GenerateRaidManagerSetting("DisplayPets"),
 	displayMainTankAndAssist = CompactUnitFrameProfiles_GenerateRaidManagerSetting("DisplayMainTankAndAssist"),
+	displayPlayer = CompactUnitFrameProfiles_GenerateRaidManagerSetting("DisplayPlayer"),
 	displayHealPrediction = CompactUnitFrameProfiles_GenerateOptionSetter("displayHealPrediction", "all"),
 	displayPowerBar = CompactUnitFrameProfiles_GenerateSetUpOptionSetter("displayPowerBar", "normal"),
 	displayAggroHighlight = CompactUnitFrameProfiles_GenerateOptionSetter("displayAggroHighlight", "all"),

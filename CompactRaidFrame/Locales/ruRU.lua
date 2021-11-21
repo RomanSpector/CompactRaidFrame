@@ -72,6 +72,7 @@ COMPACT_UNIT_FRAME_PROFILE_DISPLAYAGGROHIGHLIGHT = "Индикатор угро�
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYBORDER = "Показывать границы";
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYHEALPREDICTION = "Поступающее лечение";
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYMAINTANKANDASSIST = "Показывать главного танка и наводчика";
+COMPACT_UNIT_FRAME_PROFILE_DISPLAYPLAYER = "Показывать фрейм игрока";
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYNONBOSSDEBUFFS = "Отрицательные эффекты";
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYONLYDISPELLABLEDEBUFFS = "Только рассеиваемые отрицательные эффекты";
 COMPACT_UNIT_FRAME_PROFILE_DISPLAYPETS = "Показывать питомцев";

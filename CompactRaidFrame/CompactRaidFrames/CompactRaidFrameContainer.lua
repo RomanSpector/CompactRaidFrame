@@ -250,6 +250,10 @@ function CompactRaidFrameContainer_AddGroup(self, id)
 	groupFrame:Show();
 end
 
+local function ShouldDisplayFrame(unit)
+	return CompactRaidFrameManager_GetSetting("DisplayPlayer") or (unit ~= "unit" and UnitGUID("player") ~= UnitGUID(unit))
+end
+
 function CompactRaidFrameContainer_AddPlayers(self)
 	--First, sort the players we're going to use
 	assert(self.flowSortFunc);	--No sort function defined! Call CompactRaidFrameContainer_SetFlowSortFunction.
@@ -259,8 +263,11 @@ function CompactRaidFrameContainer_AddPlayers(self)
 	
 	for i=1, #self.units do
 		local unit = self.units[i];
-		if ( self.flowFilterFunc(unit) ) then
-			CompactRaidFrameContainer_AddUnitFrame(self, unit, "raid");
+		
+		if ( ShouldDisplayFrame(unit) ) then
+			if ( self.flowFilterFunc(unit) ) then
+				CompactRaidFrameContainer_AddUnitFrame(self, unit, "raid");
+			end
 		end
 	end
 	
@@ -271,13 +278,13 @@ function CompactRaidFrameContainer_AddPets(self)
 	if ( IsInRaid() ) then
 		for i=1, MAX_RAID_MEMBERS do
 			local unit = "raidpet"..i;
-			if ( UnitExists(unit) ) then
+			if ( ShouldDisplayFrame("raid"..i) and UnitExists(unit) ) then
 				CompactRaidFrameContainer_AddUnitFrame(self, unit, "pet");
 			end
 		end
 	else
 		--Add the player's pet.
-		if ( UnitExists("pet") ) then
+		if ( ShouldDisplayFrame("player") and UnitExists("pet") ) then
 			CompactRaidFrameContainer_AddUnitFrame(self, "pet", "pet");
 		end
 		for i=1, GetNumSubgroupMembers() do

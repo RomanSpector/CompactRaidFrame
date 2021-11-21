@@ -47,7 +47,7 @@ function CompactRaidFrameManager_OnLoad(self)
 	FlowContainer_Initialize(self.displayFrame.optionsFlowContainer);
 end 
 
-local settings = { --[["Managed",]] "Locked", "SortMode", "KeepGroupsTogether", "DisplayPets", "DisplayMainTankAndAssist", "IsShown", "ShowBorders" };
+local settings = { --[["Managed",]] "Locked", "SortMode", "KeepGroupsTogether", "DisplayPets", "DisplayMainTankAndAssist", "IsShown", "ShowBorders", "DisplayPlayer" };
 function CompactRaidFrameManager_OnEvent(self, event, ...)
 	if ( event ~= "RAID_TARGET_UPDATE" and InCombatLockdown() ) then 
 		self:RegisterEvent("PLAYER_REGEN_ENABLED");
@@ -403,6 +403,8 @@ function CompactRaidFrameManager_GetSettingBeforeLoad(settingName)
 		return true;
 	elseif ( settingName == "HorizontalGroups" ) then
 		return false;
+	elseif ( settingName == "DisplayPlayer" ) then
+		return true;
 	else
 		GMError("Unknown setting "..tostring(settingName));
 	end
@@ -505,6 +507,10 @@ do	--Enclosure to make sure people go through SetSetting
 		CUF_HORIZONTAL_GROUPS = horizontalGroups;
 	end
 
+	local function CompactRaidFrameManager_SetDisplayPlayer(value)
+		CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer);
+	end
+
 	function CompactRaidFrameManager_SetSetting(settingName, value)
 		cachedSettings[settingName] = value;
 		isSettingCached[settingName] = true;
@@ -527,6 +533,8 @@ do	--Enclosure to make sure people go through SetSetting
 			CompactRaidFrameManager_SetBorderShown(value);
 		elseif ( settingName == "HorizontalGroups" ) then
 			CompactRaidFrameManager_SetHorizontalGroups(value);
+		elseif ( settingName == "DisplayPlayer") then
+			CompactRaidFrameManager_SetDisplayPlayer(value);
 		else
 			error("Unknown setting "..tostring(settingName));
 		end
@@ -829,7 +837,6 @@ local filterOptions = {
 	displayRoleTANK = true;
 	displayRoleHEALER = true;
 	displayRoleDAMAGER = true;
-	
 }
 
 function CRF_SetFilterRole(role, show)

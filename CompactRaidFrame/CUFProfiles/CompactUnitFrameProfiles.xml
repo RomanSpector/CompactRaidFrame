@@ -527,9 +527,19 @@
               </OnLoad>
             </Scripts>
           </Frame>
-          <CheckButton name="$parentDisplayIncomingHeals" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
+          <CheckButton name="$parentDisplayPlayer" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="0" y="-50"/>
+            </Anchors>
+            <Scripts>
+              <OnLoad>
+                CompactUnitFrameProfilesCheckButton_InitializeWidget(self, "displayPlayer");
+              </OnLoad>
+            </Scripts>
+          </CheckButton>
+          <CheckButton name="$parentDisplayIncomingHeals" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
+            <Anchors>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayPlayer" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
             </Anchors>
             <Scripts>
               <OnLoad>
