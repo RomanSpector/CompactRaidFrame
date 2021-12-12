@@ -318,6 +318,10 @@ function CompactUnitFrame_UpdateInVehicle(frame)
     if ( shouldTargetVehicle ) then
         local prefix, id, suffix = string.match(frame.unit, "([^%d]+)([%d]*)(.*)");
         unitVehicleToken = prefix.."pet"..id..suffix;
+
+        if ( frame.unit == "player" ) then
+            unitVehicleToken = "vehicle";
+        end
         if ( not UnitExists(unitVehicleToken) ) then
             shouldTargetVehicle = false;
         end
