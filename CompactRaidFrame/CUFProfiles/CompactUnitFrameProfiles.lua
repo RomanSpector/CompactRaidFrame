@@ -56,7 +56,7 @@ end
 
 function CompactUnitFrameProfiles_ResetToDefaults()
 	local profiles = {};
-	for i=1, GetNumRaidProfiles() do 
+	for i=1, GetNumRaidProfiles() do
 		tinsert(profiles, GetRaidProfileName(i));
 	end
 	for i=1, #profiles do
@@ -88,7 +88,7 @@ end
 
 function CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_Initialize()
 	local info = UIDropDownMenu_CreateInfo();
-	
+
 	info.text = DEFAULTS;
 	info.disabled  = UnitAffectingCombat("player");
 	info.value = nil;
@@ -96,7 +96,7 @@ function CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_Initialize(
 	info.checked = CompactUnitFrameProfiles.newProfileDialog.baseProfile == info.value;
 	info.isRadio = true;
 	UIDropDownMenu_AddButton(info);
-	
+
 	for i=1, GetNumRaidProfiles() do
 		local name = GetRaidProfileName(i);
 		info.text = name;
@@ -131,7 +131,7 @@ function CompactUnitFrameProfilesProfileSelector_Initialize()
 		info.isRadio = true;
 		UIDropDownMenu_AddButton(info);
 	end
-	
+
 	info.text = NEW_COMPACT_UNIT_FRAME_PROFILE;
 	info.disabled  = UnitAffectingCombat("player");
 	info.func = CompactUnitFrameProfiles_NewProfileButtonClicked;
@@ -159,7 +159,7 @@ function CompactUnitFrameProfiles_NewProfileButtonClicked()
 	end
 end
 
-function CompactUnitFrameProfiles_ActivateRaidProfile(profile)	
+function CompactUnitFrameProfiles_ActivateRaidProfile(profile)
 	CompactUnitFrameProfiles.selectedProfile = profile;
 	SaveRaidProfileCopy(profile);	--Save off the current version in case we cancel.
 	SetActiveRaidProfile(profile);
@@ -167,7 +167,7 @@ function CompactUnitFrameProfiles_ActivateRaidProfile(profile)
 	UIDropDownMenu_SetText(CompactUnitFrameProfilesProfileSelector, profile);
 	UIDropDownMenu_SetSelectedValue(CompactRaidFrameManagerDisplayFrameProfileSelector, profile);
 	UIDropDownMenu_SetText(CompactRaidFrameManagerDisplayFrameProfileSelector, profile);
-	
+
 	CompactUnitFrameProfiles_HidePopups();
 	CompactUnitFrameProfiles_UpdateCurrentPanel();
 	CompactUnitFrameProfiles_ApplyCurrentSettings();
@@ -194,7 +194,7 @@ end
 function CompactUnitFrameProfiles_UpdateNewProfileCreateButton()
 	local button = CompactUnitFrameProfiles.newProfileDialog.createButton;
 	local text = strtrim(CompactUnitFrameProfiles.newProfileDialog.editBox:GetText());
-	
+
 	if ( text == "" or RaidProfileExists(text) or strlower(text) == strlower(DEFAULTS) ) then
 		button:Disable();
 	else
@@ -228,7 +228,7 @@ function CompactUnitFrameProfiles_UpdateManagementButtons()
 	else
 		CompactUnitFrameProfilesDeleteButton:Enable();
 	end
-	
+
 	if RaidProfileHasUnsavedChanges() then 
 		CompactUnitFrameProfilesSaveButton:Enable();
 	else
@@ -274,9 +274,9 @@ function CompactUnitFrameProfiles_GetAutoActivationState()
 	if ( not name ) then	--We don't have info.
 		return false;
 	end
-	
+
 	local numPlayers, profileType, enemyType;
-	
+
 	if ( instanceType == "party" or instanceType == "raid" ) then
 		numPlayers = maxPlayers > 0 and countMap[maxPlayers] or 5;
 		profileType = instanceType;
@@ -291,7 +291,7 @@ function CompactUnitFrameProfiles_GetAutoActivationState()
 		else
 			numPlayers = countMap[GetMaxUnitNumberBattleground()]; -- временно maxPlayers
 		end
-		
+
 		profileType = instanceType;
 		enemyType = "PvP";
 	else
@@ -299,11 +299,11 @@ function CompactUnitFrameProfiles_GetAutoActivationState()
 		profileType = "world";
 		enemyType = "PvE";
 	end
-	
+
 	if ( not numPlayers ) then
 		return false;
 	end
-	
+
 	return true, numPlayers, profileType, enemyType;
 end
 
@@ -315,9 +315,9 @@ function CompactUnitFrameProfiles_CheckAutoActivation()
 		CompactUnitFrameProfiles_SetLastActivationType(nil, nil, nil, nil);
 		return;
 	end
-	
+
 	local success, numPlayers, activationType, enemyType = CompactUnitFrameProfiles_GetAutoActivationState();
-	
+
 	if ( not success ) then
 		--We didn't have all the relevant info yet. Update again soon.
 		if ( checkAutoActivationTimer ) then
@@ -331,7 +331,7 @@ function CompactUnitFrameProfiles_CheckAutoActivation()
 			checkAutoActivationTimer = nil;
 		end
 	end
-		
+
 	local spec = GetActiveTalentGroup();
 	local lastActivationType, lastNumPlayers, lastSpec, lastEnemyType = CompactUnitFrameProfiles_GetLastActivationType();
 	if ( lastActivationType == activationType and lastNumPlayers == numPlayers and lastSpec == spec and lastEnemyType == enemyType ) then
@@ -374,24 +374,25 @@ function CompactUnitFrameAutoActivateSpec_OnLoad(self)
 end
 
 function CompactUnitFrameProfilesGeneralOptionsFrame_OnShow(self)
-	local height = 293 + 26 + 26 -- на оффе сильно отличаются ветки талантов, поэтому оставлю так
-	--[[ local numSpecializations = GetNumSpecializations();
-	for i, option in ipairs(self.AutoActivateSpecs) do
-		if ( option:GetID() <= numSpecializations ) then
-			local specID, specName = GetSpecializationInfo(option:GetID());
-			option.label:SetText(specName);
-			option:Show();
-			height = height + 26;
-			if ( option:GetID() == numSpecializations ) then
-				self.AutoActivatePvP:ClearAllPoints();
-				self.AutoActivatePvP:SetPoint("TOPLEFT", option, "BOTTOMLEFT", 0, -15);
-			end
-		else
-			option:Hide();
-		end
-	end ]]
-	
-	self.autoActivateBG:SetHeight(height);
+	-- For the version of the game 3.3.5a (wotlk), this option is not suitable
+	-- local height = 293 + 26 + 26
+	-- local numSpecializations = GetNumSpecializations();
+	-- for i, option in ipairs(self.AutoActivateSpecs) do
+	-- 	if ( option:GetID() <= numSpecializations ) then
+	-- 		local specID, specName = GetSpecializationInfo(option:GetID());
+	-- 		option.label:SetText(specName);
+	-- 		option:Show();
+	-- 		height = height + 26;
+	-- 		if ( option:GetID() == numSpecializations ) then
+	-- 			self.AutoActivatePvP:ClearAllPoints();
+	-- 			self.AutoActivatePvP:SetPoint("TOPLEFT", option, "BOTTOMLEFT", 0, -15);
+	-- 		end
+	-- 	else
+	-- 		option:Hide();
+	-- 	end
+	-- end
+
+	self.autoActivateBG:SetHeight(345);
 end
 
 function CompactUnitFrameProfile_UpdateAutoActivationDisabledLabel()
@@ -403,17 +404,17 @@ function CompactUnitFrameProfile_UpdateAutoActivationDisabledLabel()
 			break;
 		end
 	end
-	
+
 	local hasTalentSpec = false;
 	if ( GetRaidProfileOption(profile, "autoActivateSpec1") or GetRaidProfileOption(profile, "autoActivateSpec2") )  then
 		hasTalentSpec = true;
 	end
-	
+
 	local hasEnemyType = false;
 	if ( GetRaidProfileOption(profile, "autoActivatePvP") or GetRaidProfileOption(profile, "autoActivatePvE") ) then
 		hasEnemyType = true;
 	end
-	
+
 	if ( hasGroupSize == hasTalentSpec and hasTalentSpec == hasEnemyType ) then
 		CompactUnitFrameProfiles.optionsFrame.autoActivateDisabledLabel:Hide();
 	elseif ( not hasGroupSize ) then
@@ -427,7 +428,7 @@ function CompactUnitFrameProfile_UpdateAutoActivationDisabledLabel()
 		CompactUnitFrameProfiles.optionsFrame.autoActivateDisabledLabel:Show();
 	end
 end
-		
+
 --------------------------------------------------------------
 -----------------UI Option Templates---------------------
 --------------------------------------------------------------
@@ -468,7 +469,7 @@ end
 
 function CompactUnitFrameProfilesDropdown_Initialize(dropDown)
 	local info = UIDropDownMenu_CreateInfo();
-	
+
 	local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName);
 	for i=1, #dropDown.options do
 		local id = dropDown.options[i];
@@ -558,20 +559,20 @@ function CompactUnitFrameProfiles_ApplyProfile(profile)
 			func(value);
 		end
 	end
-	
+
 	--Refresh all frames to make sure the changes stick.
 	CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "normal", DefaultCompactUnitFrameSetup);
 	CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "normal", CompactUnitFrame_UpdateAll);
 	CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "mini", DefaultCompactMiniFrameSetup);
 	CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "mini", CompactUnitFrame_UpdateAll);
 	--CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "group", CompactRaidGroup_UpdateLayout);	--UpdateBorder calls UpdateLayout.
-	
+
 	--Update the borders on the group frames.
 	CompactRaidFrameContainer_ApplyToFrames(CompactRaidFrameContainer, "group", CompactRaidGroup_UpdateBorder);
-	
+
 	--Update the position of the container.
 	CompactRaidFrameManager_ResizeFrame_LoadPosition(CompactRaidFrameManager);
-	
+
 	--Update the container in case sizes and such changed.
 	CompactRaidFrameContainer_TryUpdate(CompactRaidFrameContainer);
 end
@@ -629,7 +630,7 @@ CUFProfileActionTable = {
 								DefaultCompactMiniFrameSetUpOptions.displayBorder = value;
 								CompactRaidFrameManager_SetSetting("ShowBorders", value);
 							end,
-							
+
 	--State
 	locked = CompactUnitFrameProfiles_GenerateRaidManagerSetting("Locked"),
 	shown = CompactUnitFrameProfiles_GenerateRaidManagerSetting("IsShown"),

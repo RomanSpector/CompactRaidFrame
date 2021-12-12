@@ -1,7 +1,8 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\..\FrameXML\UI.xsd">
-  <Script file="CompactUnitFrameProfiles.lua"/>
-  <Script file="CUFProfilesAPI.lua"/>
+  <Script file="CompactUnitFrameProfiles.lua" />
+  <Script file="CUFProfilesAPI.lua" />
 
   <Frame name="CompactUnitFrameProfilesDropdownTemplate" inherits="UIDropDownMenuTemplate" virtual="true">
     <Layers>
@@ -10,7 +11,7 @@
           <Anchors>
             <Anchor point="BOTTOMLEFT" relativePoint="TOPLEFT">
               <Offset>
-                <AbsDimension x="16" y="3"/>
+                <AbsDimension x="16" y="3" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -28,10 +29,10 @@
   </Frame>
   <CheckButton name="CompactUnitFrameProfilesCheckButtonTemplate" motionScriptsWhileDisabled="true" virtual="true">
     <Size>
-      <AbsDimension x="26" y="26"/>
+      <AbsDimension x="26" y="26" />
     </Size>
     <HitRectInsets>
-      <AbsInset left="0" right="-100" top="0" bottom="0"/>
+      <AbsInset left="0" right="-100" top="0" bottom="0" />
     </HitRectInsets>
     <Layers>
       <Layer level="ARTWORK">
@@ -39,7 +40,7 @@
           <Anchors>
             <Anchor point="LEFT" relativePoint="RIGHT">
               <Offset>
-                <AbsDimension x="2" y="1"/>
+                <AbsDimension x="2" y="1" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -74,26 +75,26 @@
         end
       </OnLeave>
     </Scripts>
-    <NormalTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Up"/>
-    <PushedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Down"/>
-    <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-    <CheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check"/>
-    <DisabledCheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check-Disabled"/>
+    <NormalTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Up" />
+    <PushedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Down" />
+    <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Highlight" alphaMode="ADD" />
+    <CheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check" />
+    <DisabledCheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check-Disabled" />
   </CheckButton>
   <Slider name="CompactUnitFrameProfilesSliderTemplate" inherits="HorizontalSliderTemplate" virtual="true">
-    <Size x="144" y="17"/>
+    <Size x="144" y="17" />
     <Layers>
       <Layer level="ARTWORK">
         <FontString name="$parentLabel" inherits="GameFontHighlight" parentKey="label">
           <Anchors>
-            <Anchor point="BOTTOM" relativePoint="TOP"/>
+            <Anchor point="BOTTOM" relativePoint="TOP" />
           </Anchors>
         </FontString>
         <FontString name="$parentLow" inherits="GameFontHighlightSmall" text="LOW" parentKey="minLabel">
           <Anchors>
             <Anchor point="TOPLEFT" relativePoint="BOTTOMLEFT">
               <Offset>
-                <AbsDimension x="-4" y="3"/>
+                <AbsDimension x="-4" y="3" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -102,7 +103,7 @@
           <Anchors>
             <Anchor point="TOPRIGHT" relativePoint="BOTTOMRIGHT">
               <Offset>
-                <AbsDimension x="4" y="3"/>
+                <AbsDimension x="4" y="3" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -115,22 +116,22 @@
       </OnValueChanged>
     </Scripts>
   </Slider>
- 
+
   <Frame name="CompactUnitFrameProfileDialogWithCoverTemplate" frameStrata="DIALOG" frameLevel="15" hidden="true" virtual="true">
     <Anchors>
-      <Anchor point="CENTER"/>
+      <Anchor point="CENTER" />
     </Anchors>
     <Frames>
-      <Frame parentKey="Border" inherits="DialogBorderDarkTemplate"/>
+      <Frame parentKey="Border" inherits="DialogBorderDarkTemplate" />
       <Frame name="$parentCover" frameStrata="DIALOG" frameLevel="10" parentKey="cover" useParentLevel="true" enableMouse="true">
         <Layers>
           <Layer level="BACKGROUND">
             <Texture name="$parentBlackFilter">
               <Anchors>
-                <Anchor point="TOPLEFT" x="2" y="-2"/>
-                <Anchor point="BOTTOMRIGHT" x="-2" y="2"/>
+                <Anchor point="TOPLEFT" x="2" y="-2" />
+                <Anchor point="BOTTOMRIGHT" x="-2" y="2" />
               </Anchors>
-              <Color r="0" b="0" g="0" a="0.4"/>
+              <Color r="0" b="0" g="0" a="0.4" />
             </Texture>
           </Layer>
         </Layers>
@@ -152,7 +153,7 @@
       </OnHide>
     </Scripts>
   </Frame>
- 
+
   <Frame name="CompactUnitFrameProfiles" hidden="true" parent="InterfaceOptionsFramePanelContainer">
     <Layers>
       <Layer level="ARTWORK">
@@ -160,33 +161,33 @@
           <Anchors>
             <Anchor point="TOPLEFT">
               <Offset>
-                <AbsDimension x="16" y="-16"/>
+                <AbsDimension x="16" y="-16" />
               </Offset>
             </Anchor>
           </Anchors>
         </FontString>
         <Texture name="$parentSeparator">
-          <Size x="600" y="1"/>
+          <Size x="600" y="1" />
           <Anchors>
-            <Anchor point="LEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="10" y="-40"/>
+            <Anchor point="LEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="10" y="-40" />
           </Anchors>
-          <Color r="0.25" g="0.25" b="0.25"/>
+          <Color r="0.25" g="0.25" b="0.25" />
         </Texture>
       </Layer>
     </Layers>
     <Frames>
       <Frame name="$parentProfileSelector" inherits="UIDropDownMenuTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentTitle" relativePoint="BOTTOMLEFT" x="-15" y="-20"/>
+          <Anchor point="TOPLEFT" relativeTo="$parentTitle" relativePoint="BOTTOMLEFT" x="-15" y="-20" />
         </Anchors>
         <Scripts>
-          <OnShow function="CompactUnitFrameProfilesProfileSelector_SetUp"/>
+          <OnShow function="CompactUnitFrameProfilesProfileSelector_SetUp" />
         </Scripts>
       </Frame>
       <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="SAVE">
-        <Size x="115" y="21"/>
+        <Size x="115" y="21" />
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMLEFT" x="18" y="5"/>
+          <Anchor point="TOPLEFT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMLEFT" x="18" y="5" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -197,8 +198,8 @@
       </Button>
       <Button name="$parentDeleteButton" inherits="UIPanelButtonTemplate" text="DELETE">
         <Anchors>
-          <Anchor point="TOPRIGHT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMRIGHT" x="-15" y="5"/>
-          <Anchor point="BOTTOMLEFT" relativeTo="$parentSaveButton" relativePoint="BOTTOMRIGHT" x="3" y="0"/>
+          <Anchor point="TOPRIGHT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMRIGHT" x="-15" y="5" />
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentSaveButton" relativePoint="BOTTOMRIGHT" x="3" y="0" />
         </Anchors>
         <Scripts>
           <OnClick>
@@ -209,7 +210,7 @@
       </Button>
       <CheckButton name="$parentRaidStylePartyFrames" inherits="InterfaceOptionsCheckButtonTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPRIGHT" x="-260" y="-8"/>
+          <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPRIGHT" x="-260" y="-8" />
         </Anchors>
         <Scripts>
           <OnLoad>
@@ -243,12 +244,12 @@
         </Scripts>
       </CheckButton>
       <Frame name="$parentNewProfileDialog" inherits="CompactUnitFrameProfileDialogWithCoverTemplate" parentKey="newProfileDialog">
-        <Size x="450" y="200"/>
+        <Size x="450" y="200" />
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentLabel" inherits="GameFontNormalLarge" justifyH="CENTER" text="CREATE_NEW_COMPACT_UNIT_FRAME_PROFILE">
               <Anchors>
-                <Anchor point="TOP" x="0" y="-13"/>
+                <Anchor point="TOP" x="0" y="-13" />
               </Anchors>
             </FontString>
           </Layer>
@@ -256,42 +257,42 @@
         <Frames>
           <EditBox name="$parentEditBox" autoFocus="false" parentKey="editBox" letters="31">
             <Size>
-              <AbsDimension x="210" y="32"/>
+              <AbsDimension x="210" y="32" />
             </Size>
             <Anchors>
-              <Anchor point="TOP" relativeTo="$parentLabel" relativePoint="BOTTOM" x="0" y="-5"/>
+              <Anchor point="TOP" relativeTo="$parentLabel" relativePoint="BOTTOM" x="0" y="-5" />
             </Anchors>
             <Layers>
               <Layer level="BACKGROUND">
                 <Texture name="$parentLeft" file="Interface\AddOns\CompactRaidFrame\Media\ChatFrame\UI-ChatInputBorder-Left2">
                   <Size>
-                    <AbsDimension x="32" y="32"/>
+                    <AbsDimension x="32" y="32" />
                   </Size>
                   <Anchors>
-                    <Anchor point="LEFT" x="-10" y="0"/>
+                    <Anchor point="LEFT" x="-10" y="0" />
                   </Anchors>
                 </Texture>
                 <Texture name="$parentRight" file="Interface\AddOns\CompactRaidFrame\Media\ChatFrame\UI-ChatInputBorder-Right2">
                   <Size>
-                    <AbsDimension x="32" y="32"/>
+                    <AbsDimension x="32" y="32" />
                   </Size>
                   <Anchors>
-                    <Anchor point="RIGHT" x="10" y="0"/>
+                    <Anchor point="RIGHT" x="10" y="0" />
                   </Anchors>
                 </Texture>
                 <Texture name="$parentMid" file="Interface\AddOns\CompactRaidFrame\Media\ChatFrame\UI-ChatInputBorder-Mid2" horizTile="true">
                   <Size>
-                    <AbsDimension x="0" y="32"/>
+                    <AbsDimension x="0" y="32" />
                   </Size>
                   <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parentLeft" relativePoint="TOPRIGHT">
                       <Offset>
-                        <AbsDimension x="0" y="0"/>
+                        <AbsDimension x="0" y="0" />
                       </Offset>
                     </Anchor>
                     <Anchor point="TOPRIGHT" relativeTo="$parentRight" relativePoint="TOPLEFT">
                       <Offset>
-                        <AbsDimension x="0" y="0"/>
+                        <AbsDimension x="0" y="0" />
                       </Offset>
                     </Anchor>
                   </Anchors>
@@ -309,29 +310,29 @@
                 CompactUnitFrameProfiles_UpdateNewProfileCreateButton();
               </OnTextChanged>
             </Scripts>
-            <FontString inherits="ChatFontNormal"/>
+            <FontString inherits="ChatFontNormal" />
           </EditBox>
           <Frame name="$parentBaseProfileSelector" inherits="UIDropDownMenuTemplate">
             <Anchors>
-              <Anchor point="BOTTOM" x="0" y="60"/>
+              <Anchor point="BOTTOM" x="0" y="60" />
             </Anchors>
             <Layers>
               <Layer level="ARTWORK">
                 <FontString inherits="GameFontNormal" text="USE_EXISTING_PROFILE">
                   <Anchors>
-                    <Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP" x="0" y="5"/>
+                    <Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP" x="0" y="5" />
                   </Anchors>
                 </FontString>
               </Layer>
             </Layers>
             <Scripts>
-              <OnShow function="CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_SetUp"/>
+              <OnShow function="CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_SetUp" />
             </Scripts>
           </Frame>
           <Button name="$parentCreateButton" frameLevel="15" inherits="UIPanelButtonTemplate" text="CREATE_COMPACT_UNIT_FRAME_PROFILE" parentKey="createButton">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15"/>
+              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -343,9 +344,9 @@
             </Scripts>
           </Button>
           <Button name="$parentCancelButton" frameLevel="15" inherits="UIPanelButtonTemplate" text="CANCEL">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15"/>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -357,22 +358,22 @@
         </Frames>
       </Frame>
       <Frame name="$parentDeleteProfileDialog" inherits="CompactUnitFrameProfileDialogWithCoverTemplate" parentKey="deleteProfileDialog">
-        <Size x="330" y="120"/>
+        <Size x="330" y="120" />
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentLabel" inherits="GameFontNormal" justifyH="CENTER" text="CONFIRM_COMPACT_UNIT_FRAME_PROFILE_DELETION" parentKey="label">
               <Anchors>
-                <Anchor point="TOPLEFT" x="20" y="-13"/>
-                <Anchor point="BOTTOMRIGHT" x="-20" y="40"/>
+                <Anchor point="TOPLEFT" x="20" y="-13" />
+                <Anchor point="BOTTOMRIGHT" x="-20" y="40" />
               </Anchors>
             </FontString>
           </Layer>
         </Layers>
         <Frames>
           <Button name="$parentDeleteButton" inherits="UIPanelButtonTemplate" text="DELETE">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15"/>
+              <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -389,9 +390,9 @@
             </Scripts>
           </Button>
           <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="CANCEL">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15"/>
+              <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -403,22 +404,22 @@
         </Frames>
       </Frame>
       <Frame name="$parentConfirmUnsavedProfileDialog" inherits="CompactUnitFrameProfileDialogWithCoverTemplate" parentKey="unsavedProfileDialog">
-        <Size x="430" y="120"/>
+        <Size x="430" y="120" />
         <Layers>
           <Layer level="ARTWORK">
             <FontString name="$parentLabel" inherits = "GameFontNormal" justifyH = "CENTER" text="CONFIRM_COMPACT_UNIT_FRAME_PROFILE_UNSAVED_CHANGES" parentKey="label">
               <Anchors>
-                <Anchor point="TOPLEFT" x="20" y="-13"/>
-                <Anchor point="BOTTOMRIGHT" x="-20" y="40"/>
+                <Anchor point="TOPLEFT" x="20" y="-13" />
+                <Anchor point="BOTTOMRIGHT" x="-20" y="40" />
               </Anchors>
             </FontString>
           </Layer>
         </Layers>
         <Frames>
           <Button name="$parentDontSaveButton" inherits="UIPanelButtonTemplate" text="DONT_SAVE">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="15"/>
+              <Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="15" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -430,9 +431,9 @@
             </Scripts>
           </Button>
           <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="SAVE">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMRIGHT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMLEFT" x="-5" y="0"/>
+              <Anchor point="BOTTOMRIGHT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMLEFT" x="-5" y="0" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -444,9 +445,9 @@
             </Scripts>
           </Button>
           <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="CANCEL">
-            <Size x="115" y="21"/>
+            <Size x="115" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMLEFT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMRIGHT" x="5" y="0"/>
+              <Anchor point="BOTTOMLEFT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMRIGHT" x="5" y="0" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -462,23 +463,24 @@
           <Layer level="BACKGROUND">
             <Texture name="$parentAutoActivateBG" parentKey="autoActivateBG">
               <!--The size is changed programatically -->
-              <Size x="190" y="0"/> <!--Also change the with of AutoActivateDisabledLabel -->
+              <Size x="190" y="0" />
+              <!--Also change the with of AutoActivateDisabledLabel -->
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="415" y="-50"/>
+                <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="415" y="-50" />
               </Anchors>
-              <Color r="0.3" g="0.3" b="0.3" a="0.3"/>
+              <Color r="0.3" g="0.3" b="0.3" a="0.3" />
             </Texture>
           </Layer>
           <Layer level="ARTWORK">
             <FontString name="$parentAutoActivateLabel" inherits="GameFontNormal" text="AUTO_ACTIVATE_ON" parentKey="autoActivateLabel">
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateBG" relativePoint="TOPLEFT" x="5" y="-5"/>
+                <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateBG" relativePoint="TOPLEFT" x="5" y="-5" />
               </Anchors>
             </FontString>
             <FontString name="$parentAutoActivateDisabledLabel" inherits="GameFontNormalLeftRed" parentKey="autoActivateDisabledLabel" hidden="true">
-              <Size x="190" y="0"/>
+              <Size x="190" y="0" />
               <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateBG" relativePoint="BOTTOMLEFT" x="0" y="-10"/>
+                <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateBG" relativePoint="BOTTOMLEFT" x="0" y="-10" />
               </Anchors>
             </FontString>
           </Layer>
@@ -486,7 +488,7 @@
         <Frames>
           <CheckButton name="$parentKeepGroupsTogether" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" x="13" y="-110"/>
+              <Anchor point="TOPLEFT" x="13" y="-110" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -508,7 +510,7 @@
           </CheckButton>
           <CheckButton name="$parentHorizontalGroups" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="15" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="15" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -518,7 +520,7 @@
           </CheckButton>
           <Frame name="$parentSortByDropdown" inherits="CompactUnitFrameProfilesDropdownTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="15" y="-10"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="15" y="-10" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -529,7 +531,7 @@
           </Frame>
           <CheckButton name="$parentDisplayIncomingHeals" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="0" y="-50"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentKeepGroupsTogether" relativePoint="BOTTOMLEFT" x="0" y="-50" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -539,7 +541,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayPowerBar" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayIncomingHeals" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayIncomingHeals" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -549,7 +551,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayAggroHighlight" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayPowerBar" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayPowerBar" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -559,7 +561,7 @@
           </CheckButton>
           <CheckButton name="$parentUseClassColors" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayAggroHighlight" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayAggroHighlight" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -569,7 +571,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayPets" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentUseClassColors" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentUseClassColors" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -579,7 +581,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayMainTankAndAssist" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayPets" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayPets" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -589,7 +591,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayBorder" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayMainTankAndAssist" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayMainTankAndAssist" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -599,7 +601,7 @@
           </CheckButton>
           <CheckButton name="$parentShowDebuffs" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayBorder" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayBorder" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -618,7 +620,7 @@
           </CheckButton>
           <CheckButton name="$parentDisplayOnlyDispellableDebuffs" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentShowDebuffs" relativePoint="BOTTOMLEFT" x="15" y="-2"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentShowDebuffs" relativePoint="BOTTOMLEFT" x="15" y="-2" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -628,7 +630,7 @@
           </CheckButton>
           <Frame name="$parentHealthTextDropdown" inherits="CompactUnitFrameProfilesDropdownTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentDisplayOnlyDispellableDebuffs" relativePoint="BOTTOMLEFT" x="-18" y="-18"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentDisplayOnlyDispellableDebuffs" relativePoint="BOTTOMLEFT" x="-18" y="-18" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -638,7 +640,7 @@
           </Frame>
           <Slider name="$parentHeightSlider" inherits="CompactUnitFrameProfilesSliderTemplate" minValue="36" maxValue="96" valueStep="2">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentHealthTextDropdown" relativePoint="BOTTOMLEFT" x="10" y="-15"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentHealthTextDropdown" relativePoint="BOTTOMLEFT" x="10" y="-15" />
             </Anchors>
             <Scripts>
               <OnLoad inherit="prepend">
@@ -650,7 +652,7 @@
           </Slider>
           <Slider name="$parentWidthSlider" inherits="CompactUnitFrameProfilesSliderTemplate" minValue="72" maxValue="186" valueStep="2">
             <Anchors>
-              <Anchor point="LEFT" relativeTo="$parentHeightSlider" relativePoint="RIGHT" x="40" y="0"/>
+              <Anchor point="LEFT" relativeTo="$parentHeightSlider" relativePoint="RIGHT" x="40" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad inherit="prepend">
@@ -660,10 +662,10 @@
               </OnLoad>
             </Scripts>
           </Slider>
- 
+
           <CheckButton name="$parentAutoActivate2Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="autoActivate2Players">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateLabel" relativePoint="BOTTOMLEFT" x="0" y="-5"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateLabel" relativePoint="BOTTOMLEFT" x="0" y="-5" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -674,7 +676,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate3Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="autoActivate3Players">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate2Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate2Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -685,7 +687,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate5Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="autoActivate5Players">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate3Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate3Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -696,7 +698,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate10Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate5Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate5Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -706,7 +708,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate15Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate10Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate10Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -716,7 +718,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate25Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate15Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate15Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -726,7 +728,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivate40Players" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate25Players" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate25Players" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -734,26 +736,26 @@
               </OnLoad>
             </Scripts>
           </CheckButton>
- 
+
           <CheckButton name="$parentAutoActivateSpec1" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="AutoActivateSpecs1" id="1">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate40Players" relativePoint="BOTTOMLEFT" x="0" y="-15"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivate40Players" relativePoint="BOTTOMLEFT" x="0" y="-15" />
             </Anchors>
             <Scripts>
-              <OnLoad function="CompactUnitFrameAutoActivateSpec_OnLoad"/>
+              <OnLoad function="CompactUnitFrameAutoActivateSpec_OnLoad" />
             </Scripts>
           </CheckButton>
           <CheckButton name="$parentAutoActivateSpec2" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="AutoActivateSpecs2" id="2">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateSpec1" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateSpec1" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
-              <OnLoad function="CompactUnitFrameAutoActivateSpec_OnLoad"/>
+              <OnLoad function="CompactUnitFrameAutoActivateSpec_OnLoad" />
             </Scripts>
           </CheckButton>
           <CheckButton name="$parentAutoActivatePvP" inherits="CompactUnitFrameProfilesCheckButtonTemplate" parentKey="AutoActivatePvP">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateSpec2" relativePoint="BOTTOMLEFT" x="0" y="-15"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivateSpec2" relativePoint="BOTTOMLEFT" x="0" y="-15" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -763,7 +765,7 @@
           </CheckButton>
           <CheckButton name="$parentAutoActivatePvE" parentKey="AutoActivatePvE" inherits="CompactUnitFrameProfilesCheckButtonTemplate">
             <Anchors>
-              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivatePvP" relativePoint="BOTTOMLEFT" x="0" y="0"/>
+              <Anchor point="TOPLEFT" relativeTo="$parentAutoActivatePvP" relativePoint="BOTTOMLEFT" x="0" y="0" />
             </Anchors>
             <Scripts>
               <OnLoad>
@@ -771,11 +773,11 @@
               </OnLoad>
             </Scripts>
           </CheckButton>
- 
+
           <Button name="$parentResetPositionButton" inherits="UIPanelButtonTemplate" text="RESET_POSITION">
-            <Size x="160" y="21"/>
+            <Size x="160" y="21" />
             <Anchors>
-              <Anchor point="BOTTOMRIGHT" x="-5" y="5"/>
+              <Anchor point="BOTTOMRIGHT" x="-5" y="5" />
             </Anchors>
             <Scripts>
               <OnClick>
@@ -786,13 +788,13 @@
           </Button>
         </Frames>
         <Scripts>
-          <OnShow function="CompactUnitFrameProfilesGeneralOptionsFrame_OnShow"/>
+          <OnShow function="CompactUnitFrameProfilesGeneralOptionsFrame_OnShow" />
         </Scripts>
       </Frame>
     </Frames>
     <Scripts>
-      <OnLoad function="CompactUnitFrameProfiles_OnLoad"/>
-      <OnEvent function="CompactUnitFrameProfiles_OnEvent"/>
+      <OnLoad function="CompactUnitFrameProfiles_OnLoad" />
+      <OnEvent function="CompactUnitFrameProfiles_OnEvent" />
     </Scripts>
   </Frame>
 </Ui>

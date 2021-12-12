@@ -69,14 +69,14 @@ local FLATTENDED_OPTIONS = {
 
 function CompactRaidFrame:OnInitialize()
     self.db = AceDB:New("CompactRaidFrameDB");
-	self.db.char.CUF_CONFIG = self.db.char.CUF_CONFIG or {};
+	self.db.char.cvar = self.db.char.cvar or {};
 	self.db.char.profile = self.db.char.profile or {};
 	PROFILES = self.db.char.profile;
-	CUF_CONFIG = self.db.char.CUF_CONFIG;
+	CUF_CONFIG = self.db.char.cvar;
 
 	if ( not ROMANSPECTOR_DISCORD ) then
 		ROMANSPECTOR_DISCORD = true;
-		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join my Discord group |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
+		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: Join my Discord |cff44d3e3https://discord.gg/wXw6pTvxMQ|r");
 	end
 
 	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
@@ -280,11 +280,11 @@ function GetMaxNumCUFProfiles()
 end
 
 function SetActiveRaidProfile(profile)
-	CUF_CVar:SetValue("CUF_CVar_SET_ACTIVE_CUF_PROFILE", profile);
+	CUF_CVar:SetValue("CVAR_SET_ACTIVE_CUF_PROFILE", profile);
 end
 
 function GetActiveRaidProfile()
-	return CUF_CVar:GetValue("CUF_CVar_SET_ACTIVE_CUF_PROFILE");
+	return CUF_CVar:GetValue("CVAR_SET_ACTIVE_CUF_PROFILE");
 end
 
 CUF_CVar = {}

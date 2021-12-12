@@ -1,301 +1,272 @@
 local lib, version = LibStub("LibCUFAuras-1.0");
-if ( lib and version < 90000 ) then
-    return;
-end
+if ( not lib ) then error("not found LibCUFAuras-1.0") end
+if ( version > 1 ) then return end
 
-local pairs = pairs;
-local tinsert, tremove = table.insert, table.remove;
+local pairs   = pairs;
+local tinsert = table.insert;
+local tremove = table.remove;
 
-local UnitAura = UnitAura;
-local UnitGUID = UnitGUID;
-local UnitExists = UnitExists;
-local GetSpellInfo = GetSpellInfo;
-local UnitAffectingCombat = UnitAffectingCombat;
-local VSInfoList = lib.spellList;
-local _, class = UnitClass("player");
-local CAN_APPLY_AURA  = lib.CAN_APPLY_AURA[class];
+local UnitAura             = UnitAura;
+local UnitGUID             = UnitGUID;
+local UnitExists           = UnitExists;
+local CLASS_AURAS          = lib.CLASS_AURAS;
+local GetSpellInfo         = GetSpellInfo;
+local GetNumRaidMembers    = GetNumRaidMembers;
+local UnitAffectingCombat  = UnitAffectingCombat;
+local UNIT_CAN_APPLY_AURAS = lib.UNIT_CAN_APPLY_AURAS[select(2, UnitClass("player"))];
 
-lib.CASHE = lib.CASHE or {};
-
-lib.trackAuras = true;
+lib.CASHE = {};
 lib.callbacksUsed = {};
 
 function lib.callbacks:OnUsed(target, eventname)
-	lib.callbacksUsed[eventname] = lib.callbacksUsed[eventname] or {};
-	tinsert(lib.callbacksUsed[eventname], #lib.callbacksUsed[eventname]+1, target);
-	lib.trackAuras = true;
+    lib.callbacksUsed[eventname] = lib.callbacksUsed[eventname] or {};
+    tinsert(lib.callbacksUsed[eventname], #lib.callbacksUsed[eventname] + 1, target);
 
-	lib.frame:RegisterEvent("PLAYER_ENTERING_WORLD");
-	lib.frame:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
-	lib.frame:RegisterEvent("PLAYER_TARGET_CHANGED");
-	lib.frame:RegisterEvent("PLAYER_REGEN_DISABLED");
-	lib.frame:RegisterEvent("PLAYER_REGEN_ENABLED");
-	lib.frame:RegisterEvent("UNIT_TARGET");
-	lib.frame:RegisterEvent("UNIT_AURA");
+    lib.handler:RegisterEvent("UNIT_AURA");
+    lib.handler:RegisterEvent("UNIT_TARGET");
+    lib.handler:RegisterEvent("PLAYER_ENTERING_WORLD");
+    lib.handler:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
+    lib.handler:RegisterEvent("PLAYER_TARGET_CHANGED");
+    lib.handler:RegisterEvent("PLAYER_REGEN_DISABLED");
+    lib.handler:RegisterEvent("PLAYER_REGEN_ENABLED");
 end
 
 function lib.callbacks:OnUnused(target, eventname)
-	if ( lib.callbacksUsed[eventname] ) then
-		for i = #lib.callbacksUsed[eventname], 1, -1 do
-			if ( lib.callbacksUsed[eventname][i] == target ) then
-				tremove(lib.callbacksUsed[eventname], i);
-			end
-		end
-	end
+    if ( lib.callbacksUsed[eventname] ) then
+        for i = #lib.callbacksUsed[eventname], 1, -1 do
+            if ( lib.callbacksUsed[eventname][i] == target ) then
+                tremove(lib.callbacksUsed[eventname], i);
+            end
+        end
+    end
 
-	for event, value in pairs(lib.callbacksUsed) do
-		if ( #value == 0 ) then
-			lib.callbacksUsed[event] = nil;
-		end
-	end
+    for event, value in pairs(lib.callbacksUsed) do
+        if ( #value == 0 ) then
+            lib.callbacksUsed[event] = nil;
+        end
+    end
 
-	lib.trackAuras = false;
-
-	lib.frame:UnregisterEvent("PLAYER_ENTERING_WORLD");
-	lib.frame:UnregisterEvent("UPDATE_MOUSEOVER_UNIT");
-	lib.frame:UnregisterEvent("PLAYER_TARGET_CHANGED");
-	lib.frame:UnregisterEvent("PLAYER_REGEN_DISABLED");
-	lib.frame:UnregisterEvent("PLAYER_REGEN_ENABLED");
-	lib.frame:UnregisterEvent("UNIT_TARGET");
-	lib.frame:UnregisterEvent("UNIT_AURA");
+    lib.handler:UnregisterEvent("UNIT_AURA");
+    lib.handler:UnregisterEvent("UNIT_TARGET");
+    lib.handler:UnregisterEvent("PLAYER_ENTERING_WORLD");
+    lib.handler:UnregisterEvent("UPDATE_MOUSEOVER_UNIT");
+    lib.handler:UnregisterEvent("PLAYER_TARGET_CHANGED");
+    lib.handler:UnregisterEvent("PLAYER_REGEN_DISABLED");
+    lib.handler:UnregisterEvent("PLAYER_REGEN_ENABLED");
 end
 
 local function ResetUnitAuras(unitID)
-	lib:RemoveAllAurasFromGUID(UnitGUID(unitID));
+    lib:RemoveAllAurasFromGUID(UnitGUID(unitID));
 end
 
-local function inCombatPriority(number, value)
-	 if ( value ) then
-		 return number + 1;
-	 else
-		return number
-	 end
+local function GetAuraPriority(name)
+    if ( UNIT_CAN_APPLY_AURAS[name] ) then
+        if ( UNIT_CAN_APPLY_AURAS[name].appliesOnlyYourself ) then
+            return 1;
+        else
+            return UnitAffectingCombat("player") and 1 or 2;
+        end
+    elseif ( LOSS_OF_CONTROL_STORAGE[name] ) then
+        return LOSS_OF_CONTROL_STORAGE[name][2];
+    else
+        return 0;
+    end
 end
 
-local function GetAuraPriority(name, spellID, unitCaster)
-	local priorityIndex = 0;
-	local lossOfControl = C_LossOfControl and C_LossOfControl.ControlList[name];
-
-	local hasCustom, alwaysShowMine, showForMySpec =  lib:SpellGetVisibilityInfo(spellID, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
-    
-	if ( CAN_APPLY_AURA[name] and not CAN_APPLY_AURA[name].selfBuff ) then
-		priorityIndex = inCombatPriority(1, UnitAffectingCombat("player"));
-	end
-	if ( hasCustom ) then
-		priorityIndex = inCombatPriority(1, showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle")));
-	end
-	if ( lossOfControl ) then
-		priorityIndex = lossOfControl[2];
-	end
-
-	return priorityIndex;
+local sortPriorFunc = function (a,b)
+    if ( a.priorityIndex == b.priorityIndex ) then
+        return a.expirationTime > b.expirationTime;
+    else
+        return a.priorityIndex > b.priorityIndex;
+    end
 end
 
 function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
-	local name, texture, stackCount, dispelType, duration, expirationTime, 
-			unitCaster, canStealOrPurge, shouldConsolidate, spellID, canApplyAura, isBossDebuff = ...;
+    local spellName, texture, stackCount, dispelType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellID = ...;
 
-	self.CASHE[dstGUID] = self.CASHE[dstGUID] or {};
-	tinsert(self.CASHE[dstGUID], #self.CASHE[dstGUID] + 1, {
-		index = index,
+    local tracker = self.CASHE[dstGUID] or {};
+    tinsert(tracker, #tracker + 1, {
+        index = index,
         filterType = filterType,
-		priorityIndex = GetAuraPriority(name, spellID, unitCaster),
-		name = name,
-		texture = texture,
-		stackCount = stackCount,
-		debuffType = dispelType,
-		duration = duration,
-		expirationTime = expirationTime,
-		unitCaster = unitCaster,
-		canStealOrPurge = canStealOrPurge,
-		shouldConsolidate = shouldConsolidate,
-		spellID = spellID,
-		canApplyAura = canApplyAura or false,
-		isBossDebuff = isBossDebuff or false,
-	});
+        priorityIndex = GetAuraPriority(spellName),
+        name = spellName,
+        texture = texture,
+        stackCount = stackCount,
+        debuffType = dispelType,
+        duration = duration,
+        expirationTime = expirationTime,
+        unitCaster = unitCaster,
+        canStealOrPurge = canStealOrPurge,
+        shouldConsolidate = shouldConsolidate,
+        spellID = spellID,
+        canApplyAura = false,
+        isBossDebuff = false,
+    });
 
-	table.sort(self.CASHE[dstGUID], function (a,b)
-		if ( a.priorityIndex == b.priorityIndex ) then
-			return a.expirationTime > b.expirationTime;
-		else
-			return a.priorityIndex > b.priorityIndex;
-		end
-	end);
-
+    table.sort(tracker, sortPriorFunc);
+    self.CASHE[dstGUID] = tracker;
 end
 
-local CheckUnitAuras;
+ local function CheckUnitAuras(unitID, filterType)
+    local index = 1;
+    local dstGUID = UnitGUID(unitID);
+    local _, name, texture, stackCount, dispelType, duration, expirationTime, unitCaster, shouldConsolidate, spellID, canStealOrPurge;
+    while ( true ) do
+        name, _, texture, stackCount, dispelType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellID = UnitAura(unitID, index, filterType);
+        if ( not name ) then break end
+        lib:AddAuraFromUnitID(
+                                index,
+                                filterType,
+                                dstGUID,
+                                name,
+                                texture,
+                                stackCount,
+                                dispelType,
+                                duration,
+                                expirationTime,
+                                unitCaster,
+                                canStealOrPurge,
+                                shouldConsolidate,
+                                spellID,
+                                ( UNIT_CAN_APPLY_AURAS[name] and UNIT_CAN_APPLY_AURAS[name].canApplyAura )
+                            );
+        index = index + 1;
+    end
 
-do
-	local index
-	local _, name, texture, stackCount, dispelType, duration, expirationTime, unitCaster, shouldConsolidate, spellID, canStealOrPurge, canApplyAura, isBossDebuff;
-	local dstGUID;
-	function CheckUnitAuras(unitID, filterType)
-		if not ( UnitInParty(unitID) or UnitInRaid(unitID) ) then
-			return;
-		end
-
-		dstGUID = UnitGUID(unitID)
-		index = 1
-		while true do
-			name, _, texture, stackCount, dispelType, duration, expirationTime, unitCaster, 
-												canStealOrPurge, shouldConsolidate, spellID = UnitAura(unitID, index, filterType)
-			if not ( name ) then break end
-			canApplyAura = (CAN_APPLY_AURA[name] and CAN_APPLY_AURA[name].canApply);
-
-				lib:AddAuraFromUnitID(
-					index,
-                    filterType,
-					dstGUID,
-					name,
-					texture,
-					stackCount,
-					dispelType,
-					duration,
-					expirationTime,
-					unitCaster,
-					canStealOrPurge,
-					shouldConsolidate,
-					spellID,
-					canApplyAura,
-					isBossDebuff
-				);
-			index = index + 1;
-		end
-
-		lib.callbacks:Fire("COMPACT_UNIT_FRAME_UNIT_AURA", dstGUID);
-	end
+    lib.callbacks:Fire("COMPACT_UNIT_FRAME_UNIT_AURA", dstGUID);
 end
 
-lib.frame = lib.frame or CreateFrame("Frame")
-lib.frame:SetScript("OnEvent", function(self, event, ...)
-	if ( self[event] ) then
-		self[event](self, event, ...);
-	end
-end)
+local function UnitAurasUpdate(unitID)
+    ResetUnitAuras(unitID);
 
-local function UpdateAllAuras(unitID)
-	ResetUnitAuras(unitID);
-	CheckUnitAuras(unitID, "HELPFUL");
-	CheckUnitAuras(unitID, "HARMFUL");
-	CheckUnitAuras(unitID, "HARMFUL|RAID");
+    CheckUnitAuras(unitID, "HELPFUL");
+    CheckUnitAuras(unitID, "HARMFUL");
+    CheckUnitAuras(unitID, "HARMFUL|RAID");
 end
 
-function lib.frame:UNIT_AURA(_, unitID)
-	if not unitID then return; end
-	UpdateAllAuras(unitID);
+function lib.handler:UNIT_AURA(_, unitID)
+    if not unitID then return; end
+    UnitAurasUpdate(unitID);
 end
 
 local function IsInRaid()
-	return GetNumRaidMembers() > 0;
+    return GetNumRaidMembers() > 0;
 end
 
 local function GetUnitsRoster()
-	local roster = { "player" };
-	local unit = IsInRaid() and "raid" or "party";
-	local MAX_UNIT_INDEX = IsInRaid() and 40 or 4;
+    local roster = { "player" };
+    local unit = IsInRaid() and "raid" or "party";
+    local MAX_UNIT_INDEX = IsInRaid() and 40 or 4;
 
-	for i=1, MAX_UNIT_INDEX do
-		tinsert(roster, unit..i);
-	end
+    for i=1, MAX_UNIT_INDEX do
+        tinsert(roster, unit..i);
+    end
 
-	return roster;
+    return roster;
 end
 
-function lib.frame:PLAYER_ENTERING_WORLD()
-	local unitRoster = GetUnitsRoster()
-	for _, unitID in pairs(unitRoster) do
-		if ( UnitExists(unitID) ) then
-			UpdateAllAuras(unitID);
-		end
-	end
+local function UnitsAurasUpdate()
+    for _, unitID in ipairs(GetUnitsRoster()) do
+        if ( UnitExists(unitID) ) then
+            UnitAurasUpdate(unitID);
+        end
+    end
 end
 
-function lib.frame:PLAYER_REGEN_ENABLED()
-	local unitRoster = GetUnitsRoster()
-	for _, unitID in pairs(unitRoster) do
-		if ( UnitExists(unitID) ) then
-			UpdateAllAuras(unitID);
-		end
-	end
+function lib.handler:PLAYER_ENTERING_WORLD()
+    UnitsAurasUpdate();
 end
 
-function lib.frame:PLAYER_REGEN_DISABLED()
-	local unitRoster = GetUnitsRoster()
-	for _, unitID in pairs(unitRoster) do
-		if ( UnitExists(unitID) ) then
-			UpdateAllAuras(unitID);
-		end
-	end
+function lib.handler:PLAYER_REGEN_ENABLED()
+    UnitsAurasUpdate();
+end
+
+function lib.handler:PLAYER_REGEN_DISABLED()
+    UnitsAurasUpdate();
 end
 
 -- Remove all auras on a GUID. They must have died
 function lib:RemoveAllAurasFromGUID(dstGUID)
-	if self.CASHE[dstGUID] then
-        for i = #self.CASHE[dstGUID], 1, -1 do
-            tremove(self.CASHE[dstGUID], i);
+    local tracker = self.CASHE[dstGUID];
+    if ( tracker ) then
+        for i = #tracker, 1, -1 do
+            tremove(tracker, i);
         end
-	end
+    end
 end
 
 local function GetAurasValue(sizeTable, value)
-	return sizeTable >= value and value or nil;
+    return sizeTable >= value and value or nil;
 end
 
 local function IsNull(object)
-	return #object == 0;
+    return #object == 0;
 end
 
-local slots, countValue;
-function lib:UnitAuraSlots(unit, filter, maxCount, continuationToken)
-    if ( continuationToken or not self.CASHE[UnitGUID(unit)] ) then 
-        return;
-    end
+do
 
-    slots = {}
-    for key, value in ipairs(self.CASHE[UnitGUID(unit)]) do
-        if ( value.filterType == filter ) then
-            slots[#slots + 1] = key;
+    local auraSlots = {};
+    function lib:UnitAuraSlots(unit, filter, maxCount, continuationToken)
+        if ( continuationToken or not self.CASHE[UnitGUID(unit)] ) then
+            return;
         end
+
+        table.wipe(auraSlots);
+        for key, value in ipairs(self.CASHE[UnitGUID(unit)]) do
+            if ( value.filterType == filter ) then
+                auraSlots[#auraSlots + 1] = key;
+            end
+        end
+
+        local countValue = GetAurasValue(#auraSlots, maxCount);
+
+        if ( IsNull(auraSlots) ) then
+            return nil;
+        end
+
+        return countValue, unpack(auraSlots, 1, countValue or #auraSlots);
     end
 
-	countValue = GetAurasValue(#slots, maxCount);
-
-	if ( IsNull(slots) ) then
-		return nil;
-	end
-
-    return countValue, unpack(slots, 1, countValue or #slots);
 end
 
 function lib:UnitAuraBySlot(unit, slot)
-	assert(unit, "UnitAuraBySlot: not found unit");
-	assert(slot, "UnitAuraBySlot: not found slot");
-	assert(type(unit)=="string", "UnitAuraBySlot: unit is not string value.");
-	assert(type(slot)=="number", "UnitAuraBySlot: slot is not number value.");
+    assert(unit, "UnitAuraBySlot: not found unit");
+    assert(slot, "UnitAuraBySlot: not found slot");
+    assert(type(unit)=="string", "UnitAuraBySlot: unit is not string value.");
+    assert(type(slot)=="number", "UnitAuraBySlot: slot is not number value.");
 
-    if ( self.CASHE[UnitGUID(unit)] and self.CASHE[UnitGUID(unit)][slot] ) then
-        local info = self.CASHE[UnitGUID(unit)][slot];
-        return info.name, info.texture, 
-                info.stackCount, info.debuffType, 
-                info.duration, info.expirationTime, 
-                info.unitCaster, info.shouldConsolidate, 
-                info.spellID, info.spellID, info.canApplyAura,
-                info.isBossDebuff, info.index;
+    local tracker = self.CASHE[UnitGUID(unit)];
+    local info = tracker and tracker[slot];
+    if ( info ) then
+        return  info.name,              -- 1
+                info.texture,           -- 2
+                info.stackCount,        -- 3
+                info.debuffType,        -- 4
+                info.duration,          -- 5
+                info.expirationTime,    -- 6
+                info.unitCaster,        -- 7
+                info.shouldConsolidate, -- 8
+                info.spellID,           -- 9
+                info.spellID,           -- 10
+                info.canApplyAura,      -- 11
+                info.isBossDebuff,      -- 12
+                info.index;             -- 13
     end
 end
 
 function lib:SpellGetVisibilityInfo(spellID, visType)
-	local info = VSInfoList[GetSpellInfo(spellID)];
-	if ( not info ) then
-		return false;
-	end
-	return info[visType].hasCustom, info[visType].alwaysShowMine, info[visType].showForMySpec;
+    spellID = tonumber(spellID);
+    assert(type(spellID)=="number", "spellID is not number value");
+    local info = CLASS_AURAS[GetSpellInfo(spellID)];
+    if ( not info ) then
+        return false;
+    end
+    return info[visType].hasCustom, info[visType].alwaysShowMine, info[visType].showForMySpec;
 end
 
 function lib:SpellIsSelfBuff(spellID)
-	assert(spellID, "not found spellID");
-	assert(type(spellID)=="number", "spellID is not number value");
+    spellID = tonumber(spellID);
+    assert(type(spellID)=="number", "spellID is not number value");
 
-	return CAN_APPLY_AURA[GetSpellInfo(spellID)];
+    return UNIT_CAN_APPLY_AURAS[GetSpellInfo(spellID)];
 end
