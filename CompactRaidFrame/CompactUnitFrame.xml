@@ -1,21 +1,21 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-  <Script file="CompactUnitFrame.lua"/>
+  <Script file="CompactUnitFrame.lua" />
   <Button name="CompactAuraTemplate" virtual="true" enableMouse="false">
     <Size>
-      <AbsDimension x="17" y="17"/>
+      <AbsDimension x="17" y="17" />
     </Size>
     <Layers>
       <Layer level="ARTWORK">
-        <Texture name="$parentIcon" parentKey="icon" setAllPoints="true"/>
+        <Texture name="$parentIcon" parentKey="icon" setAllPoints="true" />
       </Layer>
       <Layer level="OVERLAY">
         <FontString name="$parentCount" parentKey="count" inherits="NumberFontNormalSmall" justifyH="RIGHT">
           <Anchors>
             <Anchor point="BOTTOMRIGHT">
               <Offset>
-                <AbsDimension x="5" y="0"/>
+                <AbsDimension x="5" y="0" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -27,7 +27,7 @@
         <Anchors>
           <Anchor point="CENTER">
             <Offset>
-              <AbsDimension x="0" y="-1"/>
+              <AbsDimension x="0" y="-1" />
             </Offset>
           </Anchor>
         </Anchors>
@@ -43,13 +43,13 @@
         <Texture name="$parentBorder" parentKey="border" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Debuff-Overlays">
           <Anchors>
             <Anchor point="TOPLEFT">
-              <Offset x="-1" y="1"/>
+              <Offset x="-1" y="1" />
             </Anchor>
             <Anchor point="BOTTOMRIGHT">
-              <Offset x="1" y="-1"/>
+              <Offset x="1" y="-1" />
             </Anchor>
           </Anchors>
-          <TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
+          <TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625" />
         </Texture>
       </Layer>
     </Layers>
@@ -112,7 +112,7 @@
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parentIcon" parentKey="icon">
-          <TexCoords left="0.125" right="0.875" top="0.125" bottom="0.875"/>
+          <TexCoords left="0.125" right="0.875" top="0.125" bottom="0.875" />
         </Texture>
       </Layer>
     </Layers>
@@ -149,7 +149,7 @@
     <Layers>
       <Layer level="BACKGROUND">
         <Texture name="$parentBackground" parentKey="background" setAllPoints="true" />
-      </Layer>  
+      </Layer>
       <Layer level="BORDER">
         <Texture name="$parentHorizDivider" parentKey="horizDivider" horizTile="true" />
         <Texture name="$parentHorizTopBorder" parentKey="horizTopBorder" horizTile="true" />
@@ -162,32 +162,32 @@
       <StatusBar name="$parentHealthBar" parentKey="healthBar">
         <Layers>
           <Layer level="BACKGROUND">
-            <Texture name="$parentBackground" parentKey="background" setAllPoints="true"/>
+            <Texture name="$parentBackground" parentKey="background" setAllPoints="true" />
           </Layer>
         </Layers>
       </StatusBar>
       <Frame name="$parentOverlayTexture" parentKey="overlay" setAllPoints="true">
         <Layers>
           <Layer level="BORDER">
-            <Texture name="$parentMyHealPrediction" parentKey="myHealPrediction"/>
-            <Texture name="$parentOtherHealPrediction" parentKey="otherHealPrediction"/>
-            <Texture name="$parentTotalAbsorb" parentKey="totalAbsorb"/>
-            <FontString name="$parentStatusText" inherits="GameFontDisable" parentKey="statusText"/>
+            <Texture name="$parentMyHealPrediction" parentKey="myHealPrediction" />
+            <Texture name="$parentOtherHealPrediction" parentKey="otherHealPrediction" />
+            <Texture name="$parentTotalAbsorb" parentKey="totalAbsorb" />
+            <FontString name="$parentStatusText" inherits="GameFontDisable" parentKey="statusText" />
           </Layer>
           <Layer level="ATWORK">
-            <FontString name="$parentName" inherits="GameFontHighlightSmall" parentKey="name" wordwrap="false"/>
-            <Texture name="$parentRoleIcon" hidden="true" parentKey="roleIcon"/>
-            <Texture name="$parentAggroHighlight" parentKey="aggroHighlight"/>
-            <Texture name="$parentMyHealAbsorb" parentKey="myHealAbsorb"/>
-            <Texture name="$parentTotalAbsorbOverlay" parentKey="totalAbsorbOverlay"/>
-            <Texture name="$parentMyHealAbsorbLeftShadow" parentKey="myHealAbsorbLeftShadow" file="Interface\AddOns\CompactRaidFrame\Media\RAIDFRAME\Absorb-Edge"/>
+            <FontString name="$parentName" inherits="GameFontHighlightSmall" parentKey="name" wordwrap="false" />
+            <Texture name="$parentRoleIcon" hidden="true" parentKey="roleIcon" />
+            <Texture name="$parentAggroHighlight" parentKey="aggroHighlight" />
+            <Texture name="$parentMyHealAbsorb" parentKey="myHealAbsorb" />
+            <Texture name="$parentTotalAbsorbOverlay" parentKey="totalAbsorbOverlay" />
+            <Texture name="$parentMyHealAbsorbLeftShadow" parentKey="myHealAbsorbLeftShadow" file="Interface\AddOns\CompactRaidFrame\Media\RAIDFRAME\Absorb-Edge" />
             <Texture name="$parentMyHealAbsorbRightShadow" parentKey="myHealAbsorbRightShadow" file="Interface\AddOns\CompactRaidFrame\Media\RAIDFRAME\Absorb-Edge">
-              <TexCoords left="1" right="0" top="0" bottom="1"/>
+              <TexCoords left="1" right="0" top="0" bottom="1" />
             </Texture>
           </Layer>
           <Layer level="OVERLAY">
-            <Texture name="$parentOverAbsorbGlow" parentKey="overAbsorbGlow"/>
-            <Texture name="$parentOverHealAbsorbGlow" parentKey="overHealAbsorbGlow"/>
+            <Texture name="$parentOverAbsorbGlow" parentKey="overAbsorbGlow" />
+            <Texture name="$parentOverHealAbsorbGlow" parentKey="overHealAbsorbGlow" />
           </Layer>
         </Layers>
       </Frame>
@@ -202,24 +202,24 @@
       <StatusBar name="$parentPowerBar" parentKey="powerBar" useParentLevel="true">
         <Layers>
           <Layer level="BACKGROUND">
-            <Texture name="$parentBackground" parentKey="background" setAllPoints="true"/>
+            <Texture name="$parentBackground" parentKey="background" setAllPoints="true" />
           </Layer>
         </Layers>
       </StatusBar>
-      <Button name="$parentBuff1" inherits="CompactBuffTemplate"/>
-      <Button name="$parentBuff2" inherits="CompactBuffTemplate"/>
-      <Button name="$parentBuff3" inherits="CompactBuffTemplate"/>
-      <Button name="$parentDebuff1" inherits="CompactDebuffTemplate"/>
-      <Button name="$parentDebuff2" inherits="CompactDebuffTemplate"/>
-      <Button name="$parentDebuff3" inherits="CompactDebuffTemplate"/>
-      <Button name="$parentDispelDebuff1" inherits="CompactDispelDebuffTemplate"/>
-      <Button name="$parentDispelDebuff2" inherits="CompactDispelDebuffTemplate"/>
-      <Button name="$parentDispelDebuff3" inherits="CompactDispelDebuffTemplate"/>
+      <Button name="$parentBuff1" inherits="CompactBuffTemplate" />
+      <Button name="$parentBuff2" inherits="CompactBuffTemplate" />
+      <Button name="$parentBuff3" inherits="CompactBuffTemplate" />
+      <Button name="$parentDebuff1" inherits="CompactDebuffTemplate" />
+      <Button name="$parentDebuff2" inherits="CompactDebuffTemplate" />
+      <Button name="$parentDebuff3" inherits="CompactDebuffTemplate" />
+      <Button name="$parentDispelDebuff1" inherits="CompactDispelDebuffTemplate" />
+      <Button name="$parentDispelDebuff2" inherits="CompactDispelDebuffTemplate" />
+      <Button name="$parentDispelDebuff3" inherits="CompactDispelDebuffTemplate" />
       <Button name="$parentCenterStatusIcon" parentKey="centerStatusIcon">
         <Layers>
           <Layer level="ARTWORK">
-            <Texture setAllPoints="true" parentKey="texture"/>
-            <Texture setAllPoints="true" parentKey="border"/>
+            <Texture setAllPoints="true" parentKey="texture" />
+            <Texture setAllPoints="true" parentKey="border" />
           </Layer>
         </Layers>
         <Scripts>
@@ -249,40 +249,40 @@
       </Button>
       <Frame name="$parentDropDown" inherits="UIDropDownMenuTemplate" parentKey="dropDown" hidden="true">
         <Size>
-          <AbsDimension x="10" y="10"/>
+          <AbsDimension x="10" y="10" />
         </Size>
         <Anchors>
           <Anchor point="TOP">
             <Offset>
-              <AbsDimension x="10" y="-60"/>
+              <AbsDimension x="10" y="-60" />
             </Offset>
           </Anchor>
         </Anchors>
       </Frame>
     </Frames>
     <Scripts>
-      <OnLoad function="CompactUnitFrame_OnLoad"/>
-      <OnEnter function="UnitFrame_OnEnter"/>
-      <OnLeave function="UnitFrame_OnLeave"/>
+      <OnLoad function="CompactUnitFrame_OnLoad" />
+      <OnEnter function="UnitFrame_OnEnter" />
+      <OnLeave function="UnitFrame_OnLeave" />
     </Scripts>
   </Button>
   <StatusBar name="CompactUnitFrameCastBarTemplate" parentKey="castBar" hidden="true" virtual="true">
     <Layers>
       <Layer level="BACKGROUND">
-        <Texture parentKey="Background" setAllPoints="true"/>
+        <Texture parentKey="Background" setAllPoints="true" />
       </Layer>
       <Layer level="OVERLAY">
         <FontString parentKey="Text" inherits="SystemFont_Shadow_Small">
           <Size x="0" y="16" />
           <Anchors>
-            <Anchor point="CENTER" x="0" y="0"/>
+            <Anchor point="CENTER" x="0" y="0" />
           </Anchors>
         </FontString>
         <Texture parentKey="BorderShield" file="Interface\AddOns\CompactRaidFrame\Media\TargetingFrame\NameplateFill" hidden="true">
-          <TexCoords left="0.929688" right="0.984375" top="0.234375" bottom="0.359375"/>
+          <TexCoords left="0.929688" right="0.984375" top="0.234375" bottom="0.359375" />
           <Size x="10" y="12" />
           <Anchors>
-            <Anchor point="CENTER" relativeTo="LEFT" x="-2" y="-1"/>
+            <Anchor point="CENTER" relativeTo="LEFT" x="-2" y="-1" />
           </Anchors>
         </Texture>
       </Layer>
@@ -290,7 +290,7 @@
         <Texture parentKey="Spark" file="Interface\AddOns\CompactRaidFrame\Media\CastingBar\UI-CastingBar-Spark" alphaMode="ADD">
           <Size x="16" y="16" />
           <Anchors>
-            <Anchor point="CENTER" x="0" y="0"/>
+            <Anchor point="CENTER" x="0" y="0" />
           </Anchors>
         </Texture>
         <Texture parentKey="Flash" file="Interface\AddOns\CompactRaidFrame\Media\TargetingFrame\UI-TargetingFrame-BarFill" alphaMode="ADD" />
@@ -304,7 +304,7 @@
       <OnUpdate function="CastingBarFrame_OnUpdate" />
       <OnShow function="CastingBarFrame_OnShow" />
     </Scripts>
-    <BarTexture file="Interface\AddOns\CompactRaidFrame\Media\TargetingFrame\UI-StatusBar"/>
-    <BarColor r="1.0" g="0.7" b="0.0"/>
+    <BarTexture file="Interface\AddOns\CompactRaidFrame\Media\TargetingFrame\UI-StatusBar" />
+    <BarColor r="1.0" g="0.7" b="0.0" />
   </StatusBar>
 </Ui>

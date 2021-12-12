@@ -1,223 +1,218 @@
 local lib, version = LibStub("LibCUFAuras-1.0");
-if ( lib and version < 90000 ) then
-    return;
-end
+if ( not lib ) then error("not found LibCUFAuras-1.0") end
+if ( version > 1 ) then return end
 
-local companion = "MOUNT";
-local UnitClass = UnitClass;
-local GetSpellInfo = GetSpellInfo;
+local companion        = "MOUNT";
+local UnitClass        = UnitClass;
+local GetSpellInfo     = GetSpellInfo;
 local GetCompanionInfo = GetCompanionInfo;
 local GetNumCompanions = GetNumCompanions;
+local PLAYER_CLASS     = select(2, UnitClass("player"));
 
-lib.CAN_APPLY_AURA = {};
-local CAN_APPLY_AURA = lib.CAN_APPLY_AURA;
+local function SetAuraInfo(canApplyAura, appliesOnlyYourself)
+    return {
+        canApplyAura = canApplyAura,
+        appliesOnlyYourself = appliesOnlyYourself
+    };
+end
 
-CAN_APPLY_AURA["DEATHKNIGHT"] = {
-    [GetSpellInfo(48265)] = { canApply = true, selfBuff = true  }, -- Unholy Presence
-    [GetSpellInfo(48263)] = { canApply = true, selfBuff = true  }, -- Frost Presence
-    [GetSpellInfo(48266)] = { canApply = true, selfBuff = true  }, -- Blood Presence
-    [GetSpellInfo(45529)] = { canApply = true, selfBuff = true  }, -- Blood Tap
-    [GetSpellInfo(49016)] = { canApply = true, selfBuff = false }, -- Hysteria
+local UNIT_CAN_APPLY_AURAS = {
+    ["DEATHKNIGHT"] =
+        {
+            [GetSpellInfo(48265)] = SetAuraInfo(true, true),  -- Unholy Presence
+            [GetSpellInfo(48263)] = SetAuraInfo(true, true),  -- Frost Presence
+            [GetSpellInfo(48266)] = SetAuraInfo(true, true),  -- Blood Presence
+            [GetSpellInfo(45529)] = SetAuraInfo(true, true),  -- Blood Tap
+            [GetSpellInfo(49016)] = SetAuraInfo(true, false), -- Hysteria
+        },
+    ["DRUID"] =
+        {
+            [GetSpellInfo(29166)] = SetAuraInfo(true, false), -- Innervate
+            [GetSpellInfo(9634)]  = SetAuraInfo(true, true),  -- Dire Bear Form
+            [GetSpellInfo(768)]   = SetAuraInfo(true, true),  -- Cat Form
+            [GetSpellInfo(48451)] = SetAuraInfo(true, false), -- Lifebloom
+            [GetSpellInfo(48441)] = SetAuraInfo(true, false), -- Rejuvenation
+            [GetSpellInfo(48443)] = SetAuraInfo(true, false), -- Regrowth
+            [GetSpellInfo(53251)] = SetAuraInfo(true, false), -- Wild Growth
+            [GetSpellInfo(61336)] = SetAuraInfo(true, true),  -- Survival Instincts
+            [GetSpellInfo(50334)] = SetAuraInfo(true, true),  -- Berserk
+            [GetSpellInfo(5229)]  = SetAuraInfo(true, true),  -- Enrage
+            [GetSpellInfo(22812)] = SetAuraInfo(true, true),  -- Barkskin
+            [GetSpellInfo(53312)] = SetAuraInfo(true, true),  -- Nature's Grasp
+            [GetSpellInfo(22842)] = SetAuraInfo(true, true),  -- Frenzied Regeneration
+            [GetSpellInfo(2893)]  = SetAuraInfo(true, false), -- Abolish Poison
+        },
+    ["HUNTER"] =
+        {
+            [GetSpellInfo(5384)]  = SetAuraInfo(true, true),  -- Feign Death
+            [GetSpellInfo(3045)]  = SetAuraInfo(true, true),  -- Rapid Fire
+            [GetSpellInfo(53480)] = SetAuraInfo(true, false), -- Roar of Sacrifice
+            [GetSpellInfo(53271)] = SetAuraInfo(true, false), -- Master's Call
+        },
+    ["MAGE"] =
+        {
+            [GetSpellInfo(43039)] = SetAuraInfo(true, true),  -- Ice Barrier
+            [GetSpellInfo(45438)] = SetAuraInfo(true, true),  -- Ice Block
+            [GetSpellInfo(42995)] = SetAuraInfo(true, false), -- Arcane Intellect
+            [GetSpellInfo(61316)] = SetAuraInfo(true, false), -- Dalaran Brilliance
+            [GetSpellInfo(43002)] = SetAuraInfo(true, false), -- Arcane Brilliance
+            [GetSpellInfo(43015)] = SetAuraInfo(true, false), -- Dampen Magic
+            [GetSpellInfo(54646)] = SetAuraInfo(true, false), -- Focus Magic
+            [GetSpellInfo(61024)] = SetAuraInfo(true, false), -- Dalaran Intellect
+            [GetSpellInfo(43012)] = SetAuraInfo(true, true),  -- Frost Ward
+            [GetSpellInfo(43008)] = SetAuraInfo(true, true),  -- Ice Armor
+            [GetSpellInfo(7301)]  = SetAuraInfo(true, true),  -- Frost Armor
+            [GetSpellInfo(12472)] = SetAuraInfo(true, true),  -- Icy Veins
+            [GetSpellInfo(43010)] = SetAuraInfo(true, true),  -- Fire Ward
+            [GetSpellInfo(43046)] = SetAuraInfo(true, true),  -- Molten Armor
+            [GetSpellInfo(43020)] = SetAuraInfo(true, true),  -- Mana Shield
+            [GetSpellInfo(43024)] = SetAuraInfo(true, true),  -- Mage Armor
+            [GetSpellInfo(66)]    = SetAuraInfo(true, true),  -- Invisibility
+            [GetSpellInfo(130)]   = SetAuraInfo(true, false), -- Slow Fall
+            [GetSpellInfo(11213)] = SetAuraInfo(true, true),  -- Arcane Concentration
+            [GetSpellInfo(12043)] = SetAuraInfo(true, true),  -- Presence of Mind
+            [GetSpellInfo(12042)] = SetAuraInfo(true, true),  -- Arcane Power
+            [GetSpellInfo(31579)] = SetAuraInfo(true, true),  -- Arcane Empowerment
+        },
+    ["PALADIN"] =
+        {
+            [GetSpellInfo(53601)] = SetAuraInfo(true, false), -- Sacred Shield
+            [GetSpellInfo(53563)] = SetAuraInfo(true, false), -- Beacon of Light
+            [GetSpellInfo(6940)]  = SetAuraInfo(true, false), -- Hand of Sacrifice
+            [GetSpellInfo(64205)] = SetAuraInfo(true, true),  -- Divine Sacrifice
+            [GetSpellInfo(31821)] = SetAuraInfo(true, true),  -- Aura Mastery
+            [GetSpellInfo(642)]   = SetAuraInfo(true, true),  -- Divine Shield
+            [GetSpellInfo(1022)]  = SetAuraInfo(true, false), -- Hand of Protection
+            [GetSpellInfo(10278)] = SetAuraInfo(true, false), -- Hand of Protection
+            [GetSpellInfo(1044)]  = SetAuraInfo(true, false), -- Hand of Freedom
+            [GetSpellInfo(54428)] = SetAuraInfo(true, true),  -- Divine Plea
+            [GetSpellInfo(20217)] = SetAuraInfo(true, false), -- Blessing of Kings
+            [GetSpellInfo(25898)] = SetAuraInfo(true, false), -- Greater Blessing of Kings
+            [GetSpellInfo(48936)] = SetAuraInfo(true, false), -- Blessing of Wisdom
+            [GetSpellInfo(48938)] = SetAuraInfo(true, false), -- Greater Blessing of Wisdom
+            [GetSpellInfo(48932)] = SetAuraInfo(true, false), -- Blessing of Might
+            [GetSpellInfo(48934)] = SetAuraInfo(true, false), -- Greater Blessing of Might
+            [GetSpellInfo(25899)] = SetAuraInfo(true, false), -- Greater Blessing of Sanctuary
+            [GetSpellInfo(20911)] = SetAuraInfo(true, false), -- Blessing of Sanctuary
+            [GetSpellInfo(70940)] = SetAuraInfo(true, false), -- Divine Guardian
+            [GetSpellInfo(48952)] = SetAuraInfo(true, true),  -- Holy Shield
+            [GetSpellInfo(48942)] = SetAuraInfo(true, true),  -- Devotion Aura
+            [GetSpellInfo(54043)] = SetAuraInfo(true, true),  -- Retribution Aura
+            [GetSpellInfo(19746)] = SetAuraInfo(true, true),  -- Concentration Aura
+            [GetSpellInfo(48943)] = SetAuraInfo(true, true),  -- Shadow Resistance Aura
+            [GetSpellInfo(48945)] = SetAuraInfo(true, true),  -- Frost Resistance Aura
+            [GetSpellInfo(48947)] = SetAuraInfo(true, true),  -- Fire Resistance Aura
+            [GetSpellInfo(32223)] = SetAuraInfo(true, true),  -- Crusader Aura
+            [GetSpellInfo(31884)] = SetAuraInfo(true, true),  -- Avenging Wrath
+            [GetSpellInfo(54203)] = SetAuraInfo(true, false), -- Sheath of Light
+            [GetSpellInfo(20053)] = SetAuraInfo(true, true),  -- Vengeance
+            [GetSpellInfo(59578)] = SetAuraInfo(true, true),  -- The Art of War
+        },
+    ["PRIEST"] =
+        {
+            [GetSpellInfo(48111)] = SetAuraInfo(true, false), -- Prayer of Mending
+            [GetSpellInfo(33206)] = SetAuraInfo(true, false), -- Pain Suppression
+            [GetSpellInfo(48068)] = SetAuraInfo(true, false), -- Renew
+            [GetSpellInfo(48162)] = SetAuraInfo(true, false), -- Prayer of Fortitude
+            [GetSpellInfo(48161)] = SetAuraInfo(true, false), -- Power Word: Fortitude
+            [GetSpellInfo(48066)] = SetAuraInfo(true, false), -- Power Word: Shield
+            [GetSpellInfo(48073)] = SetAuraInfo(true, false), -- Divine Spirit
+            [GetSpellInfo(48074)] = SetAuraInfo(true, false), -- Prayer of Spirit
+            [GetSpellInfo(48169)] = SetAuraInfo(true, false), -- Shadow Protection
+            [GetSpellInfo(48170)] = SetAuraInfo(true, false), -- Prayer of Shadow Protection
+            [GetSpellInfo(72418)] = SetAuraInfo(true, true),  -- Chilling Knowledge
+            [GetSpellInfo(47930)] = SetAuraInfo(true, false), -- Grace
+            [GetSpellInfo(10060)] = SetAuraInfo(true, true),  -- Power Infusion
+            [GetSpellInfo(586)]   = SetAuraInfo(true, true),  -- Fade
+            [GetSpellInfo(48168)] = SetAuraInfo(true, true),  -- Inner Fire
+            [GetSpellInfo(14751)] = SetAuraInfo(true, true),  -- Inner Focus
+            [GetSpellInfo(6346)]  = SetAuraInfo(true, true),  -- Fear Ward
+            [GetSpellInfo(64901)] = SetAuraInfo(true, false), -- Hymn of Hope
+            [GetSpellInfo(64904)] = SetAuraInfo(true, true),  -- Hymn of Hope
+            [GetSpellInfo(1706)]  = SetAuraInfo(true, false), -- Levitate
+            [GetSpellInfo(64843)] = SetAuraInfo(true, false), -- Divine Hymn
+            [GetSpellInfo(59891)] = SetAuraInfo(true, true),  -- Borrowed Time
+            [GetSpellInfo(552)]   = SetAuraInfo(true, false), -- Abolish Disease
+            [GetSpellInfo(15473)] = SetAuraInfo(true, true),  -- Shadowform
+            [GetSpellInfo(15286)] = SetAuraInfo(true, true),  -- Vampiric Embrace
+            [GetSpellInfo(49694)] = SetAuraInfo(true, true),  -- Improved Spirit Tap
+            [GetSpellInfo(47788)] = SetAuraInfo(true, false), -- Guardian Spirit
+            [GetSpellInfo(33151)] = SetAuraInfo(true, true),  -- Surge of Light
+            [GetSpellInfo(33151)] = SetAuraInfo(true, true),  -- Inspiration
+            [GetSpellInfo(7001)]  = SetAuraInfo(true, false), -- Lightwell Renew
+            [GetSpellInfo(27827)] = SetAuraInfo(true, true),  -- Spirit of Redemption
+            [GetSpellInfo(63734)] = SetAuraInfo(true, true),  -- Serendipity
+            [GetSpellInfo(65081)] = SetAuraInfo(true, false), -- Body and Soul
+            [GetSpellInfo(63944)] = SetAuraInfo(true, false), -- Renewed Hope
+        },
+    ["ROGUE"] =
+        {
+            [GetSpellInfo(1784)]  = SetAuraInfo(true, true),  -- Stealth
+            [GetSpellInfo(31665)] = SetAuraInfo(true, true),  -- Master of Subtlety
+            [GetSpellInfo(26669)] = SetAuraInfo(true, true),  -- Evasion
+            [GetSpellInfo(11305)] = SetAuraInfo(true, true),  -- Sprint
+            [GetSpellInfo(26888)] = SetAuraInfo(true, true),  -- Vanish
+            [GetSpellInfo(36554)] = SetAuraInfo(true, true),  -- Shadowstep
+            [GetSpellInfo(48659)] = SetAuraInfo(true, true),  -- Feint
+            [GetSpellInfo(31224)] = SetAuraInfo(true, true),  -- Clock of Shadow
+            [GetSpellInfo(51713)] = SetAuraInfo(true, true),  -- Shadow dance
+            [GetSpellInfo(14177)] = SetAuraInfo(true, true),  -- Cold Blood
+            [GetSpellInfo(57934)] = SetAuraInfo(true, false), -- Tricks of the Trade
+        },
+    ["SHAMAN"] =
+        {
+            [GetSpellInfo(49284)] = SetAuraInfo(true, false), -- Earth Shield
+            [GetSpellInfo(8515)]  = SetAuraInfo(true, false), -- Windfury Totem
+            [GetSpellInfo(8177)]  = SetAuraInfo(true, false), -- Grounding Totem
+            [GetSpellInfo(32182)] = SetAuraInfo(true, false), -- Heroism
+            [GetSpellInfo(2825)]  = SetAuraInfo(true, false), -- Bloodlust
+            [GetSpellInfo(61301)] = SetAuraInfo(true, false), -- Riptide
+        },
+    ["WARLOCK"] = {    },
+    ["WARRIOR"] =
+        {
+            [GetSpellInfo(2687)]  = SetAuraInfo(true, true),  -- Bloodrage
+            [GetSpellInfo(18499)] = SetAuraInfo(true, true),  -- Berserker Rage
+            [GetSpellInfo(12328)] = SetAuraInfo(true, true),  -- Sweeping Strikes
+            [GetSpellInfo(23920)] = SetAuraInfo(true, true),  -- Spell Reflection
+            [GetSpellInfo(871)]   = SetAuraInfo(true, true),  -- Shield Wall
+            [GetSpellInfo(2565)]  = SetAuraInfo(true, true),  -- Shield Block
+            [GetSpellInfo(55694)] = SetAuraInfo(true, true),  -- Enraged Regeneration
+            [GetSpellInfo(1719)]  = SetAuraInfo(true, true),  -- Recklessness
+            [GetSpellInfo(57522)] = SetAuraInfo(true, true),  -- Enrage
+            [GetSpellInfo(20230)] = SetAuraInfo(true, true),  -- Retaliation
+            [GetSpellInfo(46924)] = SetAuraInfo(true, true),  -- Bladestorm
+            [GetSpellInfo(47440)] = SetAuraInfo(true, false), -- Commanding Shout
+            [GetSpellInfo(47436)] = SetAuraInfo(true, false), -- Battle Shout
+            [GetSpellInfo(46913)] = SetAuraInfo(true, true),  -- Bloodsurge
+            [GetSpellInfo(12292)] = SetAuraInfo(true, true),  -- Death Wish
+            [GetSpellInfo(16492)] = SetAuraInfo(true, true),  -- Blood Craze
+            [GetSpellInfo(65156)] = SetAuraInfo(true, true),  -- Juggernaut
+            [GetSpellInfo(3411)]  = SetAuraInfo(true, false), -- Intervene
+        },
 };
+lib.UNIT_CAN_APPLY_AURAS = UNIT_CAN_APPLY_AURAS;
 
-CAN_APPLY_AURA["DRUID"] = {
-    [GetSpellInfo(29166)] = { canApply = true, selfBuff = false }, -- Innervate
-    [GetSpellInfo(9634)]  = { canApply = true, selfBuff = true  }, -- Dire Bear Form
-    [GetSpellInfo(768)]   = { canApply = true, selfBuff = true  }, -- Cat Form
-    [GetSpellInfo(48451)] = { canApply = true, selfBuff = false }, -- Lifebloom
-    [GetSpellInfo(48441)] = { canApply = true, selfBuff = false }, -- Rejuvenation
-    [GetSpellInfo(48443)] = { canApply = true, selfBuff = false }, -- Regrowth
-    [GetSpellInfo(53251)] = { canApply = true, selfBuff = false }, -- Wild Growth
-    [GetSpellInfo(61336)] = { canApply = true, selfBuff = true  }, -- Survival Instincts
-    [GetSpellInfo(50334)] = { canApply = true, selfBuff = true  }, -- Berserk
-    [GetSpellInfo(5229)]  = { canApply = true, selfBuff = true  }, -- Enrage
-    [GetSpellInfo(22812)] = { canApply = true, selfBuff = true  }, -- Barkskin
-    [GetSpellInfo(53312)] = { canApply = true, selfBuff = true  }, -- Nature's Grasp
-    [GetSpellInfo(22842)] = { canApply = true, selfBuff = true  }, -- Frenzied Regeneration
-    [GetSpellInfo(2893)]  = { canApply = true, selfBuff = false }, -- Abolish Poison
-};
-
-CAN_APPLY_AURA["HUNTER"] = {
-    [GetSpellInfo(5384)]  = { canApply = true, selfBuff = true  }, -- Feign Death
-    [GetSpellInfo(3045)]  = { canApply = true, selfBuff = true  }, -- Rapid Fire
-    [GetSpellInfo(53480)] = { canApply = true, selfBuff = false }, -- Roar of Sacrifice
-    [GetSpellInfo(53271)] = { canApply = true, selfBuff = false }, -- Master's Call
-};
-
-CAN_APPLY_AURA["MAGE"] = {
-    [GetSpellInfo(43039)] = { canApply = true, selfBuff = true  }, -- Ice Barrier
-    [GetSpellInfo(45438)] = { canApply = true, selfBuff = true  }, -- Ice Block
-    [GetSpellInfo(42995)] = { canApply = true, selfBuff = false }, -- Arcane Intellect
-    [GetSpellInfo(61316)] = { canApply = true, selfBuff = false }, -- Dalaran Brilliance
-    [GetSpellInfo(43002)] = { canApply = true, selfBuff = false }, -- Arcane Brilliance
-    [GetSpellInfo(43015)] = { canApply = true, selfBuff = false }, -- Dampen Magic
-    [GetSpellInfo(54646)] = { canApply = true, selfBuff = false }, -- Focus Magic
-    [GetSpellInfo(61024)] = { canApply = true, selfBuff = false }, -- Dalaran Intellect
-    [GetSpellInfo(43012)] = { canApply = true, selfBuff = true  }, -- Frost Ward
-    [GetSpellInfo(43008)] = { canApply = true, selfBuff = true  }, -- Ice Armor
-    [GetSpellInfo(7301)]  = { canApply = true, selfBuff = true  }, -- Frost Armor
-    [GetSpellInfo(12472)] = { canApply = true, selfBuff = true  }, -- Icy Veins
-    [GetSpellInfo(43010)] = { canApply = true, selfBuff = true  }, -- Fire Ward
-    [GetSpellInfo(43046)] = { canApply = true, selfBuff = true  }, -- Molten Armor
-    [GetSpellInfo(43020)] = { canApply = true, selfBuff = true  }, -- Mana Shield
-    [GetSpellInfo(43024)] = { canApply = true, selfBuff = true  }, -- Mage Armor
-    [GetSpellInfo(66)]    = { canApply = true, selfBuff = true  }, -- Invisibility
-    [GetSpellInfo(130)]   = { canApply = true, selfBuff = false }, -- Slow Fall
-    [GetSpellInfo(11213)] = { canApply = true, selfBuff = true  }, -- Arcane Concentration
-    [GetSpellInfo(12043)] = { canApply = true, selfBuff = true  }, -- Presence of Mind
-    [GetSpellInfo(12042)] = { canApply = true, selfBuff = true  }, -- Arcane Power
-    [GetSpellInfo(31579)] = { canApply = true, selfBuff = true  }, -- Arcane Empowerment
-};
-
-CAN_APPLY_AURA["PALADIN"] = {
-    [GetSpellInfo(53601)] = { canApply = true, selfBuff = false }, -- Sacred Shield
-    [GetSpellInfo(53563)] = { canApply = true, selfBuff = false }, -- Beacon of Light
-    [GetSpellInfo(6940)]  = { canApply = true, selfBuff = false }, -- Hand of Sacrifice
-    [GetSpellInfo(64205)] = { canApply = true, selfBuff = true  }, -- Divine Sacrifice
-    [GetSpellInfo(31821)] = { canApply = true, selfBuff = true  }, -- Aura Mastery
-    [GetSpellInfo(642)]   = { canApply = true, selfBuff = true  }, -- Divine Shield
-    [GetSpellInfo(1022)]  = { canApply = true, selfBuff = false }, -- Hand of Protection
-    [GetSpellInfo(10278)] = { canApply = true, selfBuff = false }, -- Hand of Protection
-    [GetSpellInfo(1044)]  = { canApply = true, selfBuff = false }, -- Hand of Freedom
-    [GetSpellInfo(54428)] = { canApply = true, selfBuff = true  }, -- Divine Plea
-    [GetSpellInfo(20217)] = { canApply = true, selfBuff = false }, -- Blessing of Kings
-    [GetSpellInfo(25898)] = { canApply = true, selfBuff = false }, -- Greater Blessing of Kings
-    [GetSpellInfo(48936)] = { canApply = true, selfBuff = false }, -- Blessing of Wisdom
-    [GetSpellInfo(48938)] = { canApply = true, selfBuff = false }, -- Greater Blessing of Wisdom
-    [GetSpellInfo(48932)] = { canApply = true, selfBuff = false }, -- Blessing of Might
-    [GetSpellInfo(48934)] = { canApply = true, selfBuff = false }, -- Greater Blessing of Might
-    [GetSpellInfo(70940)] = { canApply = true, selfBuff = false }, -- Divine Guardian
-    [GetSpellInfo(48942)] = { canApply = true, selfBuff = true  }, -- Devotion Aura
-    [GetSpellInfo(54043)] = { canApply = true, selfBuff = true  }, -- Retribution Aura
-    [GetSpellInfo(19746)] = { canApply = true, selfBuff = true  }, -- Concentration Aura
-    [GetSpellInfo(48943)] = { canApply = true, selfBuff = true  }, -- Shadow Resistance Aura
-    [GetSpellInfo(48945)] = { canApply = true, selfBuff = true  }, -- Frost Resistance Aura
-    [GetSpellInfo(48947)] = { canApply = true, selfBuff = true  }, -- Fire Resistance Aura
-    [GetSpellInfo(32223)] = { canApply = true, selfBuff = true  }, -- Crusader Aura
-    [GetSpellInfo(31884)] = { canApply = true, selfBuff = true  }, -- Avenging Wrath
-    [GetSpellInfo(54203)] = { canApply = true, selfBuff = false }, -- Sheath of Light
-    [GetSpellInfo(20053)] = { canApply = true, selfBuff = true  }, -- Vengeance
-    [GetSpellInfo(59578)] = { canApply = true, selfBuff = true  }, -- The Art of War
-};
-
-CAN_APPLY_AURA["PRIEST"] = {
-    [GetSpellInfo(48111)] = { canApply = true, selfBuff = false }, -- Prayer of Mending
-    [GetSpellInfo(33206)] = { canApply = true, selfBuff = false }, -- Pain Suppression
-    [GetSpellInfo(48068)] = { canApply = true, selfBuff = false }, -- Renew
-    [GetSpellInfo(48162)] = { canApply = true, selfBuff = false }, -- Prayer of Fortitude
-    [GetSpellInfo(48161)] = { canApply = true, selfBuff = false }, -- Power Word: Fortitude
-    [GetSpellInfo(48066)] = { canApply = true, selfBuff = false }, -- Power Word: Shield
-    [GetSpellInfo(48073)] = { canApply = true, selfBuff = false }, -- Divine Spirit
-    [GetSpellInfo(48074)] = { canApply = true, selfBuff = false }, -- Prayer of Spirit
-    [GetSpellInfo(48169)] = { canApply = true, selfBuff = false }, -- Shadow Protection
-    [GetSpellInfo(48170)] = { canApply = true, selfBuff = false }, -- Prayer of Shadow Protection
-    [GetSpellInfo(72418)] = { canApply = true, selfBuff = true  }, -- Chilling Knowledge
-    [GetSpellInfo(47930)] = { canApply = true, selfBuff = false }, -- Grace
-    [GetSpellInfo(10060)] = { canApply = true, selfBuff = true  }, -- Power Infusion
-    [GetSpellInfo(586)]   = { canApply = true, selfBuff = true  }, -- Fade
-    [GetSpellInfo(48168)] = { canApply = true, selfBuff = true  }, -- Inner Fire
-    [GetSpellInfo(14751)] = { canApply = true, selfBuff = true  }, -- Inner Focus
-    [GetSpellInfo(6346)]  = { canApply = true, selfBuff = true  }, -- Fear Ward
-    [GetSpellInfo(64901)] = { canApply = true, selfBuff = false }, -- Hymn of Hope
-    [GetSpellInfo(64904)] = { canApply = true, selfBuff = true  }, -- Hymn of Hope
-    [GetSpellInfo(1706)]  = { canApply = true, selfBuff = false }, -- Levitate
-    [GetSpellInfo(64843)] = { canApply = true, selfBuff = false }, -- Divine Hymn
-    [GetSpellInfo(59891)] = { canApply = true, selfBuff = true  }, -- Borrowed Time
-    [GetSpellInfo(552)]   = { canApply = true, selfBuff = false }, -- Abolish Disease
-    [GetSpellInfo(15473)] = { canApply = true, selfBuff = true  }, -- Shadowform
-    [GetSpellInfo(15286)] = { canApply = true, selfBuff = true  }, -- Vampiric Embrace
-    [GetSpellInfo(49694)] = { canApply = true, selfBuff = true  }, -- Improved Spirit Tap
-    [GetSpellInfo(47788)] = { canApply = true, selfBuff = false }, -- Guardian Spirit
-    [GetSpellInfo(33151)] = { canApply = true, selfBuff = true  }, -- Surge of Light
-    [GetSpellInfo(33151)] = { canApply = true, selfBuff = true  }, -- Inspiration
-    [GetSpellInfo(7001)]  = { canApply = true, selfBuff = false }, -- Lightwell Renew
-    [GetSpellInfo(27827)] = { canApply = true, selfBuff = true  }, -- Spirit of Redemption
-    [GetSpellInfo(63734)] = { canApply = true, selfBuff = true  }, -- Serendipity
-    [GetSpellInfo(65081)] = { canApply = true, selfBuff = false }, -- Body and Soul
-    [GetSpellInfo(63944)] = { canApply = true, selfBuff = false }, -- Renewed Hope
-};
-
-CAN_APPLY_AURA["ROGUE"] = {
-    [GetSpellInfo(1784)]  = { canApply = true, selfBuff = true  }, -- Stealth
-    [GetSpellInfo(31665)] = { canApply = true, selfBuff = true  }, -- Master of Subtlety
-    [GetSpellInfo(26669)] = { canApply = true, selfBuff = true  }, -- Evasion
-    [GetSpellInfo(11305)] = { canApply = true, selfBuff = true  }, -- Sprint
-    [GetSpellInfo(26888)] = { canApply = true, selfBuff = true  }, -- Vanish
-    [GetSpellInfo(36554)] = { canApply = true, selfBuff = true  }, -- Shadowstep
-    [GetSpellInfo(48659)] = { canApply = true, selfBuff = true  }, -- Feint
-    [GetSpellInfo(31224)] = { canApply = true, selfBuff = true  }, -- Clock of Shadow
-    [GetSpellInfo(51713)] = { canApply = true, selfBuff = true  }, -- Shadow dance
-    [GetSpellInfo(14177)] = { canApply = true, selfBuff = true  }, -- Cold Blood
-    [GetSpellInfo(57934)] = { canApply = true, selfBuff = false }, -- Tricks of the Trade
-};
-
-CAN_APPLY_AURA["SHAMAN"] = {
-    [GetSpellInfo(49284)] = { canApply = true, selfBuff = false }, -- Earth Shield
-    [GetSpellInfo(8515)]  = { canApply = true, selfBuff = false }, -- Windfury Totem
-    [GetSpellInfo(8177)]  = { canApply = true, selfBuff = false }, -- Grounding Totem
-    [GetSpellInfo(32182)] = { canApply = true, selfBuff = false }, -- Heroism
-    [GetSpellInfo(2825)]  = { canApply = true, selfBuff = false }, -- Bloodlust
-    [GetSpellInfo(61301)] = { canApply = true, selfBuff = false }, -- Riptide
-};
-
-CAN_APPLY_AURA["WARLOCK"] = {
-
-};
-
-CAN_APPLY_AURA["WARRIOR"] = {
-    [GetSpellInfo(2687)]  = { canApply = true, selfBuff = true  }, -- Bloodrage
-    [GetSpellInfo(18499)] = { canApply = true, selfBuff = true  }, -- Berserker Rage
-    [GetSpellInfo(12328)] = { canApply = true, selfBuff = true  }, -- Sweeping Strikes
-    [GetSpellInfo(23920)] = { canApply = true, selfBuff = true  }, -- Spell Reflection
-    [GetSpellInfo(871)]   = { canApply = true, selfBuff = true  }, -- Shield Wall
-    [GetSpellInfo(2565)]  = { canApply = true, selfBuff = true  }, -- Shield Block
-    [GetSpellInfo(55694)] = { canApply = true, selfBuff = true  }, -- Enraged Regeneration
-    [GetSpellInfo(1719)]  = { canApply = true, selfBuff = true  }, -- Recklessness
-    [GetSpellInfo(57522)] = { canApply = true, selfBuff = true  }, -- Enrage
-    [GetSpellInfo(20230)] = { canApply = true, selfBuff = true  }, -- Retaliation
-    [GetSpellInfo(46924)] = { canApply = true, selfBuff = true  }, -- Bladestorm
-    [GetSpellInfo(47440)] = { canApply = true, selfBuff = false }, -- Commanding Shout
-    [GetSpellInfo(47436)] = { canApply = true, selfBuff = false }, -- Battle Shout
-    [GetSpellInfo(46913)] = { canApply = true, selfBuff = true  }, -- Bloodsurge
-    [GetSpellInfo(12292)] = { canApply = true, selfBuff = true  }, -- Death Wish
-    [GetSpellInfo(16492)] = { canApply = true, selfBuff = true  }, -- Blood Craze
-    [GetSpellInfo(65156)] = { canApply = true, selfBuff = true  }, -- Juggernaut
-    [GetSpellInfo(3411)]  = { canApply = true, selfBuff = false }, -- Intervene
-};
+local function SetNewCompanion(spellID)
+    UNIT_CAN_APPLY_AURAS[PLAYER_CLASS][GetSpellInfo(spellID)] = { canApplyAura = true,  appliesOnlyYourself = true };
+end
 
 local function Companion_Inizialization()
-    local num = GetNumCompanions(companion);
-    local _, class = UnitClass("player");
-    for i=1,num do
-        local _, _, spellID = GetCompanionInfo(companion, i);
-        CAN_APPLY_AURA[class][GetSpellInfo(spellID)] = { canApply = true, selfBuff = true };
+    for index = 1, GetNumCompanions(companion) do
+        local _, _, spellID = GetCompanionInfo(companion, index);
+        SetNewCompanion(spellID);
     end
 end
 
-lib.frame = lib.frame or CreateFrame("Frame");
-lib.frame:RegisterEvent("COMPANION_UPDATE");
-lib.frame:RegisterEvent("PLAYER_LOGIN");
-
-lib.frame:SetScript("OnEvent", function(self, event, ...)
-	if ( self[event] ) then
-		self[event](self, event, ...);
-	end
-end)
-
--- lib.frame:SetScript("OnEvent", function(self, event, arg1, ...)
---     if ( event == "PLAYER_LOGIN" ) then
---         Companion_Inizialization();
---     elseif ( event == "COMPANION_UPDATE" and arg1 == companion ) then
---         Companion_Inizialization();
---     end
--- end)
-
-function lib.frame:PLAYER_LOGIN()
+function lib.handler:PLAYER_LOGIN()
     Companion_Inizialization();
 end
 
-function lib.frame:COMPANION_UPDATE(_, arg1)
+function lib.handler:COMPANION_UPDATE(_, arg1)
     if ( arg1 == companion ) then
         Companion_Inizialization();
     end
 end
+
+lib.handler:RegisterEvent("COMPANION_UPDATE");
+lib.handler:RegisterEvent("PLAYER_LOGIN");

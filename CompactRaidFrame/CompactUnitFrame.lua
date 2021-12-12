@@ -1,6 +1,6 @@
 --Widget Handlers
 local OPTION_TABLE_NONE = {};
-BOSS_DEBUFF_SIZE_INCREASE = 9; -- 9
+BOSS_DEBUFF_SIZE_INCREASE = 9;
 CUF_READY_CHECK_DECAY_TIME = 11;
 DISTANCE_THRESHOLD_SQUARED = 250*250;
 CUF_NAME_SECTION_SIZE = 15;
@@ -69,12 +69,13 @@ function CompactUnitFrame_OnEvent(self, event, ...)
     elseif ( event == "PARTY_MEMBERS_CHANGED" ) then
         CompactUnitFrame_UpdateAll(self);
     elseif ( event == "PARTY_MEMBER_DISABLE" or event == "PARTY_MEMBER_ENABLE" ) then	--Alternate power info may now be available.
-		CompactUnitFrame_UpdateMaxPower(self);
-		CompactUnitFrame_UpdatePower(self);
-		CompactUnitFrame_UpdatePowerColor(self);
+        CompactUnitFrame_UpdateMaxPower(self);
+        CompactUnitFrame_UpdatePower(self);
+        CompactUnitFrame_UpdatePowerColor(self);
         CompactUnitFrame_UpdateHealthColor(self);
         CompactUnitFrame_UpdateStatusText(self);
     else
+
         local unitMatches = arg1 == self.unit or arg1 == self.displayedUnit;
         if ( unitMatches ) then
             if ( event == "UNIT_MAXHEALTH" ) then
@@ -121,7 +122,7 @@ function CompactUnitFrame_OnEvent(self, event, ...)
             elseif ( event == "READY_CHECK_CONFIRM" ) then
                 CompactUnitFrame_UpdateReadyCheck(self);
             elseif ( event == "INCOMING_RESURRECT_CHANGED" ) then
-				CompactUnitFrame_UpdateCenterStatusIcon(self);
+                CompactUnitFrame_UpdateCenterStatusIcon(self);
             elseif ( event == "UNIT_OTHER_PARTY_CHANGED" ) then
                 CompactUnitFrame_UpdateCenterStatusIcon(self);
             elseif ( event == "UNIT_ABSORB_AMOUNT_CHANGED" ) then
@@ -160,13 +161,13 @@ function CompactUnitFrame_SetUnit(frame, unit)
         frame.hideCastbar = frame.optionTable.hideCastbar;
         frame.healthBar.healthBackground = nil;
         frame:SetAttribute("unit", unit);
-       
+
         if ( unit ) then
             CompactUnitFrame_RegisterEvents(frame);
         else
             CompactUnitFrame_UnregisterEvents(frame);
         end
- 
+
         if ( unit and not frame.optionTable.hideCastbar ) then
             if ( frame.castBar ) then
                 CastingBarFrame_SetUnit(frame.castBar, unit, false, true);
@@ -280,7 +281,7 @@ end
 --Internally accessed functions
 --Update Functions
 function CompactUnitFrame_UpdateAll(frame)
-    --CompactUnitFrame_UpdateInVehicle(frame);
+    CompactUnitFrame_UpdateInVehicle(frame);
     CompactUnitFrame_UpdateVisible(frame);
     if ( UnitExists(frame.displayedUnit) ) then
         CompactUnitFrame_UpdateMaxHealth(frame);
@@ -315,7 +316,7 @@ function CompactUnitFrame_UpdateInVehicle(frame)
         end
     end
     if ( shouldTargetVehicle ) then
-        local prefix, id, suffix = string.match(frame.unit, "([^%d]+)([%d]*)(.*)")
+        local prefix, id, suffix = string.match(frame.unit, "([^%d]+)([%d]*)(.*)");
         unitVehicleToken = prefix.."pet"..id..suffix;
         if ( not UnitExists(unitVehicleToken) ) then
             shouldTargetVehicle = false;
@@ -357,7 +358,7 @@ function CompactUnitFrame_IsTapDenied(frame)
 end
 
 local function IsOnThreatList(threatStatus)
-    return threatStatus ~= nil
+    return threatStatus ~= nil;
 end
 
 function CompactUnitFrame_IsOnThreatListWithPlayer(unit)
@@ -650,7 +651,7 @@ function CompactUnitFrame_UpdateInRange(frame)
 end
 
 function CompactUnitFrame_UpdateDistance(frame)
-	local distance, checkedDistance = UnitDistanceSquared(frame.displayedUnit);
+    local distance, checkedDistance = UnitDistanceSquared(frame.displayedUnit);
     if ( checkedDistance ) then
         local inDistance = distance < DISTANCE_THRESHOLD_SQUARED;
         if ( inDistance ~= frame.inDistance ) then
@@ -943,39 +944,39 @@ end
 function CompactUnitFrame_UpdateCenterStatusIcon(frame)
     if ( frame.centerStatusIcon ) then
         if ( frame.optionTable.displayInOtherGroup and UnitInOtherParty(frame.unit) ) then
-			frame.centerStatusIcon.texture:SetTexture("Interface\\LFGFrame\\LFG-Eye");
-			frame.centerStatusIcon.texture:SetTexCoord(0.125, 0.25, 0.25, 0.5);
-			frame.centerStatusIcon.border:SetTexture("Interface\\Common\\RingBorder");
-			frame.centerStatusIcon.border:Show();
-			frame.centerStatusIcon.tooltip = PARTY_IN_PUBLIC_GROUP_MESSAGE;
-			frame.centerStatusIcon:Show();
-		elseif ( frame.optionTable.displayIncomingResurrect and UnitHasIncomingResurrection(frame.unit) ) then
-			frame.centerStatusIcon.texture:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\RaidFrame\\Raid-Icon-Rez");
-			frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
-			frame.centerStatusIcon.border:Hide();
-			frame.centerStatusIcon.tooltip = nil;
-			frame.centerStatusIcon:Show();
-		elseif ( frame.optionTable.displayIncomingSummon and C_IncomingSummon.HasIncomingSummon(frame.unit) ) then
-			local status = C_IncomingSummon.IncomingSummonStatus(frame.unit);
-			if(status == Enum.SummonStatus.Pending) then
-				frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonPending");
-				frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
-				frame.centerStatusIcon.border:Hide();
-				frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_PENDING;
-				frame.centerStatusIcon:Show();
-			elseif( status == Enum.SummonStatus.Accepted ) then
-				frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonAccepted");
-				frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
-				frame.centerStatusIcon.border:Hide();
-				frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_ACCEPTED;
-				frame.centerStatusIcon:Show();
-			elseif( status == Enum.SummonStatus.Declined ) then
-				frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonDeclined");
-				frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
-				frame.centerStatusIcon.border:Hide();
-				frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_DECLINED;
-				frame.centerStatusIcon:Show();
-			end
+            frame.centerStatusIcon.texture:SetTexture("Interface\\LFGFrame\\LFG-Eye");
+            frame.centerStatusIcon.texture:SetTexCoord(0.125, 0.25, 0.25, 0.5);
+            frame.centerStatusIcon.border:SetTexture("Interface\\Common\\RingBorder");
+            frame.centerStatusIcon.border:Show();
+            frame.centerStatusIcon.tooltip = PARTY_IN_PUBLIC_GROUP_MESSAGE;
+            frame.centerStatusIcon:Show();
+        elseif ( frame.optionTable.displayIncomingResurrect and UnitHasIncomingResurrection(frame.unit) ) then
+            frame.centerStatusIcon.texture:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\RaidFrame\\Raid-Icon-Rez");
+            frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
+            frame.centerStatusIcon.border:Hide();
+            frame.centerStatusIcon.tooltip = nil;
+            frame.centerStatusIcon:Show();
+        elseif ( frame.optionTable.displayIncomingSummon and C_IncomingSummon.HasIncomingSummon(frame.unit) ) then
+            local status = C_IncomingSummon.IncomingSummonStatus(frame.unit);
+            if(status == Enum.SummonStatus.Pending) then
+                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonPending");
+                frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
+                frame.centerStatusIcon.border:Hide();
+                frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_PENDING;
+                frame.centerStatusIcon:Show();
+            elseif( status == Enum.SummonStatus.Accepted ) then
+                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonAccepted");
+                frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
+                frame.centerStatusIcon.border:Hide();
+                frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_ACCEPTED;
+                frame.centerStatusIcon:Show();
+            elseif( status == Enum.SummonStatus.Declined ) then
+                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonDeclined");
+                frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
+                frame.centerStatusIcon.border:Hide();
+                frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_DECLINED;
+                frame.centerStatusIcon:Show();
+            end
         else
             if not frame.inDistance and frame.optionTable.displayInOtherPhase then
                 local phaseReason = UnitPhaseReason(frame.unit);
@@ -1033,7 +1034,7 @@ do
     local function NumElements(arr)
         return arr and #arr or 0;
     end
-  
+
     local dispellableDebuffTypes = { Magic = true, Curse = true, Disease = true, Poison = true};
     -- This interleaves updating buffFrames, debuffFrames and dispelDebuffFrames to reduce the number of calls to UnitAuraSlots/UnitAuraBySlot
     local function CompactUnitFrame_UpdateAurasInternal(frame)
@@ -1186,7 +1187,7 @@ do
         CompactUnitFrame_HideAllDebuffs(frame, numUsedDebuffs + 1);
         CompactUnitFrame_HideAllDispelDebuffs(frame, numUsedDispelDebuffs + 1);
     end
-    
+
     function CompactUnitFrame_UpdateAuras(frame)
         CompactUnitFrame_UpdateAurasInternal(frame);
     end
@@ -1267,19 +1268,19 @@ function CompactUnitFrame_Util_IsBossAura(...)
 end
 
 do
-	local _, classFilename = UnitClass("player");
-	if ( classFilename == "PALADIN" ) then
-		CompactUnitFrame_Util_IsPriorityDebuff = function(...)
-			local spellId = select(10, ...);
-			local isForbearance = (spellId == 25771);
-			return isForbearance or SpellIsPriorityAura(spellId);
-		end
-	else
-		CompactUnitFrame_Util_IsPriorityDebuff = function(...)
-			local spellId = select(10, ...);
-			return SpellIsPriorityAura(spellId);
-		end
-	end
+    local _, classFilename = UnitClass("player");
+    if ( classFilename == "PALADIN" ) then
+        CompactUnitFrame_Util_IsPriorityDebuff = function(...)
+            local spellId = select(10, ...);
+            local isForbearance = (spellId == 25771);
+            return isForbearance or SpellIsPriorityAura(spellId);
+        end
+    else
+        CompactUnitFrame_Util_IsPriorityDebuff = function(...)
+            local spellId = select(10, ...);
+            return SpellIsPriorityAura(spellId);
+        end
+    end
 end
 
 function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, ...)
@@ -1424,15 +1425,15 @@ function DefaultCompactUnitFrameSetup(frame)
 
     local powerBarHeight = 8;
     local powerBarUsedHeight = options.displayPowerBar and powerBarHeight or 0;
-   
-    
-    
+
+
+
     frame.myHealPrediction = frame.overlay.myHealPrediction;
     frame.otherHealPrediction = frame.overlay.otherHealPrediction;
     frame.totalAbsorb = frame.overlay.totalAbsorb;
-    
+
     frame.totalAbsorbOverlay = frame.overlay.totalAbsorbOverlay;
-    
+
     frame.name = frame.overlay.name;
     frame.statusText = frame.overlay.statusText;
     frame.roleIcon = frame.overlay.roleIcon;
@@ -1501,10 +1502,10 @@ function DefaultCompactUnitFrameSetup(frame)
     frame.overHealAbsorbGlow:SetPoint("TOPRIGHT", frame.healthBar, "TOPLEFT", 7, 0);
     frame.overHealAbsorbGlow:SetWidth(16);
 
-	frame.roleIcon:ClearAllPoints();
-	frame.roleIcon:SetPoint("TOPLEFT", 3, -2);
-	frame.roleIcon:SetSize(12, 12);
-    
+    frame.roleIcon:ClearAllPoints();
+    frame.roleIcon:SetPoint("TOPLEFT", 3, -2);
+    frame.roleIcon:SetSize(12, 12);
+
     frame.name:SetPoint("TOPLEFT", frame.roleIcon, "TOPRIGHT", 0, -1);
     frame.name:SetPoint("TOPRIGHT", -3, -3);
     frame.name:SetJustifyH("LEFT");
@@ -1539,7 +1540,7 @@ function DefaultCompactUnitFrameSetup(frame)
         frame.buffFrames[i]:SetSize(buffSize, buffSize);
         frame.buffFrames[i]:SetParent(frame.healthBar);
     end
-    
+
     local debuffPos, debuffRelativePoint, debuffOffset = "BOTTOMLEFT", "BOTTOMRIGHT", CUF_AURA_BOTTOM_OFFSET + powerBarUsedHeight;
     frame.debuffFrames[1]:ClearAllPoints();
     frame.debuffFrames[1]:SetPoint(debuffPos, frame, "BOTTOMLEFT", 3, debuffOffset);
@@ -1570,7 +1571,7 @@ function DefaultCompactUnitFrameSetup(frame)
     frame.aggroHighlight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\RaidFrame\\Raid-FrameHighlights");
     frame.aggroHighlight:SetTexCoord(unpack(texCoords["Raid-AggroFrame"]));
     frame.aggroHighlight:SetAllPoints(frame);
-    
+
     frame.centerStatusIcon:ClearAllPoints();
     frame.centerStatusIcon:SetPoint("CENTER", frame, "BOTTOM", 0, options.height / 3 + 2);
     frame.centerStatusIcon:SetSize(buffSize * 2, buffSize * 2);
@@ -1649,7 +1650,7 @@ function DefaultCompactMiniFrameSetup(frame)
     frame.totalAbsorb = frame.overlay.totalAbsorb;
 
     frame.totalAbsorbOverlay = frame.overlay.totalAbsorbOverlay;
-    
+
     frame.name = frame.overlay.name;
     frame.statusText = frame.overlay.statusText;
     frame.roleIcon = frame.overlay.roleIcon;
@@ -1669,7 +1670,7 @@ function DefaultCompactMiniFrameSetup(frame)
     frame.healthBar:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -1, 1);
     frame.healthBar:SetStatusBarTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\RaidFrame\\Raid-Bar-Hp-Fill", "BORDER");
     frame.healthBar:SetFrameLevel(frame:GetFrameLevel());
-    
+
     frame.myHealPrediction:ClearAllPoints();
     frame.myHealPrediction:SetTexture(1,1,1);
     frame.myHealPrediction:SetGradient("VERTICAL", 8/255, 93/255, 72/255, 11/255, 136/255, 105/255);

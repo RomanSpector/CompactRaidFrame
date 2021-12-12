@@ -15,16 +15,16 @@
   </Frame>
 
   <CheckButton name="UICheckButtonTemplate" virtual="true">
-    <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-    <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-    <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-    <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-    <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
+    <NormalTexture file="Interface\Buttons\UI-CheckBox-Up" />
+    <PushedTexture file="Interface\Buttons\UI-CheckBox-Down" />
+    <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD" />
+    <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check" />
+    <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled" />
   </CheckButton>
 
   <CheckButton name="UIRadioButtonTemplate" virtual="true">
     <Size>
-      <AbsDimension x="16" y="16"/>
+      <AbsDimension x="16" y="16" />
     </Size>
     <Layers>
       <Layer level="BACKGROUND">
@@ -32,7 +32,7 @@
           <Anchors>
             <Anchor point="LEFT" relativePoint="RIGHT">
               <Offset>
-                <AbsDimension x="5" y="0"/>
+                <AbsDimension x="5" y="0" />
               </Offset>
             </Anchor>
           </Anchors>
@@ -40,22 +40,22 @@
       </Layer>
     </Layers>
     <NormalTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton">
-      <TexCoords left="0" right="0.25" top="0" bottom="1"/>
+      <TexCoords left="0" right="0.25" top="0" bottom="1" />
     </NormalTexture>
     <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton" alphaMode="ADD">
-      <TexCoords left="0.5" right="0.75" top="0" bottom="1"/>
+      <TexCoords left="0.5" right="0.75" top="0" bottom="1" />
     </HighlightTexture>
     <CheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-RadioButton">
-      <TexCoords left="0.25" right="0.5" top="0" bottom="1"/>
+      <TexCoords left="0.25" right="0.5" top="0" bottom="1" />
     </CheckedTexture>
   </CheckButton>
 
   <Slider name="HorizontalSliderTemplate" orientation="HORIZONTAL" enableMouse="true" virtual="true" inherits="BackdropTemplate">
     <HitRectInsets>
-      <AbsInset left="0" right="0" top="-10" bottom="-10"/>
+      <AbsInset left="0" right="0" top="-10" bottom="-10" />
     </HitRectInsets>
     <ThumbTexture parentKey="Thumb" name="$parentThumb" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-SliderBar-Button-Horizontal">
-      <Size x="32" y="32"/>
+      <Size x="32" y="32" />
     </ThumbTexture>
     <Scripts>
       <OnLoad>
@@ -63,7 +63,7 @@
       </OnLoad>
     </Scripts>
   </Slider>
-  
+
   <Button name="UIPanelButtonTemplate" inherits="UIPanelButtonNoTooltipTemplate" virtual="true">
     <Scripts>
       <OnEnter>
@@ -97,8 +97,8 @@
         <!-- TODO: Convert this to atlas -->
         <Texture parentKey="Bg" file="Interface\AddOns\CompactRaidFrame\Media\DialogFrame\UI-DialogBox-Background-Dark" horizTile="true" vertTile="true">
           <Anchors>
-            <Anchor point="TOPLEFT" x="7" y="-7"/>
-            <Anchor point="BOTTOMRIGHT" x="-7" y="7"/>
+            <Anchor point="TOPLEFT" x="7" y="-7" />
+            <Anchor point="BOTTOMRIGHT" x="-7" y="7" />
           </Anchors>
         </Texture>
       </Layer>
@@ -107,13 +107,13 @@
 
   <Button name="UIPanelInfoButton" virtual="true">
     <Size>
-      <AbsDimension x="16" y="16"/>
+      <AbsDimension x="16" y="16" />
     </Size>
     <Layers>
       <Layer level="ARTWORK">
         <Texture name="$parentTexture" file="Interface\AddOns\CompactRaidFrame\Media\FriendsFrame\InformationIcon" parentKey="texture">
           <Anchors>
-            <Anchor point="TOPLEFT"/>
+            <Anchor point="TOPLEFT" />
           </Anchors>
         </Texture>
       </Layer>
@@ -128,83 +128,83 @@
     </Scripts>
     <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\FriendsFrame\InformationIcon-Highlight" alphaMode="ADD">
       <Anchors>
-        <Anchor point="TOPLEFT" relativeTo="$parentTexture" relativePoint="TOPLEFT"/>
+        <Anchor point="TOPLEFT" relativeTo="$parentTexture" relativePoint="TOPLEFT" />
       </Anchors>
-      <Color r="1" g="1" b="1" a="0.4"/>
+      <Color r="1" g="1" b="1" a="0.4" />
     </HighlightTexture>
   </Button>
 
   <Button name="UIMenuButtonStretchTemplate" virtual="true">
-    <Size x="40" y="26"/>
+    <Size x="40" y="26" />
     <Layers>
       <Layer level="BORDER">
         <Texture parentKey="TopLeft" name="$parentTopLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="6"/>
+          <Size x="12" y="6" />
           <Anchors>
-            <Anchor point="TOPLEFT"/>
+            <Anchor point="TOPLEFT" />
           </Anchors>
-          <TexCoords left="0" right="0.09375" top="0" bottom="0.1875"/>
+          <TexCoords left="0" right="0.09375" top="0" bottom="0.1875" />
         </Texture>
         <Texture parentKey="TopRight" name="$parentTopRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="6"/>
+          <Size x="12" y="6" />
           <Anchors>
-            <Anchor point="TOPRIGHT"/>
+            <Anchor point="TOPRIGHT" />
           </Anchors>
-          <TexCoords left="0.53125" right="0.625" top="0" bottom="0.1875"/>
+          <TexCoords left="0.53125" right="0.625" top="0" bottom="0.1875" />
         </Texture>
         <Texture parentKey="BottomLeft" name="$parentBottomLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="6"/>
+          <Size x="12" y="6" />
           <Anchors>
-            <Anchor point="BOTTOMLEFT"/>
+            <Anchor point="BOTTOMLEFT" />
           </Anchors>
-          <TexCoords left="0" right="0.09375" top="0.625" bottom="0.8125"/>
+          <TexCoords left="0" right="0.09375" top="0.625" bottom="0.8125" />
         </Texture>
         <Texture parentKey="BottomRight" name="$parentBottomRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="6"/>
+          <Size x="12" y="6" />
           <Anchors>
-            <Anchor point="BOTTOMRIGHT"/>
+            <Anchor point="BOTTOMRIGHT" />
           </Anchors>
-          <TexCoords left="0.53125" right="0.625" top="0.625" bottom="0.8125"/>
+          <TexCoords left="0.53125" right="0.625" top="0.625" bottom="0.8125" />
         </Texture>
         <Texture parentKey="TopMiddle" name="$parentTopMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="56" y="6"/>
+          <Size x="56" y="6" />
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="TOPRIGHT"/>
-            <Anchor point="BOTTOMRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMLEFT"/>
+            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="TOPRIGHT" />
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMLEFT" />
           </Anchors>
-          <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.1875"/>
+          <TexCoords left="0.09375" right="0.53125" top="0" bottom="0.1875" />
         </Texture>
         <Texture parentKey="MiddleLeft" name="$parentMiddleLeft" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="14"/>
+          <Size x="12" y="14" />
           <Anchors>
-            <Anchor point="TOPRIGHT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT"/>
-            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPLEFT"/>
+            <Anchor point="TOPRIGHT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT" />
+            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPLEFT" />
           </Anchors>
-          <TexCoords left="0" right="0.09375" top="0.1875" bottom="0.625"/>
+          <TexCoords left="0" right="0.09375" top="0.1875" bottom="0.625" />
         </Texture>
         <Texture parentKey="MiddleRight" name="$parentMiddleRight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="12" y="14"/>
+          <Size x="12" y="14" />
           <Anchors>
-            <Anchor point="TOPRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMRIGHT"/>
-            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT"/>
+            <Anchor point="TOPRIGHT" relativeTo="$parentTopRight" relativePoint="BOTTOMRIGHT" />
+            <Anchor point="BOTTOMLEFT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT" />
           </Anchors>
-          <TexCoords left="0.53125" right="0.625" top="0.1875" bottom="0.625"/>
+          <TexCoords left="0.53125" right="0.625" top="0.1875" bottom="0.625" />
         </Texture>
         <Texture parentKey="BottomMiddle" name="$parentBottomMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="56" y="6"/>
+          <Size x="56" y="6" />
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPRIGHT"/>
-            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="BOTTOMLEFT"/>
+            <Anchor point="TOPLEFT" relativeTo="$parentBottomLeft" relativePoint="TOPRIGHT" />
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="BOTTOMLEFT" />
           </Anchors>
-          <TexCoords left="0.09375" right="0.53125" top="0.625" bottom="0.8125"/>
+          <TexCoords left="0.09375" right="0.53125" top="0.625" bottom="0.8125" />
         </Texture>
         <Texture parentKey="MiddleMiddle" name="$parentMiddleMiddle" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Up">
-          <Size x="56" y="14"/>
+          <Size x="56" y="14" />
           <Anchors>
-            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT"/>
-            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT"/>
+            <Anchor point="TOPLEFT" relativeTo="$parentTopLeft" relativePoint="BOTTOMRIGHT" />
+            <Anchor point="BOTTOMRIGHT" relativeTo="$parentBottomRight" relativePoint="TOPLEFT" />
           </Anchors>
-          <TexCoords left="0.09375" right="0.53125" top="0.1875" bottom="0.625"/>
+          <TexCoords left="0.09375" right="0.53125" top="0.1875" bottom="0.625" />
         </Texture>
       </Layer>
     </Layers>
@@ -285,14 +285,14 @@
     </Scripts>
     <ButtonText parentKey="Text" name="$parentText">
       <Anchors>
-        <Anchor point="CENTER" x="0" y="-1"/>
+        <Anchor point="CENTER" x="0" y="-1" />
       </Anchors>
     </ButtonText>
-    <NormalFont style="GameFontHighlightSmall"/>
-    <HighlightFont style="GameFontHighlightSmall"/>
-    <DisabledFont style="GameFontDisableSmall"/>
+    <NormalFont style="GameFontHighlightSmall" />
+    <HighlightFont style="GameFontHighlightSmall" />
+    <DisabledFont style="GameFontDisableSmall" />
     <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Silver-Button-Highlight" alphaMode="ADD">
-      <TexCoords left="0" right="1.0" top="0.03" bottom="0.7175"/>
+      <TexCoords left="0" right="1.0" top="0.03" bottom="0.7175" />
     </HighlightTexture>
   </Button>
 
