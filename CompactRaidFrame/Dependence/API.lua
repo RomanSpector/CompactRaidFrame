@@ -336,7 +336,7 @@ function RaidOptionsFrame_UpdatePartyFrames()
 end
 
 local LibGT      = LibStub:GetLibrary("LibGroupTalents-1.0");
-local LibAbsorb  = LibStub:GetLibrary("AbsorbsMonitor-1.0");
+local LibAbsorb  = LibStub:GetLibrary("SpecializedAbsorbs-1.0");
 local HealComm   = LibStub:GetLibrary("LibHealComm-4.0");
 local LibAura    = LibStub:GetLibrary("LibCUFAuras-1.0");
 local LibResComm = LibStub:GetLibrary("LibResComm-1.0");
@@ -386,7 +386,9 @@ do
                     CompactUnitFrame_FireEvent(self, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED");
                 elseif ( event == "AreaCleared" ) then
                     CompactUnitFrame_FireEvent(self, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED");
-                elseif ( event == "COMPACT_UNIT_FRAME_UNIT_AURA" ) then 
+                elseif ( event == "UnitAbsorbed" ) then
+                    CompactUnitFrame_FireEvent(self, "UNIT_HEAL_ABSORB_AMOUNT_CHANGED");
+                elseif ( event == "COMPACT_UNIT_FRAME_UNIT_AURA" ) then
                     CompactUnitFrame_FireEvent(self, "COMPACT_UNIT_FRAME_UNIT_AURA");
                 end
             end
@@ -403,6 +405,7 @@ do
         LibAbsorb.RegisterCallback(self, "UnitCleared", LibEventCallback, self);
         LibAbsorb.RegisterCallback(self, "AreaCreated", LibEventCallback, self);
         LibAbsorb.RegisterCallback(self, "AreaCleared", LibEventCallback, self);
+        LibAbsorb.RegisterCallback(self, "UnitAbsorbed", LibEventCallback, self);
 
         HealComm.RegisterCallback(self, "HealComm_HealStarted", LibEventCallback, self);
         HealComm.RegisterCallback(self, "HealComm_HealUpdated", LibEventCallback, self);
@@ -459,11 +462,11 @@ function UnitGetTotalAbsorbs(unit)
         return;
     end
 
-    return LibAbsorb.Unit_Total(UnitGUID(unit));
+    return LibAbsorb.UnitTotal(UnitGUID(unit));
 end
 
 function UnitGetTotalHealAbsorbs(unit) -- there is nothing like this in the WotLK patch
-    return;
+    return 0;
 end
 
 local LibGTConvertRole = {
@@ -564,13 +567,13 @@ StaticPopupDialogs["CUF_CLICK_LINK_CLICKURL"] = {
     hasEditBox = true,
     hasWideEditBox = true,
     OnShow = function (self, data)
-        local wideEditBox = _G[this:GetName().."WideEditBox"];
-        if ( wideEditBox ) then
-            wideEditBox:SetText("https://discord.gg/wXw6pTvxMQ");
-            wideEditBox:SetFocus();
-            wideEditBox:HighlightText();
-            wideEditBox:ClearAllPoints();
-            wideEditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25);
+        local EditBox = _G[this:GetName().."WideEditBox"];
+        if ( EditBox ) then
+            EditBox:SetText("https://discord.gg/wXw6pTvxMQ");
+            EditBox:SetFocus();
+            EditBox:HighlightText();
+            EditBox:ClearAllPoints();
+            EditBox:SetPoint("BOTTOM", self, "BOTTOM", 0, 25);
         end
     end,
 };

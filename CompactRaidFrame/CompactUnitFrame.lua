@@ -207,7 +207,6 @@ end
 function CompactUnitFrame_SetUpFrame(frame, func)
     func(frame);
     CompactUnitFrame_UpdateAll(frame);
-    CompactUnitFrame_SetUpClicks(frame);
 end
 
 function CompactUnitFrame_SetOptionTable(frame, optionTable)
@@ -218,7 +217,9 @@ end
 function CompactUnitFrame_RegisterEvents(frame)
     local onEventHandler = frame.OnEvent or CompactUnitFrame_OnEvent;
     frame:SetScript("OnEvent", onEventHandler);
+
     CompactUnitFrame_UpdateUnitEvents(frame);
+
     local onUpdate = frame.OnUpdate or CompactUnitFrame_OnUpdate;
     frame:SetScript("OnUpdate", onUpdate);
 end
@@ -247,7 +248,6 @@ function CompactUnitFrame_SetUpClicks(frame)
     frame:SetAttribute("*type2", "menu");
     --NOTE: Make sure you also change the CompactAuraTemplate. (It has to be registered for clicks to be able to pass them through.)
     frame:RegisterForClicks("LeftButtonDown", "RightButtonUp");
-
     CompactUnitFrame_SetMenuFunc(frame, CompactUnitFrameDropDown_Initialize);
 end
 
@@ -309,12 +309,15 @@ end
 function CompactUnitFrame_UpdateInVehicle(frame)
     local shouldTargetVehicle = UnitHasVehicleUI(frame.unit);
     local unitVehicleToken;
-    if ( shouldTargetVehicle ) then
-        local raidID = UnitInRaid(frame.unit) and UnitInRaid(frame.unit) + 1;
-        if ( raidID and not UnitTargetsVehicleInRaidUI(frame.unit) ) then
-            shouldTargetVehicle = false;
-        end
-    end
+
+    --! UnitTargetsVehicleInRaidUI returns false in any states. I don't understand why
+    -- if ( shouldTargetVehicle ) then
+    --     local raidID = UnitInRaid(frame.unit);
+    --     if ( raidID and not UnitTargetsVehicleInRaidUI(frame.unit) ) then
+    --         shouldTargetVehicle = false;
+    --     end
+    -- end
+
     if ( shouldTargetVehicle ) then
         local prefix, id, suffix = string.match(frame.unit, "([^%d]+)([%d]*)(.*)");
         unitVehicleToken = prefix.."pet"..id..suffix;
@@ -326,12 +329,13 @@ function CompactUnitFrame_UpdateInVehicle(frame)
             shouldTargetVehicle = false;
         end
     end
+
     if ( shouldTargetVehicle ) then
         if ( not frame.hasValidVehicleDisplay ) then
             frame.hasValidVehicleDisplay = true;
             frame.displayedUnit = unitVehicleToken;
             frame:SetAttribute("unit", frame.displayedUnit);
-            CompactUnitFrame_UpdateUnitEvents(frame);
+            CompactUnitFrame_RegisterEvents(frame);
         end
     else
         if ( frame.hasValidVehicleDisplay ) then
