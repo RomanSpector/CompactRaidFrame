@@ -1224,6 +1224,15 @@ function isBlacklisted(spellName)
     if ( classIndex == 0) then
         return false;
     end
+    commonBuffBlacklist = {
+        --dungeon buffs
+        ["Luck of the Draw"] = true,
+    } 
+    for key,value in pairs(commonBuffBlacklist) do 
+        if ( spellName == key ) then
+            return true;
+        end
+    end
 
     -- blacklist spells for current class
     -- TODO: Add other classes
