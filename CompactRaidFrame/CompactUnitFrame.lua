@@ -1226,26 +1226,27 @@ function isBlacklisted(spellName)
     end
 
     -- blacklist spells for current class
+    -- TODO: Add other classes
     if ( class == "WARRIOR") then
-        return true;
+        return false;
     elseif ( class == "PALADIN") then
-        return true;
+        return false;
     elseif ( class == "HUNTER") then
-        return true;
+        return false;
     elseif ( class == "ROGUE") then
-        return true;
+        return false;
     elseif ( class == "PRIEST") then
-        return true;
+        return false;
     elseif ( class == "DEATHKNIGHT") then
-        return true;
+        return false;
     elseif ( class == "SHAMAN") then
-        return true;
+        return false;
     elseif ( class == "MAGE") then
-        return true;
+        return false;
     elseif ( class == "WARLOCK") then
-        return true;
+        return false;
     elseif ( class == "SHAMAN") then
-        return true;
+        return false;
     elseif ( class == "DRUID" ) then 
         classBuffInfo = {
             --class buffs
