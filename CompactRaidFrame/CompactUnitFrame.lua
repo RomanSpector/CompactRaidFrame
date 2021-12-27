@@ -1203,14 +1203,81 @@ end
 
 --Utility Functions
 function CompactUnitFrame_UtilShouldDisplayBuff(...)
-    local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura = ...;
+    local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId = ...;
     local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+    local showAllClassBuffs = true;
+
+    if ( isBlacklisted(name) ) then
+        return false;
+    end
+
     if ( hasCustom ) then
-        return showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"));
+        return ( showForMySpec  ) or ( ( alwaysShowMine ) and (showAllClassBuffs or unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"));
     else
-        return (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") and canApplyAura and not SpellIsSelfBuff(spellId);
+        return (( alwaysShowMine ) or unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") and not SpellIsSelfBuff(spellId);
     end
 end
+
+function isBlacklisted(spellName)
+    local _, class, classIndex = UnitClass("player"); 
+
+    if ( classIndex == 0) then
+        return false;
+    end
+
+    -- blacklist spells for current class
+    if ( class == "WARRIOR") then
+        return true;
+    elseif ( class == "PALADIN") then
+        return true;
+    elseif ( class == "HUNTER") then
+        return true;
+    elseif ( class == "ROGUE") then
+        return true;
+    elseif ( class == "PRIEST") then
+        return true;
+    elseif ( class == "DEATHKNIGHT") then
+        return true;
+    elseif ( class == "SHAMAN") then
+        return true;
+    elseif ( class == "MAGE") then
+        return true;
+    elseif ( class == "WARLOCK") then
+        return true;
+    elseif ( class == "SHAMAN") then
+        return true;
+    elseif ( class == "DRUID" ) then 
+        classBuffInfo = {
+            --class buffs
+            ["Mark of the Wild"] = true,
+            ["Gift of the Wild"] = true,
+            ["Thorns"] = true,
+
+
+            --forms
+            ["Aquatic Form"] = true,
+            ["Bear Form"] = true,
+            ["Dire Bear Form"] = true,
+            ["Flight Form"] = true,
+            ["Travel Form"] = true,
+            ["Swift Flight Form"] = true,
+            ["Cat Form"] = true,
+            ["Moonkin Form"] = true,
+            ["Tree of Life"] = true,
+
+                --stances
+                ["Prowl"] = true,
+                ["Track Humanoids"] = true,
+        } 
+        for key,value in pairs(classBuffInfo) do 
+            if ( spellName == key ) then
+                return true;
+            end
+        end
+    end 
+    return false;
+end
+
 
 function CompactUnitFrame_HideAllBuffs(frame, startingIndex)
     if frame.buffFrames then
