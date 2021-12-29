@@ -82,7 +82,7 @@ local sortPriorFunc = function (a,b)
 end
 
 function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
-    local spellName, texture, stackCount, dispelType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellID = ...;
+    local spellName, texture, stackCount, dispelType, duration, expirationTime, unitCaster, canStealOrPurge, shouldConsolidate, spellID, canApplyAura = ...;
 
     local tracker = self.CASHE[dstGUID] or {};
     tinsert(tracker, #tracker + 1, {
@@ -99,7 +99,7 @@ function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
         canStealOrPurge = canStealOrPurge,
         shouldConsolidate = shouldConsolidate,
         spellID = spellID,
-        canApplyAura = false,
+        canApplyAura = canApplyAura,
         isBossDebuff = false,
     });
 
