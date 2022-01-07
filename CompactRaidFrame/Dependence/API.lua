@@ -532,7 +532,7 @@ function SpellIsSelfBuff(spellId)
         return false;
     end
 
-    return info.selfBuff;
+    return info.appliesOnlyYourself;
 end
 
 function SpellGetVisibilityInfo(spellId, visType)

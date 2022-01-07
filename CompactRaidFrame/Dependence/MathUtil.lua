@@ -47,8 +47,8 @@ function DeltaLerp(startValue, endValue, amount, timeSec)
     return Lerp(startValue, endValue, Saturate(amount * timeSec * TARGET_FRAME_PER_SEC));
 end
 
-function FrameDeltaLerp(startValue, endValue, amount)
-    return DeltaLerp(startValue, endValue, amount, GetTickTime());
+function FrameDeltaLerp(startValue, endValue, amount, elapsed)
+    return DeltaLerp(startValue, endValue, amount, elapsed);
 end
 
 function RandomFloatInRange(minValue, maxValue)
