@@ -1,5 +1,4 @@
-local CUF = select(2, ...)
-CUF.CUF.BACKDROP_TOOLTIP_8_8_1111 = {
+CUFBACKDROP_TOOLTIP_8_8_1111 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -8,7 +7,7 @@ CUF.CUF.BACKDROP_TOOLTIP_8_8_1111 = {
     edgeSize = 8,
     insets = { left = 1, right = 1, top = 1, bottom = 1 },
 };
-CUF.CUF.BACKDROP_TOOLTIP_8_12_1111 = {
+CUFBACKDROP_TOOLTIP_8_12_1111 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -17,7 +16,7 @@ CUF.CUF.BACKDROP_TOOLTIP_8_12_1111 = {
     edgeSize = 12,
     insets = { left = 1, right = 1, top = 1, bottom = 1 },
 };
-CUF.CUF.BACKDROP_TOOLTIP_16_16_5555 = {
+CUFBACKDROP_TOOLTIP_16_16_5555 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -26,7 +25,7 @@ CUF.CUF.BACKDROP_TOOLTIP_16_16_5555 = {
     edgeSize = 16,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-CUF.CUF.BACKDROP_TOOLTIP_12_12_4444 = {
+CUFBACKDROP_TOOLTIP_12_12_4444 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -35,29 +34,29 @@ CUF.CUF.BACKDROP_TOOLTIP_12_12_4444 = {
     edgeSize = 12,
     insets = { left = 4, right = 4, top = 4, bottom = 4 },
 };
-CUF.CUF.BACKDROP_TOOLTIP_0_16 = {
+CUFBACKDROP_TOOLTIP_0_16 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 16,
     tileEdge = true,
 };
-CUF.CUF.BACKDROP_TOOLTIP_0_12_0055 = {
+CUFBACKDROP_TOOLTIP_0_12_0055 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 12,
     tileEdge = true,
     insets = { left = 0, right = 0, top = 5, bottom = 5 },
 };
-CUF.CUF.BACKDROP_TOOLTIP_0_16_5555 = {
+CUFBACKDROP_TOOLTIP_0_16_5555 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 16,
     tileEdge = true,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-CUF.CUF.BACKDROP_ACHIEVEMENTS_0_64 = {
+CUFBACKDROP_ACHIEVEMENTS_0_64 = {
     edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
     edgeSize = 64,
     tileEdge = true,
 };
-CUF.CUF.BACKDROP_ARENA_32_32 = {
+CUFBACKDROP_ARENA_32_32 = {
     bgFile = "Interface\\CharacterFrame\\UI-Party-Background",
     edgeFile = "Interface\\ArenaEnemyFrame\\UI-Arena-Border",
     tile = true,
@@ -66,7 +65,7 @@ CUF.CUF.BACKDROP_ARENA_32_32 = {
     edgeSize = 32,
     insets = { left = 32, right = 32, top = 32, bottom = 32 },
 };
-CUF.CUF.BACKDROP_DIALOG_32_32 = {
+CUFBACKDROP_DIALOG_32_32 = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
     tile = true,
@@ -75,7 +74,7 @@ CUF.CUF.BACKDROP_DIALOG_32_32 = {
     edgeSize = 32,
     insets = { left = 11, right = 12, top = 12, bottom = 11 },
 };
-CUF.CUF.BACKDROP_GOLD_DIALOG_32_32 = {
+CUFBACKDROP_GOLD_DIALOG_32_32 = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
     tile = true,
@@ -84,12 +83,12 @@ CUF.CUF.BACKDROP_GOLD_DIALOG_32_32 = {
     edgeSize = 32,
     insets = { left = 11, right = 12, top = 12, bottom = 11 },
 };
-CUF.CUF.BACKDROP_WATERMARK_DIALOG_0_16 = {
+CUFBACKDROP_WATERMARK_DIALOG_0_16 = {
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-TestWatermark-Border",
     tileEdge = true,
     edgeSize = 16,
 };
-CUF.BACKDROP_SLIDER_8_8 = {
+CUFBACKDROP_SLIDER_8_8 = {
     bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
     edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
     tile = true,
@@ -98,7 +97,7 @@ CUF.BACKDROP_SLIDER_8_8 = {
     edgeSize = 8,
     insets = { left = 3, right = 3, top = 6, bottom = 6 },
 };
-CUF.BACKDROP_PARTY_32_32 = {
+CUFBACKDROP_PARTY_32_32 = {
     bgFile = "Interface\\CharacterFrame\\UI-Party-Background",
     edgeFile = "Interface\\CharacterFrame\\UI-Party-Border",
     tile = true,
@@ -107,7 +106,7 @@ CUF.BACKDROP_PARTY_32_32 = {
     edgeSize = 32,
     insets = { left = 32, right = 32, top = 32, bottom = 32 },
 };
-CUF.BACKDROP_TOAST_12_12 = {
+CUFBACKDROP_TOAST_12_12 = {
     bgFile = "Interface\\FriendsFrame\\UI-Toast-Background",
     edgeFile = "Interface\\FriendsFrame\\UI-Toast-Border",
     tile = true,
@@ -116,17 +115,17 @@ CUF.BACKDROP_TOAST_12_12 = {
     edgeSize = 12,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-CUF.BACKDROP_CALLOUT_GLOW_0_16 = {
+CUFBACKDROP_CALLOUT_GLOW_0_16 = {
     edgeFile = "Interface\\TutorialFrame\\UI-TutorialFrame-CalloutGlow",
     edgeSize = 16,
     tileEdge = true,
 };
-CUF.BACKDROP_CALLOUT_GLOW_0_20 = {
+CUFBACKDROP_CALLOUT_GLOW_0_20 = {
     edgeFile = "Interface\\TutorialFrame\\UI-TutorialFrame-CalloutGlow",
     edgeSize = 20,
     tileEdge = true,
 };
-CUF.BACKDROP_GLUE_TOOLTIP_16_16 = {
+CUFBACKDROP_GLUE_TOOLTIP_16_16 = {
     bgFile = "Interface\\Glues\\Common\\Glue-Tooltip-Background",
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tile = true,
@@ -135,12 +134,12 @@ CUF.BACKDROP_GLUE_TOOLTIP_16_16 = {
     edgeSize = 16,
     insets = { left = 10, right = 5, top = 4, bottom = 9 },
 };
-CUF.BACKDROP_GLUE_TOOLTIP_0_16 = {
+CUFBACKDROP_GLUE_TOOLTIP_0_16 = {
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tileEdge = true,
     edgeSize = 16,
 };
-CUF.BACKDROP_MIXED_TOOLTIP_16_16 = {
+CUFBACKDROP_MIXED_TOOLTIP_16_16 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tile = true,
@@ -149,7 +148,7 @@ CUF.BACKDROP_MIXED_TOOLTIP_16_16 = {
     edgeSize = 16,
     insets = { left = 10, right = 5, top = 4, bottom = 9 },
 };
-CUF.BACKDROP_TEXT_PANEL_0_16 = {
+CUFBACKDROP_TEXT_PANEL_0_16 = {
     edgeFile = "Interface\\Glues\\Common\\TextPanel-Border",
     tileEdge = true,
     edgeSize = 16,

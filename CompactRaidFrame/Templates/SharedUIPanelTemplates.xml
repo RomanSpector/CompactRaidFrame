@@ -59,7 +59,7 @@
     </ThumbTexture>
     <Scripts>
       <OnLoad>
-        self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
+        self.backdropInfo = _G["CUFBACKDROP_SLIDER_8_8"]
       </OnLoad>
     </Scripts>
   </Slider>

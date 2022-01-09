@@ -644,7 +644,7 @@
             </Anchors>
             <Scripts>
               <OnLoad inherit="prepend">
-                self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
+                self.backdropInfo = _G["CUFBACKDROP_SLIDER_8_8"]
                 CUFMixin(self, CUFBackdropTemplateMixin)
                 CompactUnitFrameProfilesSlider_InitializeWidget(self, "frameHeight", SHORT, TALL);
               </OnLoad>
@@ -656,7 +656,7 @@
             </Anchors>
             <Scripts>
               <OnLoad inherit="prepend">
-                self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
+                self.backdropInfo = _G["CUFBACKDROP_SLIDER_8_8"]
                 CUFMixin(self, CUFBackdropTemplateMixin)
                 CompactUnitFrameProfilesSlider_InitializeWidget(self, "frameWidth", NARROW, WIDE);
               </OnLoad>
