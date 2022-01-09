@@ -354,11 +354,11 @@ function CompactRaidFrameManager_UpdateRaidIcons()
     for i=1, NUM_RAID_ICONS do
         local button = _G["CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarker"..i];	--.... /cry
         if ( disableAll or button:GetID() == GetRaidTargetIndex(unit) ) then
-            button:GetNormalTexture():CUFSetDesaturated(true);
+            button:GetNormalTexture():SetDesaturated(true);
             button:SetAlpha(0.7);
             button:Disable();
         else
-            button:GetNormalTexture():CUFSetDesaturated(false);
+            button:GetNormalTexture():SetDesaturated(false);
             button:SetAlpha(1);
             button:Enable();
         end
@@ -366,10 +366,10 @@ function CompactRaidFrameManager_UpdateRaidIcons()
 
     local removeButton = CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerRemove;
     if ( not GetRaidTargetIndex(unit) ) then
-        removeButton:GetNormalTexture():CUFSetDesaturated(true);
+        removeButton:GetNormalTexture():SetDesaturated(true);
         removeButton:Disable();
     else
-        removeButton:GetNormalTexture():CUFSetDesaturated(false);
+        removeButton:GetNormalTexture():SetDesaturated(false);
         removeButton:Enable();
     end
 end
