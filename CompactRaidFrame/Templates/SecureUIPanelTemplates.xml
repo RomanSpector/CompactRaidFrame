@@ -18,7 +18,7 @@
           </Anchors>
           <TexCoords left="0" right="0.09375" top="0" bottom="0.6875" />
         </Texture>
-        <Texture parentKey="Right" file="Interface\UI-Panel-Button-Up">
+        <Texture parentKey="Right" file="Interface\Buttons\UI-Panel-Button-Up">
           <Size x="12" y="22" />
           <Anchors>
             <Anchor point="TOPRIGHT" />
@@ -26,7 +26,7 @@
           </Anchors>
           <TexCoords left="0.53125" right="0.625" top="0" bottom="0.6875" />
         </Texture>
-        <Texture parentKey="Middle" file="Interface\UI-Panel-Button-Up">
+        <Texture parentKey="Middle" file="Interface\Buttons\UI-Panel-Button-Up">
           <Size x="12" y="22" />
           <Anchors>
             <Anchor point="TOPLEFT" relativeKey="$parent.Left" relativePoint="TOPRIGHT" />
