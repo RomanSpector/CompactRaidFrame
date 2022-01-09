@@ -11,8 +11,8 @@
   <Script file="Mixin.lua" />
   <Script file="C_Texture.lua" />
   <Script file="Color.lua" />
-  <Script file="PartyUtil.lua" />
-  <Script file="PixelUtil.lua" />
+  <Script file="CUFPartyUtil.lua" />
+  <Script file="CUFPixelUtil.lua" />
   <Script file="AuraUtil.lua" />
   <Script file="NineSlice.lua" />
   <Script file="TextureUtil.lua" />

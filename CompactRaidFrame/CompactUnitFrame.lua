@@ -1,8 +1,8 @@
 --Widget Handlers
 local OPTION_TABLE_NONE = {};
-BOSS_DEBUFF_SIZE_INCREASE = 9;
+CUF_BOSS_DEBUFF_SIZE_INCREASE = 9;
 CUF_READY_CHECK_DECAY_TIME = 11;
-DISTANCE_THRESHOLD_SQUARED = 250*250;
+CUF_DISTANCE_THRESHOLD_SQUARED = 250*250;
 CUF_NAME_SECTION_SIZE = 15;
 CUF_AURA_BOTTOM_OFFSET = 2;
 
@@ -444,7 +444,7 @@ function CompactUnitFrame_UpdateHealth(frame)
             frame.healthBar:SetSmoothedValue(health);
         end
     else
-        PixelUtil.SetStatusBarValue(frame.healthBar, health);
+        CUFPixelUtil.SetStatusBarValue(frame.healthBar, health);
     end
 end
 
@@ -460,7 +460,7 @@ end
 
 function CompactUnitFrame_UpdatePower(frame)
     if frame.powerBar then
-        PixelUtil.SetStatusBarValue(frame.powerBar, UnitPower(frame.displayedUnit, CompactUnitFrame_GetDisplayedPowerID(frame)));
+        CUFPixelUtil.SetStatusBarValue(frame.powerBar, UnitPower(frame.displayedUnit, CompactUnitFrame_GetDisplayedPowerID(frame)));
     end
 end
 
@@ -498,13 +498,13 @@ function CompactUnitFrame_UpdatePowerColor(frame)
 end
 
 function ShouldShowName(frame)
-    if UnitNameplateShowsWidgetsOnly(frame.unit) then
+    if CUFUnitNameplateShowsWidgetsOnly(frame.unit) then
         return false;
     end
     if ( frame.optionTable.displayName ) then
         local failedRequirement = false;
         if ( frame.optionTable.displayNameByPlayerNameRules ) then
-            if ( UnitShouldDisplayName(frame.unit) ) then
+            if ( CUFUnitShouldDisplayName(frame.unit) ) then
                 return true;
             end
             failedRequirement = true;
@@ -521,8 +521,8 @@ function ShouldShowName(frame)
 end
 
 function CompactUnitFrame_UpdateWidgetsOnlyMode(frame)
-    local inWidgetsOnlyMode = nil --UnitNameplateShowsWidgetsOnly(frame.unit);
-    frame.healthBar:SetShown(not inWidgetsOnlyMode and not frame.hideHealthbar);
+    local inWidgetsOnlyMode = nil --CUFUnitNameplateShowsWidgetsOnly(frame.unit);
+    frame.healthBar:CUFSetShown(not inWidgetsOnlyMode and not frame.hideHealthbar);
     if frame.castBar and not frame.optionTable.hideCastbar then
         if inWidgetsOnlyMode then
             CastingBarFrame_SetUnit(frame.castBar, nil, nil, nil);
@@ -532,20 +532,20 @@ function CompactUnitFrame_UpdateWidgetsOnlyMode(frame)
         end
     end
     if frame.BuffFrame then
-        frame.BuffFrame:SetShown(not inWidgetsOnlyMode);
+        frame.BuffFrame:CUFSetShown(not inWidgetsOnlyMode);
     end
     if frame.ClassificationFrame then
-        frame.ClassificationFrame:SetShown(not inWidgetsOnlyMode);
+        frame.ClassificationFrame:CUFSetShown(not inWidgetsOnlyMode);
     end
     if frame.RaidTargetFrame then
-        frame.RaidTargetFrame:SetShown(not inWidgetsOnlyMode);
+        frame.RaidTargetFrame:CUFSetShown(not inWidgetsOnlyMode);
     end
     if frame.WidgetContainer then
         frame.WidgetContainer:ClearAllPoints();
         if inWidgetsOnlyMode then
-            PixelUtil.SetPoint(frame.WidgetContainer, "BOTTOM", frame, "BOTTOM", 0, 0);
+            CUFPixelUtil.SetPoint(frame.WidgetContainer, "BOTTOM", frame, "BOTTOM", 0, 0);
         else
-            PixelUtil.SetPoint(frame.WidgetContainer, "TOP", frame.castBar, "BOTTOM", 0, 0);
+            CUFPixelUtil.SetPoint(frame.WidgetContainer, "TOP", frame.castBar, "BOTTOM", 0, 0);
         end
     end
 end
@@ -608,10 +608,10 @@ function CompactUnitFrame_UpdateAggroHighlight(frame)
 end
 
 local function IsPlayerEffectivelyTank()
-    local assignedRole = UnitGroupRoles("player") ;
+    local assignedRole = CUFUnitGroupRoles("player") ;
     if ( assignedRole == "NONE" ) then
         local spec = GetActiveTalentGroup();
-        return spec and GetSpecializationRole(spec) == "TANK";
+        return spec and CUFGetSpecializationRole(spec) == "TANK";
     end
     return assignedRole == "TANK";
 end
@@ -631,9 +631,9 @@ function CompactUnitFrame_UpdateHealthBorder(frame)
         SetBorderColor(frame, frame.optionTable.selectedBorderColor:GetRGBA());
         return;
     end
-    if frame.optionTable.tankBorderColor and IsInGroup() and IsPlayerEffectivelyTank() then
+    if frame.optionTable.tankBorderColor and CUFIsInGroup() and IsPlayerEffectivelyTank() then
         local isTanking, threatStatus = UnitDetailedThreatSituation("player", frame.displayedUnit);
-        local showTankingColor = (not isTanking) and IsOnThreatList(threatStatus) and IsInGroup();
+        local showTankingColor = (not isTanking) and IsOnThreatList(threatStatus) and CUFIsInGroup();
         if showTankingColor then
             SetBorderColor(frame, frame.optionTable.tankBorderColor:GetRGBA());
             return;
@@ -659,9 +659,9 @@ function CompactUnitFrame_UpdateInRange(frame)
 end
 
 function CompactUnitFrame_UpdateDistance(frame)
-    local distance, checkedDistance = UnitDistanceSquared(frame.displayedUnit);
+    local distance, checkedDistance = CUFUnitDistanceCUFSquared(frame.displayedUnit);
     if ( checkedDistance ) then
-        local inDistance = distance < DISTANCE_THRESHOLD_SQUARED;
+        local inDistance = distance < CUF_DISTANCE_THRESHOLD_SQUARED;
         if ( inDistance ~= frame.inDistance ) then
             frame.inDistance = inDistance;
             CompactUnitFrame_UpdateCenterStatusIcon(frame);
@@ -735,7 +735,7 @@ function CompactUnitFrame_UpdateHealPrediction(frame)
     local _, maxHealth = frame.healthBar:GetMinMaxValues();
     local health = frame.healthBar:GetValue();
     --health = maxHealth * fake.healthMult;
-    --PixelUtil.SetStatusBarValue(frame.healthBar, health);
+    --CUFPixelUtil.SetStatusBarValue(frame.healthBar, health);
     if ( maxHealth <= 0 ) then
         return;
     end
@@ -752,14 +752,14 @@ function CompactUnitFrame_UpdateHealPrediction(frame)
         return;
     end
 
-    local myIncomingHeal = UnitGetIncomingHeals(frame.displayedUnit, "player") or 0;
+    local myIncomingHeal = CUFUnitGetIncomingHeals(frame.displayedUnit, "player") or 0;
     --myIncomingHeal = fake.myHeal;
-    local allIncomingHeal = UnitGetIncomingHeals(frame.displayedUnit) or 0;
+    local allIncomingHeal = CUFUnitGetIncomingHeals(frame.displayedUnit) or 0;
     --allIncomingHeal = fake.allHeal;
-    local totalAbsorb = UnitGetTotalAbsorbs(frame.displayedUnit) or 0;
+    local totalAbsorb = CUFUnitGetTotalAbsorbs(frame.displayedUnit) or 0;
     --totalAbsorb = fake.absorb;
     --We don't fill outside the health bar with healAbsorbs.  Instead, an overHealAbsorbGlow is shown.
-    local myCurrentHealAbsorb = UnitGetTotalHealAbsorbs(frame.displayedUnit) or 0;
+    local myCurrentHealAbsorb = CUFUnitGetTotalHealAbsorbs(frame.displayedUnit) or 0;
     --myCurrentHealAbsorb = fake.healAbsorb;
     if ( health < myCurrentHealAbsorb ) then
         frame.overHealAbsorbGlow:Show();
@@ -890,10 +890,10 @@ function CompactUnitFrame_UpdateRoleIcon(frame)
         frame.roleIcon:Show();
         frame.roleIcon:SetSize(size, size);
     else
-        local role = UnitGroupRoles(frame.unit);
+        local role = CUFUnitGroupRoles(frame.unit);
         if ( frame.optionTable.displayRoleIcon and (role == "TANK" or role == "HEALER" or role == "DAMAGER") ) then
             frame.roleIcon:SetTexture("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES");
-            frame.roleIcon:SetTexCoord(GetTexCoordsForRoleSmallCircle(role));
+            frame.roleIcon:SetTexCoord(CUFCUFGetTexCoordsForRoleSmallCircle(role));
             frame.roleIcon:Show();
             frame.roleIcon:SetSize(size, size);
         else
@@ -951,35 +951,35 @@ end
 
 function CompactUnitFrame_UpdateCenterStatusIcon(frame)
     if ( frame.centerStatusIcon ) then
-        if ( frame.optionTable.displayInOtherGroup and UnitInOtherParty(frame.unit) ) then
+        if ( frame.optionTable.displayInOtherGroup and CUFUnitInOtherParty(frame.unit) ) then
             frame.centerStatusIcon.texture:SetTexture("Interface\\LFGFrame\\LFG-Eye");
             frame.centerStatusIcon.texture:SetTexCoord(0.125, 0.25, 0.25, 0.5);
             frame.centerStatusIcon.border:SetTexture("Interface\\Common\\RingBorder");
             frame.centerStatusIcon.border:Show();
             frame.centerStatusIcon.tooltip = PARTY_IN_PUBLIC_GROUP_MESSAGE;
             frame.centerStatusIcon:Show();
-        elseif ( frame.optionTable.displayIncomingResurrect and UnitHasIncomingResurrection(frame.unit) ) then
+        elseif ( frame.optionTable.displayIncomingResurrect and CUFUnitHasIncomingResurrection(frame.unit) ) then
             frame.centerStatusIcon.texture:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\RaidFrame\\Raid-Icon-Rez");
             frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
             frame.centerStatusIcon.border:Hide();
             frame.centerStatusIcon.tooltip = nil;
             frame.centerStatusIcon:Show();
-        elseif ( frame.optionTable.displayIncomingSummon and C_IncomingSummon.HasIncomingSummon(frame.unit) ) then
-            local status = C_IncomingSummon.IncomingSummonStatus(frame.unit);
-            if(status == Enum.SummonStatus.Pending) then
-                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonPending");
+        elseif ( frame.optionTable.displayIncomingSummon and CUF_IncomingSummon.HasIncomingSummon(frame.unit) ) then
+            local status = CUF_IncomingSummon.IncomingSummonStatus(frame.unit);
+            if(status == CUFEnum.SummonStatus.Pending) then
+                frame.centerStatusIcon.texture:CUFSetAtlas("Raid-Icon-SummonPending");
                 frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
                 frame.centerStatusIcon.border:Hide();
                 frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_PENDING;
                 frame.centerStatusIcon:Show();
-            elseif( status == Enum.SummonStatus.Accepted ) then
-                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonAccepted");
+            elseif( status == CUFEnum.SummonStatus.Accepted ) then
+                frame.centerStatusIcon.texture:CUFSetAtlas("Raid-Icon-SummonAccepted");
                 frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
                 frame.centerStatusIcon.border:Hide();
                 frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_ACCEPTED;
                 frame.centerStatusIcon:Show();
-            elseif( status == Enum.SummonStatus.Declined ) then
-                frame.centerStatusIcon.texture:SetAtlas("Raid-Icon-SummonDeclined");
+            elseif( status == CUFEnum.SummonStatus.Declined ) then
+                frame.centerStatusIcon.texture:CUFSetAtlas("Raid-Icon-SummonDeclined");
                 frame.centerStatusIcon.texture:SetTexCoord(0, 1, 0, 1);
                 frame.centerStatusIcon.border:Hide();
                 frame.centerStatusIcon.tooltip = INCOMING_SUMMON_TOOLTIP_SUMMON_DECLINED;
@@ -987,12 +987,12 @@ function CompactUnitFrame_UpdateCenterStatusIcon(frame)
             end
         else
             if not frame.inDistance and frame.optionTable.displayInOtherPhase then
-                local phaseReason = UnitPhaseReason(frame.unit);
+                local phaseReason = CUFUnitPhaseReason(frame.unit);
                 if phaseReason then
                     frame.centerStatusIcon.texture:SetTexture("Interface\\TargetingFrame\\UI-PhasingIcon");
                     frame.centerStatusIcon.texture:SetTexCoord(0.15625, 0.84375, 0.15625, 0.84375);
                     frame.centerStatusIcon.border:Hide();
-                    frame.centerStatusIcon.tooltip = PartyUtil.GetPhasedReasonString(phaseReason, frame.unit);
+                    frame.centerStatusIcon.tooltip = CUFPartyUtil.GetPhasedReasonString(phaseReason, frame.unit);
                     frame.centerStatusIcon:Show();
                     return;
                 end
@@ -1017,26 +1017,26 @@ function CompactUnitFrame_ClearWidgetSet(frame)
 end
 --Other internal functions
 do
-    local function SetDebuffsHelper(debuffFrames, frameNum, maxDebuffs, filter, isBossAura, isBossBuff, auras)
+    local function SetDebuffsHelper(debuffFrames, framCUFEnum, maxDebuffs, filter, isBossAura, isBossBuff, auras)
         if auras then
             for i = 1,#auras do
                 local aura = auras[i];
-                if frameNum > maxDebuffs then
+                if framCUFEnum > maxDebuffs then
                     break;
                 end
-                local debuffFrame = debuffFrames[frameNum];
+                local debuffFrame = debuffFrames[framCUFEnum];
                 local index, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId = aura[1], aura[2], aura[3], aura[4], aura[5], aura[6], aura[7], aura[8], aura[9], aura[10], aura[11];
                 local unit = nil;
                 CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBossAura, isBossBuff, name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId);
-                frameNum = frameNum + 1;
+                framCUFEnum = framCUFEnum + 1;
                 if isBossAura then
                     --Boss auras are about twice as big as normal debuffs, so we may need to display fewer buffs
-                    local bossDebuffScale = (debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE)/debuffFrame.baseSize;
+                    local bossDebuffScale = (debuffFrame.baseSize + CUF_BOSS_DEBUFF_SIZE_INCREASE)/debuffFrame.baseSize;
                     maxDebuffs = maxDebuffs - (bossDebuffScale - 1);
                 end
             end
         end
-        return frameNum, maxDebuffs;
+        return framCUFEnum, maxDebuffs;
     end
 
     local function NumElements(arr)
@@ -1044,7 +1044,7 @@ do
     end
 
     local dispellableDebuffTypes = { Magic = true, Curse = true, Disease = true, Poison = true};
-    -- This interleaves updating buffFrames, debuffFrames and dispelDebuffFrames to reduce the number of calls to UnitAuraSlots/UnitAuraBySlot
+    -- This interleaves updating buffFrames, debuffFrames and dispelDebuffFrames to reduce the number of calls to CUFUnitAuraSlots/CUFUnitAuraBySlot
     local function CompactUnitFrame_UpdateAurasInternal(frame)
         local doneWithBuffs = not frame.buffFrames or not frame.optionTable.displayBuffs or frame.maxBuffs == 0;
         local doneWithDebuffs = not frame.debuffFrames or not frame.optionTable.displayDebuffs or frame.maxDebuffs == 0;
@@ -1059,7 +1059,7 @@ do
         local batchCount = frame.maxDebuffs;
 
         if not doneWithDebuffs then
-            AuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL", batchCount, function(...)
+            CUFAuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL", batchCount, function(...)
                 if CompactUnitFrame_Util_IsBossAura(...) then
                     if not bossDebuffs then
                         bossDebuffs = {};
@@ -1088,7 +1088,7 @@ do
         if not doneWithBuffs or not doneWithDebuffs then
             index = 1;
             batchCount = math.max(frame.maxDebuffs, frame.maxBuffs);
-            AuraUtil.ForEachAura(frame.displayedUnit, "HELPFUL", batchCount, function(...)
+            CUFAuraUtil.ForEachAura(frame.displayedUnit, "HELPFUL", batchCount, function(...)
                 if CompactUnitFrame_Util_IsBossAura(...) then
                     -- Boss Auras are considered Debuffs for our purposes.
                     if not doneWithDebuffs then
@@ -1132,7 +1132,7 @@ do
         if not doneWithDispelDebuffs or not doneWithDebuffs then
             batchCount = math.max(frame.maxDebuffs, frame.maxDispelDebuffs);
             index = 1;
-            AuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL|RAID", batchCount, function(...)
+            CUFAuraUtil.ForEachAura(frame.displayedUnit, "HARMFUL|RAID", batchCount, function(...)
                 if not doneWithDebuffs and displayOnlyDispellableDebuffs then
                     if CompactUnitFrame_Util_ShouldDisplayDebuff(...) and not CompactUnitFrame_Util_IsBossAura(...) and not CompactUnitFrame_Util_IsPriorityDebuff(...) then
                         if not nonBossRaidDebuffs then
@@ -1162,35 +1162,35 @@ do
             end);
         end
 
-        local frameNum = 1;
+        local framCUFEnum = 1;
         local maxDebuffs = frame.maxDebuffs;
         do
             local isBossAura = true;
             local isBossBuff = false;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, bossDebuffs);
+            framCUFEnum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, framCUFEnum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, bossDebuffs);
         end
         do
             local isBossAura = true;
             local isBossBuff = true;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HELPFUL", isBossAura, isBossBuff, bossBuffs);
+            framCUFEnum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, framCUFEnum, maxDebuffs, "HELPFUL", isBossAura, isBossBuff, bossBuffs);
         end
         do
             local isBossAura = true;
             local isBossBuff = false;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, priorityDebuffs);
+            framCUFEnum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, framCUFEnum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, priorityDebuffs);
         end
         do
             local isBossAura = false;
             local isBossBuff = false;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL|RAID", isBossAura, isBossBuff, nonBossRaidDebuffs);
+            framCUFEnum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, framCUFEnum, maxDebuffs, "HARMFUL|RAID", isBossAura, isBossBuff, nonBossRaidDebuffs);
         end
         do
             local isBossAura = false;
             local isBossBuff = false;
-            frameNum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, frameNum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, nonBossDebuffs);
+            framCUFEnum, maxDebuffs = SetDebuffsHelper(frame.debuffFrames, framCUFEnum, maxDebuffs, "HARMFUL", isBossAura, isBossBuff, nonBossDebuffs);
         end
 
-        numUsedDebuffs = frameNum - 1;
+        numUsedDebuffs = framCUFEnum - 1;
         CompactUnitFrame_HideAllBuffs(frame, numUsedBuffs + 1);
         CompactUnitFrame_HideAllDebuffs(frame, numUsedDebuffs + 1);
         CompactUnitFrame_HideAllDispelDebuffs(frame, numUsedDispelDebuffs + 1);
@@ -1204,11 +1204,11 @@ end
 --Utility Functions
 function CompactUnitFrame_UtilShouldDisplayBuff(...)
     local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura = ...;
-    local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+    local hasCustom, alwaysShowMine, showForMySpec = CUFSpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
     if ( hasCustom ) then
         return showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle"));
     else
-        return (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") and canApplyAura and not SpellIsSelfBuff(spellId);
+        return (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") and canApplyAura and not CUFSpellIsSelfBuff(spellId);
     end
 end
 
@@ -1255,7 +1255,7 @@ function CompactUnitFrame_UtilSetBuff(buffFrame, index, ...)
         local startTime = expirationTime - duration;
         CooldownFrame_SetTimer(buffFrame.cooldown, startTime, duration, 1);
     else
-        CooldownFrame_Clear(buffFrame.cooldown);
+        CUFCooldownFrame_Clear(buffFrame.cooldown);
     end
     buffFrame:SetFrameStrata("MEDIUM");
     buffFrame:Show();
@@ -1263,7 +1263,7 @@ end
 
 function CompactUnitFrame_Util_ShouldDisplayDebuff(...)
     local name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, _, spellId, canApplyAura, isBossAura = ...;
-    local hasCustom, alwaysShowMine, showForMySpec = SpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
+    local hasCustom, alwaysShowMine, showForMySpec = CUFSpellGetVisibilityInfo(spellId, UnitAffectingCombat("player") and "RAID_INCOMBAT" or "RAID_OUTOFCOMBAT");
     if ( hasCustom ) then
         return showForMySpec or (alwaysShowMine and (unitCaster == "player" or unitCaster == "pet" or unitCaster == "vehicle") );   --Would only be "mine" in the case of something like forbearance.
     else
@@ -1281,12 +1281,12 @@ do
         CompactUnitFrame_Util_IsPriorityDebuff = function(...)
             local spellId = select(10, ...);
             local isForbearance = (spellId == 25771);
-            return isForbearance or SpellIsPriorityAura(spellId);
+            return isForbearance or CUFSpellIsPriorityAura(spellId);
         end
     else
         CompactUnitFrame_Util_IsPriorityDebuff = function(...)
             local spellId = select(10, ...);
-            return SpellIsPriorityAura(spellId);
+            return CUFSpellIsPriorityAura(spellId);
         end
     end
 end
@@ -1326,13 +1326,13 @@ function CompactUnitFrame_UtilSetDebuff(debuffFrame, unit, index, filter, isBoss
         local startTime = expirationTime - duration;
         CooldownFrame_SetTimer(debuffFrame.cooldown, startTime, duration, 1);
     else
-        CooldownFrame_Clear(debuffFrame.cooldown);
+        CUFCooldownFrame_Clear(debuffFrame.cooldown);
     end
     local color = DebuffTypeColor[debuffType] or DebuffTypeColor["none"];
     debuffFrame.border:SetVertexColor(color.r, color.g, color.b);
     debuffFrame.isBossBuff = isBossBuff;
     if ( isBossAura ) then
-        local size = min(debuffFrame.baseSize + BOSS_DEBUFF_SIZE_INCREASE, debuffFrame.maxHeight);
+        local size = min(debuffFrame.baseSize + CUF_BOSS_DEBUFF_SIZE_INCREASE, debuffFrame.maxHeight);
         debuffFrame:SetSize(size, size);
     else
         debuffFrame:SetSize(debuffFrame.baseSize, debuffFrame.baseSize);

@@ -2,11 +2,11 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-  <Texture name="UIPanelButtonHighlightTexture" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD" virtual="true">
+  <Texture name="CUFUIPanelButtonHighlightTexture" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-Highlight" alphaMode="ADD" virtual="true">
     <TexCoords left="0" right="0.625" top="0" bottom="0.6875" />
   </Texture>
 
-  <Button name="UIPanelButtonNoTooltipTemplate" virtual="true">
+  <Button name="CUFUIPanelButtonNoTooltipTemplate" virtual="true">
     <Size x="40" y="22" />
     <Layers>
       <Layer level="BACKGROUND">
@@ -48,7 +48,7 @@
     <NormalFont style="GameFontNormal" />
     <HighlightFont style="GameFontHighlight" />
     <DisabledFont style="GameFontDisable" />
-    <HighlightTexture inherits="UIPanelButtonHighlightTexture" />
+    <HighlightTexture inherits="CUFUIPanelButtonHighlightTexture" />
   </Button>
 
 </Ui>

@@ -56,8 +56,8 @@ end
 function CompactRaidGroup_UpdateUnits(frame)
     local groupIndex = frame:GetID();
     local frameIndex = 1;
-    if ( IsInRaid() ) then
-        for i=1, GetNumGroupMembers() do
+    if ( CUFIsInRaid() ) then
+        for i=1, CUFGetNumGroupMembers() do
             local name, rank, subgroup = GetRaidRosterInfo(i);
             if ( subgroup == groupIndex and frameIndex <= MEMBERS_PER_RAID_GROUP ) then
                 CompactUnitFrame_SetUnit(_G[frame:GetName().."Member"..frameIndex], "raid"..i);

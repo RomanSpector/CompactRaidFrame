@@ -42,11 +42,11 @@ local function SetupPieceVisuals(piece, setupInfo, pieceLayout, textureKit, user
     --- Change texture coordinates before applying atlas.
     SetupTextureCoordinates(piece, setupInfo, pieceLayout, userLayout);
     -- textureKit is optional, that's fine; but if it's nil the caller should ensure that there are no format specifiers in .atlas
-    local atlasName = GetFinalNameFromTextureKit(pieceLayout.atlas, textureKit);
-    local info = C_Texture.GetAtlasInfo(atlasName);
+    local atlasName = CUFGetFinalNameFromTextureKit(pieceLayout.atlas, textureKit);
+    local info = CUF_Texture.GetAtlasInfo(atlasName);
     piece:SetHorizTile(info and info.tilesHorizontally or false);
     piece:SetVertTile(info and info.tilesVertically or false);
-    piece:SetAtlas(atlasName, true);
+    piece:CUFSetAtlas(atlasName, true);
 end
 
 local function SetupCorner(container, piece, setupInfo, pieceLayout)
@@ -295,16 +295,16 @@ local layouts =
 };
 --------------------------------------------------
 -- NINE SLICE UTILS
-NineSliceUtil = {};
-function NineSliceUtil.ApplyUniqueCornersLayout(self, textureKit)
-    NineSliceUtil.ApplyLayout(self, layouts.UniqueCornersLayout, textureKit);
+CUFNineSliceUtil = {};
+function CUFNineSliceUtil.ApplyUniqueCornersLayout(self, textureKit)
+    CUFNineSliceUtil.ApplyLayout(self, layouts.UniqueCornersLayout, textureKit);
 end
 
-function NineSliceUtil.ApplyIdenticalCornersLayout(self, textureKit)
-    NineSliceUtil.ApplyLayout(self, layouts.IdenticalCornersLayout, textureKit);
+function CUFNineSliceUtil.ApplyIdenticalCornersLayout(self, textureKit)
+    CUFNineSliceUtil.ApplyLayout(self, layouts.IdenticalCornersLayout, textureKit);
 end
 
-function NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
+function CUFNineSliceUtil.ApplyLayout(container, userLayout, textureKit)
     for pieceIndex, setup in ipairs(nineSliceSetup) do
         local pieceName = setup.pieceName;
         local pieceLayout = userLayout[pieceName];
@@ -326,7 +326,7 @@ function NineSliceUtil.ApplyLayout(container, userLayout, textureKit)
     end
 end
 
-function NineSliceUtil.DisableSharpening(container)
+function CUFNineSliceUtil.DisableSharpening(container)
     for pieceIndex, setup in ipairs(nineSliceSetup) do
         local piece = GetNineSlicePiece(container, setup.pieceName);
         piece:SetTexelSnappingBias(0);
@@ -334,28 +334,28 @@ function NineSliceUtil.DisableSharpening(container)
     end
 end
 
-function NineSliceUtil.ApplyLayoutByName(container, userLayoutName, textureKit)
-    return NineSliceUtil.ApplyLayout(container, NineSliceUtil.GetLayout(userLayoutName), textureKit);
+function CUFNineSliceUtil.ApplyLayoutByName(container, userLayoutName, textureKit)
+    return CUFNineSliceUtil.ApplyLayout(container, CUFNineSliceUtil.GetLayout(userLayoutName), textureKit);
 end
 
-function NineSliceUtil.GetLayout(layoutName)
+function CUFNineSliceUtil.GetLayout(layoutName)
     return layouts[layoutName];
 end
 
-function NineSliceUtil.AddLayout(layoutName, layout)
+function CUFNineSliceUtil.AddLayout(layoutName, layout)
     layouts[layoutName] = layout;
 end
 --------------------------------------------------
 -- NINE SLICE PANEL MIXIN
-NineSlicePanelMixin = {};
+CUFNineSlicePanelMixin = {};
 
-function NineSlicePanelMixin:GetFrameLayoutType()
+function CUFNineSlicePanelMixin:GetFrameLayoutType()
     return self.layoutType or self:GetParent().layoutType;
 end
 
-function NineSlicePanelMixin:OnLoad()
-    local layout = NineSliceUtil.GetLayout(self:GetFrameLayoutType());
+function CUFNineSlicePanelMixin:OnLoad()
+    local layout = CUFNineSliceUtil.GetLayout(self:GetFrameLayoutType());
     if layout then
-        NineSliceUtil.ApplyLayout(self, layout, self.layoutTextureKit);
+        CUFNineSliceUtil.ApplyLayout(self, layout, self.layoutTextureKit);
     end
 end

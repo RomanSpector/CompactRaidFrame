@@ -15,14 +15,14 @@ local FrameData = {
     CreateFrame("CheckButton"),
 }
 
-function InitSubFrame()
+function CUFInitSubFrame()
     for _, v in pairs(FrameData) do
         Texture = getmetatable(v:CreateTexture())
         FontString = getmetatable(v:CreateFontString())
     end
 end
 
-InitSubFrame()
+CUFInitSubFrame()
 
 local function Method_SetShown(self, ...)
     if ... then
@@ -189,55 +189,55 @@ local function Method_ClearAndSetPoint(self, ...)
 end
 
 -- Frame Method
-function Frame.__index:SetShown( ... ) Method_SetShown( self, ... ) end
+function Frame.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
 function Frame.__index:FixOpenPanel( ... ) Method_FixOpenPanel( self, ... ) end
-function Frame.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function Frame.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Frame.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function Frame.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- Button Method
-function Button.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function Button.__index:SetEnabled( ... ) Method_SetEnabled( self, ... ) end
-function Button.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function Button.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
-function Button.__index:SetNormalAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetNormalTexture(), atlasName, useAtlasSize, filterMode )  end
-function Button.__index:SetPushedAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetPushedTexture(), atlasName, useAtlasSize, filterMode )  end
-function Button.__index:SetDisabledAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetDisabledTexture(), atlasName, useAtlasSize, filterMode )  end
-function Button.__index:SetHighlightAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetHighlightTexture(), atlasName, useAtlasSize, filterMode )  end
+function Button.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function Button.__index:CUFSetEnabled( ... ) Method_SetEnabled( self, ... ) end
+function Button.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function Button.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Button.__index:CUFSetNormalAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetNormalTexture(), atlasName, useAtlasSize, filterMode )  end
+function Button.__index:CUFSetPushedAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetPushedTexture(), atlasName, useAtlasSize, filterMode )  end
+function Button.__index:CUFSetDisabledAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetDisabledTexture(), atlasName, useAtlasSize, filterMode )  end
+function Button.__index:CUFSetHighlightAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetHighlightTexture(), atlasName, useAtlasSize, filterMode )  end
 
 -- Slider Method
-function Slider.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function Slider.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function Slider.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Slider.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function Slider.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function Slider.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- Texture Method
-function Texture.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function Texture.__index:SetSubTexCoord( left, right, top, bottom ) Method_SetSubTexCoord( self, left, right, top, bottom ) end
-function Texture.__index:SetPortrait( displayID ) Method_SetPortrait( self, displayID ) end
-function Texture.__index:SetAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self, atlasName, useAtlasSize, filterMode ) end
-function Texture.__index:GetAtlas() return Method_GetAtlas( self ) end
-function Texture.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function Texture.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Texture.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function Texture.__index:CUFSetSubTexCoord( left, right, top, bottom ) Method_SetSubTexCoord( self, left, right, top, bottom ) end
+function Texture.__index:CUFSetPortrait( displayID ) Method_SetPortrait( self, displayID ) end
+function Texture.__index:CUFSetAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self, atlasName, useAtlasSize, filterMode ) end
+function Texture.__index:CUFGetAtlas() return Method_GetAtlas( self ) end
+function Texture.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function Texture.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- StatusBar Method
-function StatusBar.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function StatusBar.__index:SmoothSetValue( value ) Method_SmoothSetValue( self, value ) end
-function StatusBar.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function StatusBar.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function StatusBar.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function StatusBar.__index:CUFSmoothSetValue( value ) Method_SmoothSetValue( self, value ) end
+function StatusBar.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function StatusBar.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- FontString Method
-function FontString.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function FontString.__index:SetRemainingTime( time, daysformat ) Method_SetRemainingTime( self, time, daysformat ) end
-function FontString.__index:SetDesaturated( toggle, color ) Method_SetDesaturated( self, toggle, color ) end
-function FontString.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function FontString.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function FontString.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function FontString.__index:CUFSetRemainingTime( time, daysformat ) Method_SetRemainingTime( self, time, daysformat ) end
+function FontString.__index:CUFSetDesaturated( toggle, color ) Method_SetDesaturated( self, toggle, color ) end
+function FontString.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function FontString.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- ScrollFrame Method
-function ScrollFrame.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function ScrollFrame.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function ScrollFrame.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function ScrollFrame.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function ScrollFrame.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function ScrollFrame.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
 
 -- CheckButton Method
-function CheckButton.__index:SetShown( ... ) Method_SetShown( self, ... ) end
-function CheckButton.__index:SetEnabled( ... ) Method_SetEnabled( self, ... ) end
-function CheckButton.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
-function CheckButton.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function CheckButton.__index:CUFSetShown( ... ) Method_SetShown( self, ... ) end
+function CheckButton.__index:CUFSetEnabled( ... ) Method_SetEnabled( self, ... ) end
+function CheckButton.__index:CUFSetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
+function CheckButton.__index:CUFClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end

@@ -259,7 +259,7 @@ function ChatThrottleLib:UpdateAvail()
 	local avail = self.avail
 
 	if now - self.HardThrottlingBeginTime < 5 then
-		-- First 5 seconds after startup/zoning: VERY hard clamping to avoid irritating the server rate limiter, it seems very cranky then
+		-- First 5 seconds after startup/zoning: VERY hard Clamping to avoid irritating the server rate limiter, it seems very cranky then
 		avail = math_min(avail + (newavail*0.1), MAX_CPS*0.5)
 		self.bChoking = true
 	elseif GetFramerate() < self.MIN_FPS then		-- GetFrameRate call takes ~0.002 secs

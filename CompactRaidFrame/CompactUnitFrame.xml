@@ -34,7 +34,7 @@
       </Cooldown>
     </Frames>
     <Scripts>
-      <!-- <OnClick function="PassClickToParent"/> -->
+      <!-- <OnClick function="CUFPassClickToParent"/> -->
     </Scripts>
   </Button>
   <Button name="CompactDebuffTemplate" inherits="CompactAuraTemplate" virtual="true">
@@ -125,7 +125,7 @@
         tinsert(parent.dispelDebuffFrames, self);
         self:RegisterForClicks("LeftButtonDown", "RightButtonUp");
       </OnLoad>
-      <!-- <OnClick function="PassClickToParent"/> -->
+      <!-- <OnClick function="CUFPassClickToParent"/> -->
       <OnUpdate>
         if ( GameTooltip:IsOwned(self) ) then
           GameTooltip:SetUnitDebuff(self:GetParent():GetParent().displayedUnit, self:GetID(), "RAID");
@@ -175,7 +175,7 @@
             <FontString name="$parentStatusText" inherits="GameFontDisable" parentKey="statusText" />
           </Layer>
           <Layer level="ATWORK">
-            <FontString name="$parentName" inherits="GameFontHighlightSmall" parentKey="name" wordwrap="false" />
+            <FontString name="$parentName" inherits="GameFontHighlightSmall" parentKey="name" wordWrap="false" />
             <Texture name="$parentRoleIcon" hidden="true" parentKey="roleIcon" />
             <Texture name="$parentAggroHighlight" parentKey="aggroHighlight" />
             <Texture name="$parentMyHealAbsorb" parentKey="myHealAbsorb" />

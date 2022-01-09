@@ -1,8 +1,8 @@
-PartyUtil = {};
+CUFPartyUtil = {};
 
 local unitTags = { "player", "party1", "party2", "party3", "party4" };
 
-function PartyUtil.GetMinLevel()
+function CUFPartyUtil.GetMinLevel()
     local minLevel = math.huge;
     for index, unit in ipairs(unitTags) do
         if UnitExists(unit) then
@@ -64,23 +64,23 @@ local function GetShardedString(unitToken)
     end
 end
 
-function PartyUtil.GetPhasedReasonString(phaseReason, unitToken)
-    if phaseReason == Enum.PhaseReason.WarMode then
-        if C_PvP.IsWarModeDesired() then
+function CUFPartyUtil.GetPhasedReasonString(phaseReason, unitToken)
+    if phaseReason == CUFEnum.PhaseReason.WarMode then
+        if CUF_PvP.IsWarModeDesired() then
             return PARTY_PLAYER_WARMODE_DISABLED;
         else
             return PARTY_PLAYER_WARMODE_ENABLED;
         end
-    elseif phaseReason == Enum.PhaseReason.ChromieTime then
+    elseif phaseReason == CUFEnum.PhaseReason.ChromieTime then
         return GetChromieTimeString(unitToken);
-    elseif phaseReason == Enum.PhaseReason.Phasing then
+    elseif phaseReason == CUFEnum.PhaseReason.Phasing then
         return PARTY_PHASED_MESSAGE;
-    elseif phaseReason == Enum.PhaseReason.Sharding then
+    elseif phaseReason == CUFEnum.PhaseReason.Sharding then
         return GetShardedString(unitToken);
     end
 end
 
-function GetGroupMemberCountsForDisplay()
+function CUFGetGroupMemberCountsForDisplay()
     local data = GetGroupMemberCounts();
     data.DAMAGER = data.DAMAGER + data.NOROLE; --People without a role count as damage
     data.NOROLE = 0;

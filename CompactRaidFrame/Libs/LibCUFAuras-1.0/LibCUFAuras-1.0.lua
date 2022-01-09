@@ -149,14 +149,14 @@ function lib.handler:UNIT_AURA(_, unitID)
     UnitAurasUpdate(unitID);
 end
 
-local function IsInRaid()
+local function CUFIsInRaid()
     return GetNumRaidMembers() > 0;
 end
 
 local function GetUnitsRoster()
     local roster = { "player" };
-    local unit = IsInRaid() and "raid" or "party";
-    local MAX_UNIT_INDEX = IsInRaid() and 40 or 4;
+    local unit = CUFIsInRaid() and "raid" or "party";
+    local MAX_UNIT_INDEX = CUFIsInRaid() and 40 or 4;
 
     for i=1, MAX_UNIT_INDEX do
         tinsert(roster, unit..i);
@@ -206,7 +206,7 @@ end
 do
 
     local auraSlots = {};
-    function lib:UnitAuraSlots(unit, filter, maxCount, continuationToken)
+    function lib:CUFUnitAuraSlots(unit, filter, maxCount, continuationToken)
         if ( continuationToken or not self.CASHE[UnitGUID(unit)] ) then
             return;
         end
@@ -229,11 +229,11 @@ do
 
 end
 
-function lib:UnitAuraBySlot(unit, slot)
-    assert(unit, "UnitAuraBySlot: not found unit");
-    assert(slot, "UnitAuraBySlot: not found slot");
-    assert(type(unit)=="string", "UnitAuraBySlot: unit is not string value.");
-    assert(type(slot)=="number", "UnitAuraBySlot: slot is not number value.");
+function lib:CUFUnitAuraBySlot(unit, slot)
+    assert(unit, "CUFUnitAuraBySlot: not found unit");
+    assert(slot, "CUFUnitAuraBySlot: not found slot");
+    assert(type(unit)=="string", "CUFUnitAuraBySlot: unit is not string value.");
+    assert(type(slot)=="number", "CUFUnitAuraBySlot: slot is not number value.");
 
     local tracker = self.CASHE[UnitGUID(unit)];
     local info = tracker and tracker[slot];
@@ -254,7 +254,7 @@ function lib:UnitAuraBySlot(unit, slot)
     end
 end
 
-function lib:SpellGetVisibilityInfo(spellID, visType)
+function lib:CUFSpellGetVisibilityInfo(spellID, visType)
     spellID = tonumber(spellID);
     assert(type(spellID)=="number", "spellID is not number value");
     local info = CLASS_AURAS[GetSpellInfo(spellID)];
@@ -264,7 +264,7 @@ function lib:SpellGetVisibilityInfo(spellID, visType)
     return info[visType].hasCustom, info[visType].alwaysShowMine, info[visType].showForMySpec;
 end
 
-function lib:SpellIsSelfBuff(spellID)
+function lib:CUFSpellIsSelfBuff(spellID)
     spellID = tonumber(spellID);
     assert(type(spellID)=="number", "spellID is not number value");
 

@@ -40,12 +40,12 @@ end
 
 function CompactUnitFrameProfiles_ValidateProfilesLoaded(self)
 	if ( HasLoadedCUFProfiles() and self.variablesLoaded ) then
-		if ( RaidProfileExists(GetActiveRaidProfile()) ) then
-			CompactUnitFrameProfiles_ActivateRaidProfile(GetActiveRaidProfile());
-		elseif ( GetNumRaidProfiles() == 0 ) then	--If we don't have any profiles, we need to create a new one.
+		if ( CUFRaidProfileExists(CUFGetActiveRaidProfile()) ) then
+			CompactUnitFrameProfiles_ActivateRaidProfile(CUFGetActiveRaidProfile());
+		elseif ( CUFGetNumRaidProfiles() == 0 ) then	--If we don't have any profiles, we need to create a new one.
 			CompactUnitFrameProfiles_ResetToDefaults();
 		else
-			CompactUnitFrameProfiles_ActivateRaidProfile(GetRaidProfileName(1));
+			CompactUnitFrameProfiles_ActivateRaidProfile(CUFGetRaidProfileName(1));
 		end
 	end
 end
@@ -56,18 +56,18 @@ end
 
 function CompactUnitFrameProfiles_ResetToDefaults()
 	local profiles = {};
-	for i=1, GetNumRaidProfiles() do
-		tinsert(profiles, GetRaidProfileName(i));
+	for i=1, CUFGetNumRaidProfiles() do
+		tinsert(profiles, CUFGetRaidProfileName(i));
 	end
 	for i=1, #profiles do
-		DeleteRaidProfile(profiles[i]);
+		CUFDeleteRaidProfile(profiles[i]);
 	end
-	CreateNewRaidProfile(DEFAULT_CUF_PROFILE_NAME);
+	CUFCreateNewRaidProfile(DEFAULT_CUF_PROFILE_NAME);
 	CompactUnitFrameProfiles_ActivateRaidProfile(DEFAULT_CUF_PROFILE_NAME);
 end
 
 function CompactUnitFrameProfiles_SaveChanges(self)
-	SaveRaidProfileCopy(self.selectedProfile);	--Save off the current version in case we cancel.
+	CUFSaveRaidProfileCopy(self.selectedProfile);	--Save off the current version in case we cancel.
 	CompactUnitFrameProfiles_UpdateManagementButtons();
 end
 
@@ -76,7 +76,7 @@ function CompactUnitFrameProfiles_CancelCallback(self)
 end
 
 function CompactUnitFrameProfiles_CancelChanges(self)
-	RestoreRaidProfileFromCopy();
+	CUFRestoreRaidProfileFromCopy();
 	CompactUnitFrameProfiles_UpdateCurrentPanel();
 	CompactUnitFrameProfiles_ApplyCurrentSettings();
 end
@@ -97,8 +97,8 @@ function CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_Initialize(
 	info.isRadio = true;
 	UIDropDownMenu_AddButton(info);
 
-	for i=1, GetNumRaidProfiles() do
-		local name = GetRaidProfileName(i);
+	for i=1, CUFGetNumRaidProfiles() do
+		local name = CUFGetRaidProfileName(i);
 		info.text = name;
 		info.disabled  = UnitAffectingCombat("player");
 		info.value = name;
@@ -116,13 +116,13 @@ end
 function CompactUnitFrameProfilesProfileSelector_SetUp(self)
 	UIDropDownMenu_SetWidth(self, 190);
 	UIDropDownMenu_Initialize(self, CompactUnitFrameProfilesProfileSelector_Initialize);
-	--UIDropDownMenu_SetSelectedValue(self, GetActiveRaidProfile());
+	--UIDropDownMenu_SetSelectedValue(self, CUFGetActiveRaidProfile());
 end
 
 function CompactUnitFrameProfilesProfileSelector_Initialize()
 	local info = UIDropDownMenu_CreateInfo();
-	for i=1, GetNumRaidProfiles() do 
-		local name = GetRaidProfileName(i);
+	for i=1, CUFGetNumRaidProfiles() do 
+		local name = CUFGetRaidProfileName(i);
 		info.text = name;
 		info.disabled  = UnitAffectingCombat("player");
 		info.func = CompactUnitFrameProfilesProfileSelectorButton_OnClick;
@@ -138,13 +138,13 @@ function CompactUnitFrameProfilesProfileSelector_Initialize()
 	info.value = nil;
 	info.checked = false;
 	info.notCheckable = true;
-	info.disabled = GetNumRaidProfiles() >= GetMaxNumCUFProfiles();
+	info.disabled = CUFGetNumRaidProfiles() >= GetMaxNumCUFProfiles();
 	info.isRadio = true;
 	UIDropDownMenu_AddButton(info);
 end
 
 function CompactUnitFrameProfilesProfileSelectorButton_OnClick(self)
-	if ( RaidProfileHasUnsavedChanges() ) then
+	if ( CUFRaidProfileHasUnsavedChanges() ) then
 		CompactUnitFrameProfiles_ConfirmUnsavedChanges("select", self.value);
 	else
 		CompactUnitFrameProfiles_ActivateRaidProfile(self.value);
@@ -152,7 +152,7 @@ function CompactUnitFrameProfilesProfileSelectorButton_OnClick(self)
 end
 
 function CompactUnitFrameProfiles_NewProfileButtonClicked()
-	if ( RaidProfileHasUnsavedChanges() ) then
+	if ( CUFRaidProfileHasUnsavedChanges() ) then
 		CompactUnitFrameProfiles_ConfirmUnsavedChanges("new");
 	else
 		CompactUnitFrameProfiles_ShowNewProfileDialog();
@@ -161,8 +161,8 @@ end
 
 function CompactUnitFrameProfiles_ActivateRaidProfile(profile)
 	CompactUnitFrameProfiles.selectedProfile = profile;
-	SaveRaidProfileCopy(profile);	--Save off the current version in case we cancel.
-	SetActiveRaidProfile(profile);
+	CUFSaveRaidProfileCopy(profile);	--Save off the current version in case we cancel.
+	CUFSetActiveRaidProfile(profile);
 	UIDropDownMenu_SetSelectedValue(CompactUnitFrameProfilesProfileSelector, profile);
 	UIDropDownMenu_SetText(CompactUnitFrameProfilesProfileSelector, profile);
 	UIDropDownMenu_SetSelectedValue(CompactRaidFrameManagerDisplayFrameProfileSelector, profile);
@@ -174,7 +174,7 @@ function CompactUnitFrameProfiles_ActivateRaidProfile(profile)
 end
 
 function CompactUnitFrameProfiles_ApplyCurrentSettings()
-	CompactUnitFrameProfiles_ApplyProfile(GetActiveRaidProfile());
+	CompactUnitFrameProfiles_ApplyProfile(CUFGetActiveRaidProfile());
 end
 
 function CompactUnitFrameProfiles_UpdateCurrentPanel()
@@ -187,7 +187,7 @@ function CompactUnitFrameProfiles_UpdateCurrentPanel()
 end
 
 function CompactUnitFrameProfiles_CreateProfile(profileName)
-	CreateNewRaidProfile(profileName, CompactUnitFrameProfiles.newProfileDialog.baseProfile);
+	CUFCreateNewRaidProfile(profileName, CompactUnitFrameProfiles.newProfileDialog.baseProfile);
 	CompactUnitFrameProfiles_ActivateRaidProfile(profileName);
 end
 
@@ -195,7 +195,7 @@ function CompactUnitFrameProfiles_UpdateNewProfileCreateButton()
 	local button = CompactUnitFrameProfiles.newProfileDialog.createButton;
 	local text = strtrim(CompactUnitFrameProfiles.newProfileDialog.editBox:GetText());
 
-	if ( text == "" or RaidProfileExists(text) or strlower(text) == strlower(DEFAULTS) ) then
+	if ( text == "" or CUFRaidProfileExists(text) or strlower(text) == strlower(DEFAULTS) ) then
 		button:Disable();
 	else
 		button:Enable();
@@ -223,13 +223,13 @@ function CompactUnitFrameProfiles_ConfirmProfileDeletion(profile)
 end
 
 function CompactUnitFrameProfiles_UpdateManagementButtons()
-	if ( GetNumRaidProfiles() <= 1 ) then
+	if ( CUFGetNumRaidProfiles() <= 1 ) then
 		CompactUnitFrameProfilesDeleteButton:Disable();
 	else
 		CompactUnitFrameProfilesDeleteButton:Enable();
 	end
 
-	if RaidProfileHasUnsavedChanges() then 
+	if CUFRaidProfileHasUnsavedChanges() then 
 		CompactUnitFrameProfilesSaveButton:Enable();
 	else
 		CompactUnitFrameProfilesSaveButton:Disable();
@@ -282,20 +282,20 @@ function CompactUnitFrameProfiles_GetAutoActivationState()
 		profileType = instanceType;
 		enemyType = "PvE";
 	elseif ( instanceType == "arena" ) then
-		numPlayers = countMap[GetNumGroupMembers()];
+		numPlayers = countMap[CUFGetNumGroupMembers()];
 		profileType = instanceType;
 		enemyType = "PvP";
 	elseif ( instanceType == "pvp" ) then
 		if ( false ) then -- IsRatedBattleground()
 			numPlayers = 10;
 		else
-			numPlayers = countMap[GetMaxUnitNumberBattleground()]; -- временно maxPlayers
+			numPlayers = countMap[CUFGetMaxUnitNumberBattleground()]; -- временно maxPlayers
 		end
 
 		profileType = instanceType;
 		enemyType = "PvP";
 	else
-		numPlayers = countMap[GetNumGroupMembers()];
+		numPlayers = countMap[CUFGetNumGroupMembers()];
 		profileType = "world";
 		enemyType = "PvE";
 	end
@@ -311,7 +311,7 @@ local checkAutoActivationTimer;
 function CompactUnitFrameProfiles_CheckAutoActivation()
 	--We only want to adjust the profile when you 1) Zone or 2) change specs. We don't want to automatically
 	--change the profile when you are in the uninstanced world.
-	if ( not IsInGroup() ) then
+	if ( not CUFIsInGroup() ) then
 		CompactUnitFrameProfiles_SetLastActivationType(nil, nil, nil, nil);
 		return;
 	end
@@ -339,11 +339,11 @@ function CompactUnitFrameProfiles_CheckAutoActivation()
 		return;
 	end
 
-	if ( CompactUnitFrameProfiles_ProfileMatchesAutoActivation(GetActiveRaidProfile(), numPlayers, spec, enemyType) ) then
+	if ( CompactUnitFrameProfiles_ProfileMatchesAutoActivation(CUFGetActiveRaidProfile(), numPlayers, spec, enemyType) ) then
 		CompactUnitFrameProfiles_SetLastActivationType(activationType, numPlayers, spec, enemyType);
 	else
-		for i=1, GetNumRaidProfiles() do
-			local profile = GetRaidProfileName(i);
+		for i=1, CUFGetNumRaidProfiles() do
+			local profile = CUFGetRaidProfileName(i);
 			if ( CompactUnitFrameProfiles_ProfileMatchesAutoActivation(profile, numPlayers, spec, enemyType) ) then
 				CompactUnitFrameProfiles_ActivateRaidProfile(profile);
 				CompactUnitFrameProfiles_SetLastActivationType(activationType, numPlayers, spec, enemyType);
@@ -365,8 +365,8 @@ function CompactUnitFrameProfiles_GetLastActivationType()
 end
 
 function CompactUnitFrameProfiles_ProfileMatchesAutoActivation(profile, numPlayers, spec, enemyType)
-	return GetRaidProfileOption(profile, "autoActivate"..numPlayers.."Players") and GetRaidProfileOption(profile, "autoActivateSpec"..spec) and
-		GetRaidProfileOption(profile, "autoActivate"..enemyType);
+	return CUFGetRaidProfileOption(profile, "autoActivate"..numPlayers.."Players") and CUFGetRaidProfileOption(profile, "autoActivateSpec"..spec) and
+		CUFGetRaidProfileOption(profile, "autoActivate"..enemyType);
 end
 
 function CompactUnitFrameAutoActivateSpec_OnLoad(self)
@@ -396,22 +396,22 @@ function CompactUnitFrameProfilesGeneralOptionsFrame_OnShow(self)
 end
 
 function CompactUnitFrameProfile_UpdateAutoActivationDisabledLabel()
-	local profile = GetActiveRaidProfile();
+	local profile = CUFGetActiveRaidProfile();
 	local hasGroupSize = false;
 	for i=1, #autoActivateGroupSizes do
-		if ( GetRaidProfileOption(profile, "autoActivate"..autoActivateGroupSizes[i].."Players") ) then
+		if ( CUFGetRaidProfileOption(profile, "autoActivate"..autoActivateGroupSizes[i].."Players") ) then
 			hasGroupSize = true;
 			break;
 		end
 	end
 
 	local hasTalentSpec = false;
-	if ( GetRaidProfileOption(profile, "autoActivateSpec1") or GetRaidProfileOption(profile, "autoActivateSpec2") )  then
+	if ( CUFGetRaidProfileOption(profile, "autoActivateSpec1") or CUFGetRaidProfileOption(profile, "autoActivateSpec2") )  then
 		hasTalentSpec = true;
 	end
 
 	local hasEnemyType = false;
-	if ( GetRaidProfileOption(profile, "autoActivatePvP") or GetRaidProfileOption(profile, "autoActivatePvE") ) then
+	if ( CUFGetRaidProfileOption(profile, "autoActivatePvP") or CUFGetRaidProfileOption(profile, "autoActivatePvE") ) then
 		hasEnemyType = true;
 	end
 
@@ -464,13 +464,13 @@ end
 
 function CompactUnitFrameProfilesDropdown_Update(self)
 	UIDropDownMenu_Initialize(self, CompactUnitFrameProfilesDropdown_Initialize);
-	UIDropDownMenu_SetSelectedValue(self, GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName)); --
+	UIDropDownMenu_SetSelectedValue(self, CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName)); --
 end
 
 function CompactUnitFrameProfilesDropdown_Initialize(dropDown)
 	local info = UIDropDownMenu_CreateInfo();
 
-	local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName);
+	local currentValue = CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName);
 	for i=1, #dropDown.options do
 		local id = dropDown.options[i];
 		local tag = format("COMPACT_UNIT_FRAME_PROFILE_%s_%s", strupper(dropDown.optionName), strupper(id));
@@ -486,7 +486,7 @@ function CompactUnitFrameProfilesDropdown_Initialize(dropDown)
 end
 
 function CompactUnitFrameProfilesDropdownButton_OnClick(button, dropDown)
-	SetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName, button.value);
+	CUFSetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, dropDown.optionName, button.value);
 	UIDropDownMenu_SetSelectedValue(dropDown, button.value);
 	CompactUnitFrameProfiles_ApplyCurrentSettings();
 	CompactUnitFrameProfiles_UpdateCurrentPanel();
@@ -510,13 +510,13 @@ function CompactUnitFrameProfilesSlider_InitializeWidget(self, optionName, minTe
 end
 
 function CompactUnitFrameProfilesSlider_Update(self)
-	local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
+	local currentValue = CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
 	self:SetValue(currentValue);
 end
 
 function CompactUnitFrameProfilesSlider_OnValueChanged(self, value, userInput)
 	if ( userInput ) then
-		SetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName, value);
+		CUFSetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName, value);
 		CompactUnitFrameProfiles_ApplyCurrentSettings();
 		CompactUnitFrameProfiles_UpdateCurrentPanel();
 	end
@@ -533,7 +533,7 @@ function CompactUnitFrameProfilesCheckButton_InitializeWidget(self, optionName, 
 end
 
 function CompactUnitFrameProfilesCheckButton_Update(self)
-	local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
+	local currentValue = CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
 	self:SetChecked(currentValue);
 end
 
@@ -544,7 +544,7 @@ function CompactUnitFrameProfilesCheckButton_OnClick(self, button)
 		PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
 	end
 
-	SetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName, self:GetChecked() or false);
+	CUFSetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName, self:GetChecked() or false);
 	CompactUnitFrameProfiles_ApplyCurrentSettings();
 	CompactUnitFrameProfiles_UpdateCurrentPanel();
 end
@@ -552,7 +552,7 @@ end
 -----------------Applying of Options----------------------
 -------------------------------------------------------------
 function CompactUnitFrameProfiles_ApplyProfile(profile)
-	local settings = GetRaidProfileFlattenedOptions(profile);
+	local settings = CUFGetRaidProfileFlattenedOptions(profile);
 	for settingName, value in pairs(settings) do
 		local func = CUFProfileActionTable[settingName];
 		if ( func ) then

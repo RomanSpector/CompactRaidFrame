@@ -1,6 +1,6 @@
 ---------------
 -- where ​... are the mixins to mixin
-function Mixin(object, ...)
+function CUFMixin(object, ...)
     for i = 1, select("#", ...) do
         local mixin = select(i, ...);
         for k, v in pairs(mixin) do
@@ -10,12 +10,12 @@ function Mixin(object, ...)
     return object;
 end
 -- where ​... are the mixins to mixin
-function CreateFromMixins(...)
-    return Mixin({}, ...)
+function CUFCreateFromMixins(...)
+    return CUFMixin({}, ...)
 end
 
-function CreateAndInitFromMixin(mixin, ...)
-    local object = CreateFromMixins(mixin);
+function CUFCreateAndInitFromCUFMixin(mixin, ...)
+    local object = CUFCreateFromMixins(mixin);
     object:Init(...);
     return object;
 end

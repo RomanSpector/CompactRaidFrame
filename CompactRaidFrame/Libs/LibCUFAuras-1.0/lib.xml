@@ -4,7 +4,7 @@
 
   <Script file="init.lua" />
   <Script file="CanApplyAura.lua" />
-  <Script file="SpellGetVisibilityInfo.lua" />
+  <Script file="CUFSpellGetVisibilityInfo.lua" />
   <Script file="LibCUFAuras-1.0.lua" />
 
 </Ui>

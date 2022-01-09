@@ -3,7 +3,7 @@
 ..\..\FrameXML\UI.xsd">
   <Script file="CompactRaidFrameManager.lua" />
 
-  <Button name="CRFManagerFilterButtonTemplate" inherits="UIMenuButtonStretchTemplate" virtual="true">
+  <Button name="CRFManagerFilterButtonTemplate" inherits="CUFUIMenuButtonStretchTemplate" virtual="true">
     <Layers>
       <Layer level="OVERLAY">
         <Texture name="$parentSelectedHighlight" file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-Panel-Button-YellowHighlight" alphaMode="ADD" parentKey="selectedHighlight" alpha="0.7">
@@ -136,7 +136,7 @@
       </Layer>
     </Layers>
     <Frames>
-      <Frame name="$parentContainerResizeFrame" frameStrata="LOW" resizable="true" movable="true" dontSavePosition="true" clampedToScreen="true" parentKey="containerResizeFrame">
+      <Frame name="$parentContainerResizeFrame" frameStrata="LOW" resizable="true" movable="true" dontSavePosition="true" ClampedToScreen="true" parentKey="containerResizeFrame">
         <Size x="300" y="200" />
         <Layers>
           <Layer level="BORDER">
@@ -325,7 +325,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Button name="$parentOptionsButton" inherits="UIPanelInfoButton">
+          <Button name="$parentOptionsButton" inherits="CUFUIPanelInfoButton">
             <Anchors>
               <Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT" x="-9" y="-7" />
             </Anchors>
@@ -337,7 +337,7 @@
               </OnClick>
             </Scripts>
           </Button>
-          <Frame name="$parentOptionFlowContainer" parentKey="optionsFlowContainer">
+          <Frame name="$parentOptionCUFFlowContainer" parentKey="optionsCUFFlowContainer">
             <Size x="200" y="300" />
             <Anchors>
               <Anchor point="TOPLEFT" relativeTo="$parentHeaderDelineator" relativePoint="BOTTOMLEFT" x="-10" y="4" />
@@ -437,29 +437,29 @@
               </Button>
             </Frames>
           </Frame>
-          <Button name="$parentLockedModeToggle" parentKey="lockedModeToggle" inherits="UIMenuButtonStretchTemplate" text = "UNLOCK">
+          <Button name="$parentLockedModeToggle" parentKey="lockedModeToggle" inherits="CUFUIMenuButtonStretchTemplate" text = "UNLOCK">
             <Size x="85" y="20" />
             <Scripts>
               <OnClick>
                 if UnitAffectingCombat("player") then return DEFAULT_CHAT_FRAME:AddMessage(COMPACT_UNIT_FRAME_COMBATLOCK_FUNC); end
                 PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                SetRaidProfileOption(GetActiveRaidProfile(), "locked", self.lockMode);
+                CUFSetRaidProfileOption(CUFGetActiveRaidProfile(), "locked", self.lockMode);
                 CompactRaidFrameManager_SetSetting("Locked", self.lockMode);
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentHiddenModeToggle" parentKey="hiddenModeToggle" inherits="UIMenuButtonStretchTemplate" text = "SHOW">
+          <Button name="$parentHiddenModeToggle" parentKey="hiddenModeToggle" inherits="CUFUIMenuButtonStretchTemplate" text = "SHOW">
             <Size x="85" y="20" />
             <Scripts>
               <OnClick>
                 if UnitAffectingCombat("player") then return DEFAULT_CHAT_FRAME:AddMessage(COMPACT_UNIT_FRAME_COMBATLOCK_FUNC); end
                 PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                SetRaidProfileOption(GetActiveRaidProfile(), "shown", self.shownMode);
+                CUFSetRaidProfileOption(CUFGetActiveRaidProfile(), "shown", self.shownMode);
                 CompactRaidFrameManager_SetSetting("IsShown", self.shownMode);
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentConvertToRaid" parentKey="convertToRaid" inherits="UIMenuButtonStretchTemplate" text="CONVERT_TO_RAID" hidden="true">
+          <Button name="$parentConvertToRaid" parentKey="convertToRaid" inherits="CUFUIMenuButtonStretchTemplate" text="CONVERT_TO_RAID" hidden="true">
             <Size x="169" y="20" />
             <Scripts>
               <OnClick>
@@ -532,7 +532,7 @@
           <Frame name="$parentLeaderOptions" parentKey="leaderOptions" hidden="true">
             <Size x="200" y="45" />
             <Frames>
-              <Button name="$parentInitiateRolePoll" inherits="UIMenuButtonStretchTemplate" text="ROLE_POLL" parentKey="rolePollButton">
+              <Button name="$parentInitiateRolePoll" inherits="CUFUIMenuButtonStretchTemplate" text="ROLE_POLL" parentKey="rolePollButton">
                 <Size x="85" y="20" />
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT" x="20" y="-5" />
@@ -544,7 +544,7 @@
                   </OnClick>
                 </Scripts>
               </Button>
-              <Button name="$parentCountdown" inherits="UIMenuButtonStretchTemplate" text="PLAYER_COUNTDOWN_BUTTON" parentKey="countdownButton">
+              <Button name="$parentCountdown" inherits="CUFUIMenuButtonStretchTemplate" text="PLAYER_COUNTDOWN_BUTTON" parentKey="countdownButton">
                 <Size x="85" y="20" />
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parentInitiateRolePoll" relativePoint="TOPRIGHT" x="0" y="0" />
@@ -552,11 +552,11 @@
                 <Scripts>
                   <OnClick>
                     PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                    C_PartyInfo.DoCountdown(10);
+                    CUF_PartyInfo.DoCountdown(10);
                   </OnClick>
                 </Scripts>
               </Button>
-              <Button name="$parentInitiateReadyCheck" inherits="UIMenuButtonStretchTemplate" text="READY_CHECK" parentKey="readyCheckButton">
+              <Button name="$parentInitiateReadyCheck" inherits="CUFUIMenuButtonStretchTemplate" text="READY_CHECK" parentKey="readyCheckButton">
                 <Size x="129" y="20" />
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parentInitiateRolePoll" relativePoint="BOTTOMLEFT" x="0" y="0" />
@@ -564,13 +564,13 @@
                 <Scripts>
                   <OnClick>
                     PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                    if ( UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") ) then
+                    if ( CUFUnitIsGroupLeader("player") or CUFUnitIsGroupAssistant("player") ) then
                       DoReadyCheck();
                     end
                   </OnClick>
                 </Scripts>
               </Button>
-              <DropDownToggleButton name="$parentRaidWorldMarkerButton" inherits="UIMenuButtonStretchTemplate">
+              <DropDownToggleButton name="$parentRaidWorldMarkerButton" inherits="CUFUIMenuButtonStretchTemplate">
                 <Size x="40" y="20" />
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parentInitiateReadyCheck" relativePoint="TOPRIGHT" x="0" y="0" />
@@ -621,8 +621,8 @@
                 self:RegisterEvent("PARTY_LEADER_CHANGED");
               </OnLoad>
               <OnEvent>
-                self:SetChecked(IsEveryoneAssistant());
-                if ( UnitIsGroupLeader("player") ) then
+                self:SetChecked(CUFIsEveryoneAssistant());
+                if ( CUFUnitIsGroupLeader("player") ) then
                   self:Enable();
                   self.text:SetFontObject(GameFontNormalSmall);
                 else
@@ -632,7 +632,7 @@
               </OnEvent>
               <OnClick>
                 PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                SetEveryoneIsAssistant(self:GetChecked());
+                CUFSetEveryoneIsAssistant(self:GetChecked());
               </OnClick>
               <OnEnter>
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT");

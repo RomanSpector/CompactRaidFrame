@@ -1,6 +1,6 @@
-function GetTextureInfo(obj)
+function CUFGetTextureInfo(obj)
     if obj:GetObjectType() == "Texture" then
-        local assetName = obj:GetAtlas();
+        local assetName = obj:CUFGetAtlas();
         local assetType = "Atlas";
 
         if not assetName then
@@ -23,7 +23,7 @@ function GetTextureInfo(obj)
     end
 end
 
-function SetClampedTextureRotation(texture, rotationDegrees)
+function CUFSetClampedTextureRotation(texture, rotationDegrees)
     if (rotationDegrees ~= 0 and rotationDegrees ~= 90 and rotationDegrees ~= 180 and rotationDegrees ~= 270) then
         error("SetRotation: rotationDegrees must be 0, 90, 180, or 270");
         return;
@@ -72,9 +72,9 @@ function SetClampedTextureRotation(texture, rotationDegrees)
     end
 end
 
-function ClearClampedTextureRotation(texture)
+function CUFClearClampedTextureRotation(texture)
     if (texture.rotationDegrees) then
-        SetClampedTextureRotation(0);
+        CUFSetClampedTextureRotation(0);
         texture.origTexCoords = nil;
         texture.origWidth = nil;
         texture.origHeight = nil;
@@ -82,30 +82,30 @@ function ClearClampedTextureRotation(texture)
 end
 
 
-function GetTexCoordsByGrid(xOffset, yOffset, textureWidth, textureHeight, gridWidth, gridHeight)
+function CUFGetTexCoordsByGrid(xOffset, yOffset, textureWidth, textureHeight, gridWidth, gridHeight)
     local widthPerGrid = gridWidth/textureWidth;
     local heightPerGrid = gridHeight/textureHeight;
     return (xOffset-1)*widthPerGrid, (xOffset)*widthPerGrid, (yOffset-1)*heightPerGrid, (yOffset)*heightPerGrid;
 end
 
-function GetTexCoordsForRole(role)
+function CUFGetTexCoordsForRole(role)
     local textureHeight, textureWidth = 256, 256;
     local roleHeight, roleWidth = 67, 67;
 
     if ( role == "GUIDE" ) then
-        return GetTexCoordsByGrid(1, 1, textureWidth, textureHeight, roleWidth, roleHeight);
+        return CUFGetTexCoordsByGrid(1, 1, textureWidth, textureHeight, roleWidth, roleHeight);
     elseif ( role == "TANK" ) then
-        return GetTexCoordsByGrid(1, 2, textureWidth, textureHeight, roleWidth, roleHeight);
+        return CUFGetTexCoordsByGrid(1, 2, textureWidth, textureHeight, roleWidth, roleHeight);
     elseif ( role == "HEALER" ) then
-        return GetTexCoordsByGrid(2, 1, textureWidth, textureHeight, roleWidth, roleHeight);
+        return CUFGetTexCoordsByGrid(2, 1, textureWidth, textureHeight, roleWidth, roleHeight);
     elseif ( role == "DAMAGER" ) then
-        return GetTexCoordsByGrid(2, 2, textureWidth, textureHeight, roleWidth, roleHeight);
+        return CUFGetTexCoordsByGrid(2, 2, textureWidth, textureHeight, roleWidth, roleHeight);
     else
         error("Unknown role: "..tostring(role));
     end
 end
 
-function CreateTextureMarkup(file, fileWidth, fileHeight, width, height, left, right, top, bottom, xOffset, yOffset)
+function CUFCreateTextureMarkup(file, fileWidth, fileHeight, width, height, left, right, top, bottom, xOffset, yOffset)
     return ("|T%s:%d:%d:%d:%d:%d:%d:%d:%d:%d:%d|t"):format(
           file
         , height
@@ -121,7 +121,7 @@ function CreateTextureMarkup(file, fileWidth, fileHeight, width, height, left, r
     );
 end
 
-function CreateAtlasMarkup(atlasName, width, height, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor)
+function CUFCreateAtlasMarkup(atlasName, width, height, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor)
     if ( bVertexColor ) then
         return ("|A:%s:%d:%d:%d:%d:%d:%d:%d|a"):format(
               atlasName
@@ -143,17 +143,17 @@ function CreateAtlasMarkup(atlasName, width, height, offsetX, offsetY, rVertexCo
         );
     end
 end
-function CreateAtlasMarkupWithAtlasSize(atlasName, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor)
-    local atlasInfo = C_Texture.GetAtlasInfo(atlasName);
-    return CreateAtlasMarkup(atlasName, atlasInfo.width, atlasInfo.height, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor);
+function CUFCreateAtlasMarkupWithAtlasSize(atlasName, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor)
+    local atlasInfo = CUF_Texture.GetAtlasInfo(atlasName);
+    return CUFCreateAtlasMarkup(atlasName, atlasInfo.width, atlasInfo.height, offsetX, offsetY, rVertexColor, gVertexColor, bVertexColor);
 end
 
 -- NOTE: Many of the TextureKit functions below use the following parameters
 -- If setVisibilityOfRegions is true, the frame will be shown or hidden based on whether the textureKit and atlas element were found
 -- If useAtlasSize is true, the frame will be resized to be the same size as the atlas element.
--- Use the constants in TextureKitConstants for both
+-- Use the constants in CUFTextureKitConstants for both
 
-TextureKitConstants = {
+CUFTextureKitConstants = {
     SetVisibility = true;
     DoNotSetVisibility = false;
 
@@ -162,19 +162,19 @@ TextureKitConstants = {
 }
 
 -- Pass in a frame and a table containing parentKeys (on frame) as keys and atlas member names as the values
-function SetupAtlasesOnRegions(frame, regionsToAtlases, useAtlasSize)
+function CUFSetupAtlasesOnRegions(frame, regionsToAtlases, useAtlasSize)
     for region, atlas in pairs(regionsToAtlases) do
         if frame[region] then
             if frame[region]:GetObjectType() == "StatusBar" then
                 frame[region]:SetStatusBarAtlas(atlas);
             elseif frame[region].SetAtlas then
-                frame[region]:SetAtlas(atlas, useAtlasSize);
+                frame[region]:CUFSetAtlas(atlas, useAtlasSize);
             end
         end
     end
 end
 
-function GetFinalNameFromTextureKit(fmt, textureKits)
+function CUFGetFinalNameFromTextureKit(fmt, textureKits)
     if type(textureKits) == "table" then
         return fmt:format(unpack(textureKits));
     else
@@ -185,7 +185,7 @@ end
 -- Pass in a TextureKit name, a frame and a formatting string.
 -- The TextureKit name will be inserted into fmt (at the first %s). The resulting atlas name will be set on frame
 -- Use "%s" for fmt if the TextureKit name is the entire atlas element name
-function SetupTextureKitOnFrame(textureKit, frame, fmt, setVisibility, useAtlasSize)
+function CUFSetupTextureKitOnFrame(textureKit, frame, fmt, setVisibility, useAtlasSize)
     if not frame then
         return;
     end
@@ -194,34 +194,34 @@ function SetupTextureKitOnFrame(textureKit, frame, fmt, setVisibility, useAtlasS
 
     if textureKit then
         if frame:GetObjectType() == "StatusBar" then
-            success = frame:SetStatusBarAtlas(GetFinalNameFromTextureKit(fmt, textureKit));
+            success = frame:SetStatusBarAtlas(CUFGetFinalNameFromTextureKit(fmt, textureKit));
         elseif frame.SetAtlas then
-            success = frame:SetAtlas(GetFinalNameFromTextureKit(fmt, textureKit), useAtlasSize);
+            success = frame:CUFSetAtlas(CUFGetFinalNameFromTextureKit(fmt, textureKit), useAtlasSize);
         end
     end
 
     if setVisibility then
-        frame:SetShown(success);
+        frame:CUFSetShown(success);
     end
 end
 
 -- Pass in a TextureKit name and a table containing frames as keys and formatting strings as values
 -- For each frame key in frames, the TextureKit name will be inserted into fmt (at the first %s). The resulting atlas name will be set on frame
 -- Use "%s" for fmt if the TextureKit name is the entire atlas element name
-function SetupTextureKitOnFrames(textureKit, frames, setVisibilityOfRegions, useAtlasSize)
+function CUFSetupTextureKitOnFrames(textureKit, frames, setVisibilityOfRegions, useAtlasSize)
     if not textureKit and not setVisibilityOfRegions then
         return;
     end
 
     for frame, fmt in pairs(frames) do
-        SetupTextureKitOnFrame(textureKit, frame, fmt, setVisibilityOfRegions, useAtlasSize);
+        CUFSetupTextureKitOnFrame(textureKit, frame, fmt, setVisibilityOfRegions, useAtlasSize);
     end
 end
 
 -- Pass in a TextureKit name, a frame and a table containing parentKeys (on frame) as keys and formatting strings as values
 -- For each frame key in frames, the TextureKit name will be inserted into fmt (at the first %s). The resulting atlas name will be set on frame
 -- Use "%s" for fmt if the TextureKit name is the entire atlas element name
-function SetupTextureKitOnRegions(textureKit, frame, regions, setVisibilityOfRegions, useAtlasSize)
+function CUFSetupTextureKitOnRegions(textureKit, frame, regions, setVisibilityOfRegions, useAtlasSize)
     if not textureKit and not setVisibilityOfRegions then
         return;
     end
@@ -233,19 +233,19 @@ function SetupTextureKitOnRegions(textureKit, frame, regions, setVisibilityOfReg
         end
     end
 
-    return SetupTextureKitOnFrames(textureKit, frames, setVisibilityOfRegions, useAtlasSize);
+    return CUFSetupTextureKitOnFrames(textureKit, frames, setVisibilityOfRegions, useAtlasSize);
 end
 
 -- Pass in a TextureKit name, a frame and a table containing parentKeys (on frame) as keys and a table as values
 -- The values table should contain formatString as a member (setVisibility and useAtlasSize can also be added if desired)
 -- For each frame key in frames, the TextureKit name will be inserted into formatString (at the first %s). The resulting atlas name will be set on frame
 -- Use "%s" for formatString if the TextureKit name is the entire atlas element name
-function SetupTextureKitsFromRegionInfo(textureKit, frame, regionInfoList)
+function CUFSetupTextureKitsFromRegionInfo(textureKit, frame, regionInfoList)
     if not frame or not regionInfoList then
         return;
     end
 
     for region, regionInfo in pairs(regionInfoList) do
-        SetupTextureKitOnFrame(textureKit, frame[region], regionInfo.formatString, regionInfo.setVisibility, regionInfo.useAtlasSize);
+        CUFSetupTextureKitOnFrame(textureKit, frame[region], regionInfo.formatString, regionInfo.setVisibility, regionInfo.useAtlasSize);
     end
 end

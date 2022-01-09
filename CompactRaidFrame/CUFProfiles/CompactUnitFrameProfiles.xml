@@ -81,7 +81,7 @@
     <CheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check" />
     <DisabledCheckedTexture file="Interface\AddOns\CompactRaidFrame\Media\Buttons\UI-CheckBox-Check-Disabled" />
   </CheckButton>
-  <Slider name="CompactUnitFrameProfilesSliderTemplate" inherits="HorizontalSliderTemplate" virtual="true">
+  <Slider name="CompactUnitFrameProfilesSliderTemplate" inherits="CUFHorizontalSliderTemplate" virtual="true">
     <Size x="144" y="17" />
     <Layers>
       <Layer level="ARTWORK">
@@ -122,7 +122,7 @@
       <Anchor point="CENTER" />
     </Anchors>
     <Frames>
-      <Frame parentKey="Border" inherits="DialogBorderDarkTemplate" />
+      <Frame parentKey="Border" inherits="CUFDialogBorderDarkTemplate" />
       <Frame name="$parentCover" frameStrata="DIALOG" frameLevel="10" parentKey="cover" useParentLevel="true" enableMouse="true">
         <Layers>
           <Layer level="BACKGROUND">
@@ -184,7 +184,7 @@
           <OnShow function="CompactUnitFrameProfilesProfileSelector_SetUp" />
         </Scripts>
       </Frame>
-      <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="SAVE">
+      <Button name="$parentSaveButton" inherits="CUFUIPanelButtonTemplate" text="SAVE">
         <Size x="115" y="21" />
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMLEFT" x="18" y="5" />
@@ -196,7 +196,7 @@
           </OnClick>
         </Scripts>
       </Button>
-      <Button name="$parentDeleteButton" inherits="UIPanelButtonTemplate" text="DELETE">
+      <Button name="$parentDeleteButton" inherits="CUFUIPanelButtonTemplate" text="DELETE">
         <Anchors>
           <Anchor point="TOPRIGHT" relativeTo="$parentProfileSelector" relativePoint="BOTTOMRIGHT" x="-15" y="5" />
           <Anchor point="BOTTOMLEFT" relativeTo="$parentSaveButton" relativePoint="BOTTOMRIGHT" x="3" y="0" />
@@ -204,7 +204,7 @@
         <Scripts>
           <OnClick>
             PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-            CompactUnitFrameProfiles_ConfirmProfileDeletion(GetActiveRaidProfile());
+            CompactUnitFrameProfiles_ConfirmProfileDeletion(CUFGetActiveRaidProfile());
           </OnClick>
         </Scripts>
       </Button>
@@ -221,7 +221,7 @@
 
             self.setFunc = function (value)
               CUF_CVar:SetValue(self.CVar, value)
-              RaidOptionsFrame_UpdatePartyFrames()
+              CUFRaidOptionsFrame_UpdatePartyFrames()
               CompactRaidFrameManager_UpdateShown(CompactRaidFrameManager);
 
               if ( value and value ~= "0" ) then
@@ -329,7 +329,7 @@
               <OnShow function="CompactUnitFrameProfilesNewProfileDialogBaseProfileSelector_SetUp" />
             </Scripts>
           </Frame>
-          <Button name="$parentCreateButton" frameLevel="15" inherits="UIPanelButtonTemplate" text="CREATE_COMPACT_UNIT_FRAME_PROFILE" parentKey="createButton">
+          <Button name="$parentCreateButton" frameLevel="15" inherits="CUFUIPanelButtonTemplate" text="CREATE_COMPACT_UNIT_FRAME_PROFILE" parentKey="createButton">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15" />
@@ -343,7 +343,7 @@
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentCancelButton" frameLevel="15" inherits="UIPanelButtonTemplate" text="CANCEL">
+          <Button name="$parentCancelButton" frameLevel="15" inherits="CUFUIPanelButtonTemplate" text="CANCEL">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15" />
@@ -370,7 +370,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Button name="$parentDeleteButton" inherits="UIPanelButtonTemplate" text="DELETE">
+          <Button name="$parentDeleteButton" inherits="CUFUIPanelButtonTemplate" text="DELETE">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativePoint="BOTTOM" x="-5" y="15" />
@@ -378,18 +378,18 @@
             <Scripts>
               <OnClick>
                 PlaySoundFile(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON);
-                local newProfile = GetRaidProfileName(1);
+                local newProfile = CUFGetRaidProfileName(1);
                 if ( newProfile == self:GetParent().profile ) then
-                  newProfile = GetRaidProfileName(2);
+                  newProfile = CUFGetRaidProfileName(2);
                 end
                 CompactUnitFrameProfiles_ActivateRaidProfile(newProfile);
-                DeleteRaidProfile(self:GetParent().profile);
+                CUFDeleteRaidProfile(self:GetParent().profile);
                 CompactUnitFrameProfiles_UpdateManagementButtons();
                 self:GetParent():Hide();
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="CANCEL">
+          <Button name="$parentCancelButton" inherits="CUFUIPanelButtonTemplate" text="CANCEL">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativePoint="BOTTOM" x="5" y="15" />
@@ -416,7 +416,7 @@
           </Layer>
         </Layers>
         <Frames>
-          <Button name="$parentDontSaveButton" inherits="UIPanelButtonTemplate" text="DONT_SAVE">
+          <Button name="$parentDontSaveButton" inherits="CUFUIPanelButtonTemplate" text="DONT_SAVE">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOM" relativePoint="BOTTOM" x="0" y="15" />
@@ -430,7 +430,7 @@
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentSaveButton" inherits="UIPanelButtonTemplate" text="SAVE">
+          <Button name="$parentSaveButton" inherits="CUFUIPanelButtonTemplate" text="SAVE">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMRIGHT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMLEFT" x="-5" y="0" />
@@ -444,7 +444,7 @@
               </OnClick>
             </Scripts>
           </Button>
-          <Button name="$parentCancelButton" inherits="UIPanelButtonTemplate" text="CANCEL">
+          <Button name="$parentCancelButton" inherits="CUFUIPanelButtonTemplate" text="CANCEL">
             <Size x="115" y="21" />
             <Anchors>
               <Anchor point="BOTTOMLEFT" relativeTo="$parentDontSaveButton" relativePoint="BOTTOMRIGHT" x="5" y="0" />
@@ -493,7 +493,7 @@
             <Scripts>
               <OnLoad>
                 CompactUnitFrameProfilesCheckButton_InitializeWidget(self, "keepGroupsTogether", function(self)
-                  local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
+                  local currentValue = CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
                   local sortBy = _G[self:GetParent():GetName().."SortByDropdown"];
                   local horizontalGroups = _G[self:GetParent():GetName().."HorizontalGroups"];
                   if ( currentValue ) then
@@ -606,7 +606,7 @@
             <Scripts>
               <OnLoad>
                 CompactUnitFrameProfilesCheckButton_InitializeWidget(self, "displayNonBossDebuffs", function(self)
-                  local currentValue = GetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
+                  local currentValue = CUFGetRaidProfileOption(CompactUnitFrameProfiles.selectedProfile, self.optionName);
                   local onlyDispellable = _G[self:GetParent():GetName().."DisplayOnlyDispellableDebuffs"];
                   if ( currentValue ) then
                     onlyDispellable:Show();
@@ -645,7 +645,7 @@
             <Scripts>
               <OnLoad inherit="prepend">
                 self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
-                Mixin(self, BackdropTemplateMixin)
+                CUFMixin(self, CUFBackdropTemplateMixin)
                 CompactUnitFrameProfilesSlider_InitializeWidget(self, "frameHeight", SHORT, TALL);
               </OnLoad>
             </Scripts>
@@ -657,7 +657,7 @@
             <Scripts>
               <OnLoad inherit="prepend">
                 self.backdropInfo = _G["BACKDROP_SLIDER_8_8"]
-                Mixin(self, BackdropTemplateMixin)
+                CUFMixin(self, CUFBackdropTemplateMixin)
                 CompactUnitFrameProfilesSlider_InitializeWidget(self, "frameWidth", NARROW, WIDE);
               </OnLoad>
             </Scripts>
@@ -774,7 +774,7 @@
             </Scripts>
           </CheckButton>
 
-          <Button name="$parentResetPositionButton" inherits="UIPanelButtonTemplate" text="RESET_POSITION">
+          <Button name="$parentResetPositionButton" inherits="CUFUIPanelButtonTemplate" text="RESET_POSITION">
             <Size x="160" y="21" />
             <Anchors>
               <Anchor point="BOTTOMRIGHT" x="-5" y="5" />

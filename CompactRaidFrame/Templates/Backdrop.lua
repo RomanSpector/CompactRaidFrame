@@ -1,4 +1,5 @@
-BACKDROP_TOOLTIP_8_8_1111 = {
+local CUF = select(2, ...)
+CUF.CUF.BACKDROP_TOOLTIP_8_8_1111 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -7,7 +8,7 @@ BACKDROP_TOOLTIP_8_8_1111 = {
     edgeSize = 8,
     insets = { left = 1, right = 1, top = 1, bottom = 1 },
 };
-BACKDROP_TOOLTIP_8_12_1111 = {
+CUF.CUF.BACKDROP_TOOLTIP_8_12_1111 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -16,7 +17,7 @@ BACKDROP_TOOLTIP_8_12_1111 = {
     edgeSize = 12,
     insets = { left = 1, right = 1, top = 1, bottom = 1 },
 };
-BACKDROP_TOOLTIP_16_16_5555 = {
+CUF.CUF.BACKDROP_TOOLTIP_16_16_5555 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -25,7 +26,7 @@ BACKDROP_TOOLTIP_16_16_5555 = {
     edgeSize = 16,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-BACKDROP_TOOLTIP_12_12_4444 = {
+CUF.CUF.BACKDROP_TOOLTIP_12_12_4444 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     tile = true,
@@ -34,29 +35,29 @@ BACKDROP_TOOLTIP_12_12_4444 = {
     edgeSize = 12,
     insets = { left = 4, right = 4, top = 4, bottom = 4 },
 };
-BACKDROP_TOOLTIP_0_16 = {
+CUF.CUF.BACKDROP_TOOLTIP_0_16 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 16,
     tileEdge = true,
 };
-BACKDROP_TOOLTIP_0_12_0055 = {
+CUF.CUF.BACKDROP_TOOLTIP_0_12_0055 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 12,
     tileEdge = true,
     insets = { left = 0, right = 0, top = 5, bottom = 5 },
 };
-BACKDROP_TOOLTIP_0_16_5555 = {
+CUF.CUF.BACKDROP_TOOLTIP_0_16_5555 = {
     edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
     edgeSize = 16,
     tileEdge = true,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-BACKDROP_ACHIEVEMENTS_0_64 = {
+CUF.CUF.BACKDROP_ACHIEVEMENTS_0_64 = {
     edgeFile = "Interface\\AchievementFrame\\UI-Achievement-WoodBorder",
     edgeSize = 64,
     tileEdge = true,
 };
-BACKDROP_ARENA_32_32 = {
+CUF.CUF.BACKDROP_ARENA_32_32 = {
     bgFile = "Interface\\CharacterFrame\\UI-Party-Background",
     edgeFile = "Interface\\ArenaEnemyFrame\\UI-Arena-Border",
     tile = true,
@@ -65,7 +66,7 @@ BACKDROP_ARENA_32_32 = {
     edgeSize = 32,
     insets = { left = 32, right = 32, top = 32, bottom = 32 },
 };
-BACKDROP_DIALOG_32_32 = {
+CUF.CUF.BACKDROP_DIALOG_32_32 = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
     tile = true,
@@ -74,7 +75,7 @@ BACKDROP_DIALOG_32_32 = {
     edgeSize = 32,
     insets = { left = 11, right = 12, top = 12, bottom = 11 },
 };
-BACKDROP_GOLD_DIALOG_32_32 = {
+CUF.CUF.BACKDROP_GOLD_DIALOG_32_32 = {
     bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Gold-Border",
     tile = true,
@@ -83,12 +84,12 @@ BACKDROP_GOLD_DIALOG_32_32 = {
     edgeSize = 32,
     insets = { left = 11, right = 12, top = 12, bottom = 11 },
 };
-BACKDROP_WATERMARK_DIALOG_0_16 = {
+CUF.CUF.BACKDROP_WATERMARK_DIALOG_0_16 = {
     edgeFile = "Interface\\DialogFrame\\UI-DialogBox-TestWatermark-Border",
     tileEdge = true,
     edgeSize = 16,
 };
-BACKDROP_SLIDER_8_8 = {
+CUF.BACKDROP_SLIDER_8_8 = {
     bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
     edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
     tile = true,
@@ -97,7 +98,7 @@ BACKDROP_SLIDER_8_8 = {
     edgeSize = 8,
     insets = { left = 3, right = 3, top = 6, bottom = 6 },
 };
-BACKDROP_PARTY_32_32 = {
+CUF.BACKDROP_PARTY_32_32 = {
     bgFile = "Interface\\CharacterFrame\\UI-Party-Background",
     edgeFile = "Interface\\CharacterFrame\\UI-Party-Border",
     tile = true,
@@ -106,7 +107,7 @@ BACKDROP_PARTY_32_32 = {
     edgeSize = 32,
     insets = { left = 32, right = 32, top = 32, bottom = 32 },
 };
-BACKDROP_TOAST_12_12 = {
+CUF.BACKDROP_TOAST_12_12 = {
     bgFile = "Interface\\FriendsFrame\\UI-Toast-Background",
     edgeFile = "Interface\\FriendsFrame\\UI-Toast-Border",
     tile = true,
@@ -115,17 +116,17 @@ BACKDROP_TOAST_12_12 = {
     edgeSize = 12,
     insets = { left = 5, right = 5, top = 5, bottom = 5 },
 };
-BACKDROP_CALLOUT_GLOW_0_16 = {
+CUF.BACKDROP_CALLOUT_GLOW_0_16 = {
     edgeFile = "Interface\\TutorialFrame\\UI-TutorialFrame-CalloutGlow",
     edgeSize = 16,
     tileEdge = true,
 };
-BACKDROP_CALLOUT_GLOW_0_20 = {
+CUF.BACKDROP_CALLOUT_GLOW_0_20 = {
     edgeFile = "Interface\\TutorialFrame\\UI-TutorialFrame-CalloutGlow",
     edgeSize = 20,
     tileEdge = true,
 };
-BACKDROP_GLUE_TOOLTIP_16_16 = {
+CUF.BACKDROP_GLUE_TOOLTIP_16_16 = {
     bgFile = "Interface\\Glues\\Common\\Glue-Tooltip-Background",
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tile = true,
@@ -134,12 +135,12 @@ BACKDROP_GLUE_TOOLTIP_16_16 = {
     edgeSize = 16,
     insets = { left = 10, right = 5, top = 4, bottom = 9 },
 };
-BACKDROP_GLUE_TOOLTIP_0_16 = {
+CUF.BACKDROP_GLUE_TOOLTIP_0_16 = {
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tileEdge = true,
     edgeSize = 16,
 };
-BACKDROP_MIXED_TOOLTIP_16_16 = {
+CUF.BACKDROP_MIXED_TOOLTIP_16_16 = {
     bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
     edgeFile = "Interface\\Glues\\Common\\Glue-Tooltip-Border",
     tile = true,
@@ -148,13 +149,13 @@ BACKDROP_MIXED_TOOLTIP_16_16 = {
     edgeSize = 16,
     insets = { left = 10, right = 5, top = 4, bottom = 9 },
 };
-BACKDROP_TEXT_PANEL_0_16 = {
+CUF.BACKDROP_TEXT_PANEL_0_16 = {
     edgeFile = "Interface\\Glues\\Common\\TextPanel-Border",
     tileEdge = true,
     edgeSize = 16,
 };
 
-BackdropTemplateMixin = { };
+CUFBackdropTemplateMixin = { };
 
 local coordStart = 0.0625;
 local coordEnd = 1 - coordStart;
@@ -173,7 +174,7 @@ local textureUVs = {			-- keys have to match pieceNames in nineSliceSetup table
 
 local defaultEdgeSize = 39;		-- the old default
 
-function BackdropTemplateMixin:OnBackdropLoaded()
+function CUFBackdropTemplateMixin:OnBackdropLoaded()
     if self.backdropInfo then
         -- check for invalid info
         if not self.backdropInfo.edgeFile and not self.backdropInfo.bgFile then
@@ -203,13 +204,13 @@ function BackdropTemplateMixin:OnBackdropLoaded()
     end
 end
 
-function BackdropTemplateMixin:OnBackdropSizeChanged()
+function CUFBackdropTemplateMixin:OnBackdropSizeChanged()
     if self.backdropInfo then
         self:SetupTextureCoordinates();
     end
 end
 
-function BackdropTemplateMixin:GetEdgeSize()
+function CUFBackdropTemplateMixin:GetEdgeSize()
     if self.backdropInfo.edgeSize and self.backdropInfo.edgeSize > 0 then
         return self.backdropInfo.edgeSize;
     else
@@ -235,7 +236,7 @@ local function SetupBackdropTextureCoordinates(region, pieceSetup, repeatX, repe
                         GetBackdropCoordValue("LRx", pieceSetup, repeatX, repeatY), GetBackdropCoordValue("LRy", pieceSetup, repeatX, repeatY));
 end
 
-function BackdropTemplateMixin:SetupTextureCoordinates()
+function CUFBackdropTemplateMixin:SetupTextureCoordinates()
     local width = self:GetWidth();
     local height = self:GetHeight();
     local effectiveScale = self:GetEffectiveScale();
@@ -266,7 +267,7 @@ function BackdropTemplateMixin:SetupTextureCoordinates()
     end
 end
 
-function BackdropTemplateMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout)
+function CUFBackdropTemplateMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout)
     local textureInfo = textureUVs[setupInfo.pieceName];
     local tileVerts = false;
     local file;
@@ -285,7 +286,7 @@ function BackdropTemplateMixin:SetupPieceVisuals(piece, setupInfo, pieceLayout)
     piece:SetSize(cornerWidth, cornerHeight);
 end
 
-function BackdropTemplateMixin:SetBorderBlendMode(blendMode)
+function CUFBackdropTemplateMixin:SetBorderBlendMode(blendMode)
     if not self.backdropInfo then
         return;
     end
@@ -297,11 +298,11 @@ function BackdropTemplateMixin:SetBorderBlendMode(blendMode)
     end
 end
 
-function BackdropTemplateMixin:HasBackdropInfo(backdropInfo)
+function CUFBackdropTemplateMixin:HasBackdropInfo(backdropInfo)
     return self.backdropInfo == backdropInfo;
 end
 
-function BackdropTemplateMixin:ClearBackdrop()
+function CUFBackdropTemplateMixin:ClearBackdrop()
     if self.backdropInfo then
         for pieceName in pairs(textureUVs) do
             local region = self[pieceName];
@@ -313,7 +314,7 @@ function BackdropTemplateMixin:ClearBackdrop()
     end
 end
 
-function BackdropTemplateMixin:ApplyBackdrop()
+function CUFBackdropTemplateMixin:ApplyBackdrop()
     local x, y, x1, y1 = 0, 0, 0, 0;
     if self.backdropInfo.bgFile then
         local edgeSize = self:GetEdgeSize();
@@ -340,17 +341,17 @@ function BackdropTemplateMixin:ApplyBackdrop()
         LeftEdge = {  },
         RightEdge = {  },
         Center = { layer = "BACKGROUND", x = x, y = y, x1 = x1, y1 = y1 },
-        setupPieceVisualsFunction = BackdropTemplateMixin.SetupPieceVisuals,
+        setupPieceVisualsFunction = CUFBackdropTemplateMixin.SetupPieceVisuals,
     };
 
-    NineSliceUtil.ApplyLayout(self, layout);
+    CUFNineSliceUtil.ApplyLayout(self, layout);
     self:SetBackdropColor(1, 1, 1, 1);
     self:SetBackdropBorderColor(1, 1, 1, 1);
     self:SetupTextureCoordinates();
 end
 
 -- backwards compatibility API starts here
-function BackdropTemplateMixin:SetBackdrop(backdropInfo)
+function CUFBackdropTemplateMixin:SetBackdrop(backdropInfo)
     if backdropInfo then
         if self:HasBackdropInfo(backdropInfo) then
             return;
@@ -366,7 +367,7 @@ function BackdropTemplateMixin:SetBackdrop(backdropInfo)
     end
 end
 
-function BackdropTemplateMixin:GetBackdrop()
+function CUFBackdropTemplateMixin:GetBackdrop()
     if self.backdropInfo then
         -- make a copy because it will be altered to match old API output
         local backdropInfo = CopyTable(self.backdropInfo);
@@ -409,7 +410,7 @@ function BackdropTemplateMixin:GetBackdrop()
     return nil;
 end
 
-function BackdropTemplateMixin:GetBackdropColor()
+function CUFBackdropTemplateMixin:GetBackdropColor()
     if not self.backdropInfo then
         return;
     end
@@ -418,7 +419,7 @@ function BackdropTemplateMixin:GetBackdropColor()
     end
 end
 
-function BackdropTemplateMixin:SetBackdropColor(r, g, b, a)
+function CUFBackdropTemplateMixin:SetBackdropColor(r, g, b, a)
     if not self.backdropInfo then
         -- Ideally this would throw an error here but the old API just failed silently
         return;
@@ -428,7 +429,7 @@ function BackdropTemplateMixin:SetBackdropColor(r, g, b, a)
     end
 end
 
-function BackdropTemplateMixin:GetBackdropBorderColor()
+function CUFBackdropTemplateMixin:GetBackdropBorderColor()
     if not self.backdropInfo then
         return
     end
@@ -441,7 +442,7 @@ function BackdropTemplateMixin:GetBackdropBorderColor()
     end
 end
 
-function BackdropTemplateMixin:SetBackdropBorderColor(r, g, b, a)
+function CUFBackdropTemplateMixin:SetBackdropBorderColor(r, g, b, a)
     if not self.backdropInfo then
         -- Ideally this would throw an error here but the old API just failed silently
         return;

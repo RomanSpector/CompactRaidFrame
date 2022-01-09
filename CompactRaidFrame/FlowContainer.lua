@@ -1,68 +1,68 @@
-function FlowContainer_Initialize(container)
+function CUFFlowContainer_Initialize(container)
     container.flowFrames = {};
     --Default orientation to horizontal for now.
-    FlowContainer_SetOrientation(container, "horizontal");
+    CUFFlowContainer_SetOrientation(container, "horizontal");
 
     --So far, we haven't actually used any space.
     container.flowMaxPrimaryUsed = 0;
     container.flowMaxSecondaryUsed = 0;
 end
 
-function FlowContainer_PauseUpdates(container)
+function CUFFlowContainer_PauseUpdates(container)
     container.flowPauseUpdates = true;
 end
 
-function FlowContainer_ResumeUpdates(container)
+function CUFFlowContainer_ResumeUpdates(container)
     container.flowPauseUpdates = false;
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_SetOrientation(container, orientation)	--"vertical" or "horizontal". This is the direction it tries to fill first.
+function CUFFlowContainer_SetOrientation(container, orientation)	--"vertical" or "horizontal". This is the direction it tries to fill first.
     container.flowOrientation = orientation;
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_SetMaxPerLine(container, maxPerLine)	--nil means we fit as much as possible.
+function CUFFlowContainer_SetMaxPerLine(container, maxPerLine)	--nil means we fit as much as possible.
     container.flowMaxPerLine = maxPerLine;
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_SetHorizontalSpacing(container, horizontalSpacing)
+function CUFFlowContainer_SetHorizontalSpacing(container, horizontalSpacing)
     container.flowHorizontalSpacing = horizontalSpacing;
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_SetVerticalSpacing(container, verticalSpacing)
+function CUFFlowContainer_SetVerticalSpacing(container, verticalSpacing)
     container.flowVerticalSpacing = verticalSpacing;
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_AddObject(container, object)
+function CUFFlowContainer_AddObject(container, object)
     tinsert(container.flowFrames, object);	--Do we want to let people choose where it will appear?
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_AddLineBreak(container)
+function CUFFlowContainer_AddLineBreak(container)
     tinsert(container.flowFrames, "linebreak");
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_AddSpacer(container, spacerSize)
+function CUFFlowContainer_AddSpacer(container, spacerSize)
     tinsert(container.flowFrames, spacerSize);
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_BeginAtomicAdd(container)
+function CUFFlowContainer_BeginAtomicAdd(container)
     tinsert(container.flowFrames, "beginatomic");
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_EndAtomicAdd(container)
+function CUFFlowContainer_EndAtomicAdd(container)
     tinsert(container.flowFrames, "endatomic");
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_RemoveObject(container, object)
+function CUFFlowContainer_RemoveObject(container, object)
     assert(type(object) == "table");	--For now, Remove can't be used with non-widgets.
     for i=1, #container.flowFrames do	--Used instead of tRemoveItem to eliminate dependencies.
         if ( container.flowFrames[i] == object ) then
@@ -70,14 +70,14 @@ function FlowContainer_RemoveObject(container, object)
             break;
         end
     end
-    FlowContainer_DoLayout(container);
+    CUFFlowContainer_DoLayout(container);
 end
 
-function FlowContainer_RemoveAllObjects(container)
+function CUFFlowContainer_RemoveAllObjects(container)
     container.flowFrames = {};	--GC no worse than a table.wipe here.
 end
 
-function FlowContainer_GetUsedBounds(container)	--Return x, y
+function CUFFlowContainer_GetUsedBounds(container)	--Return x, y
     if ( container.flowOrientation == "horizontal" ) then
         return container.flowMaxSecondaryUsed, container.flowMaxPrimaryUsed;
     else
@@ -85,7 +85,7 @@ function FlowContainer_GetUsedBounds(container)	--Return x, y
     end
 end
 
-function FlowContainer_SetStartingOffset(container, xOffset, yOffset)
+function CUFFlowContainer_SetStartingOffset(container, xOffset, yOffset)
     if ( container.flowOrientation == "horizontal" ) then
         container.startingSecondaryOffset = xOffset;
         container.startingPrimaryOffset = -yOffset;
@@ -96,7 +96,7 @@ function FlowContainer_SetStartingOffset(container, xOffset, yOffset)
 end
 
 --:GetWidth() and :GetHeight() are used in this function. --meta-comment: Comment added in case anyone ever searches all files for these.
-function FlowContainer_DoLayout(container)
+function CUFFlowContainer_DoLayout(container)
     if ( container.flowPauseUpdates ) then
         return;
     end
@@ -132,14 +132,14 @@ function FlowContainer_DoLayout(container)
                 ((container.flowMaxPerLine and currentPrimaryLine > container.flowMaxPerLine) or	--We went past the max number of columns
                     currentSecondaryOffset + object["Get"..primaryDirection](object) > container["Get"..primaryDirection](container)) ) then	--We went past the max pixel width.
 
-                if ( not (atomicAddStart and atomicAtBeginning) ) then	--If we're in an atomic add and we started at the beginning of the line, wrapping won't help us
+                if ( not (atomicAddStart and atomicAtBeginning) ) then	--If we're in an atomic add and we started at the beginning of the line, Wrapping won't help us
                     currentSecondaryOffset = 0;	--Move back all the way to the left
                     currentPrimaryLine = 1;	--Reset column count
                     currentPrimaryOffset = currentPrimaryOffset + lineMaxSize + secondarySpacing;	--Move down by the size of the biggest object in the last row
                     currentSecondaryLine = currentSecondaryLine + 1;	--Move to the next row.
                     lineMaxSize = 0;
                     if ( atomicAddStart ) then
-                        --We wrapped around. So we want to move back to the first item in the atomic add and continue from the position we're leaving off (the new line).
+                        --We Wrapped around. So we want to move back to the first item in the atomic add and continue from the position we're leaving off (the new line).
                         i = atomicAddStart;
                         atomicAtBeginning = true;
                         doContinue = true;

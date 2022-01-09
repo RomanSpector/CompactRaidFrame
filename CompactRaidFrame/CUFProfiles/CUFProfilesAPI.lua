@@ -82,7 +82,7 @@ function CompactRaidFrame:OnInitialize()
 	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
 end
 
-function GetNumRaidProfiles()
+function CUFGetNumRaidProfiles()
 	if ( not PROFILES ) then
 		return 0;
 	end
@@ -90,7 +90,7 @@ function GetNumRaidProfiles()
 	return #PROFILES;
 end
 
-function GetRaidProfileName(index)
+function CUFGetRaidProfileName(index)
 	if ( not PROFILES or not index ) then
 		return;
 	end
@@ -100,7 +100,7 @@ function GetRaidProfileName(index)
 	end
 end
 
-function RaidProfileExists(profile)
+function CUFRaidProfileExists(profile)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -116,7 +116,7 @@ function HasLoadedCUFProfiles()
 	return PROFILES and true or false;
 end
 
-function RaidProfileHasUnsavedChanges()
+function CUFRaidProfileHasUnsavedChanges()
 	if not ( PROFILES and SAVED_PROFILE ) then
 		return;
 	end
@@ -134,7 +134,7 @@ function RaidProfileHasUnsavedChanges()
 
 end
 
-function RestoreRaidProfileFromCopy()
+function CUFRestoreRaidProfileFromCopy()
 	if ( not SAVED_PROFILE ) then
 		return;
 	end
@@ -150,7 +150,7 @@ function RestoreRaidProfileFromCopy()
 	end
 end
 
-function CreateNewRaidProfile(name, baseOnProfile)
+function CUFCreateNewRaidProfile(name, baseOnProfile)
 	if ( not PROFILES or not name ) then
 		return;
 	end
@@ -171,7 +171,7 @@ function CreateNewRaidProfile(name, baseOnProfile)
 	table.insert(PROFILES, profile);
 end
 
-function DeleteRaidProfile(profile)
+function CUFDeleteRaidProfile(profile)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -188,7 +188,7 @@ function DeleteRaidProfile(profile)
 	end
 end
 
-function SaveRaidProfileCopy(profile)
+function CUFSaveRaidProfileCopy(profile)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -201,7 +201,7 @@ function SaveRaidProfileCopy(profile)
 	end
 end
 
-function SetRaidProfileOption(profile, optionName, value)
+function CUFSetRaidProfileOption(profile, optionName, value)
 	if ( not PROFILES or not profile or not optionName ) then
 		return;
 	end
@@ -214,7 +214,7 @@ function SetRaidProfileOption(profile, optionName, value)
 	end
 end
 
-function GetRaidProfileOption(profile, optionName)
+function CUFGetRaidProfileOption(profile, optionName)
 	if ( not PROFILES or not profile or not optionName ) then
 		return;
 	end
@@ -226,7 +226,7 @@ function GetRaidProfileOption(profile, optionName)
 	end
 end
 
-function GetRaidProfileFlattenedOptions(profile)
+function CUFGetRaidProfileFlattenedOptions(profile)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -244,7 +244,7 @@ function GetRaidProfileFlattenedOptions(profile)
 	end
 end
 
-function SetRaidProfileSavedPosition(profile, isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset)
+function CUFSetRaidProfileSavedPosition(profile, isDynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -263,7 +263,7 @@ function SetRaidProfileSavedPosition(profile, isDynamic, topPoint, topOffset, bo
 	end
 end
 
-function GetRaidProfileSavedPosition(profile)
+function CUFGetRaidProfileSavedPosition(profile)
 	if ( not PROFILES or not profile ) then
 		return;
 	end
@@ -279,11 +279,11 @@ function GetMaxNumCUFProfiles()
 	return MAX_CUF_PROFILES;
 end
 
-function SetActiveRaidProfile(profile)
+function CUFSetActiveRaidProfile(profile)
 	CUF_CVar:SetValue("CVAR_SET_ACTIVE_CUF_PROFILE", profile);
 end
 
-function GetActiveRaidProfile()
+function CUFGetActiveRaidProfile()
 	return CUF_CVar:GetValue("CVAR_SET_ACTIVE_CUF_PROFILE");
 end
 

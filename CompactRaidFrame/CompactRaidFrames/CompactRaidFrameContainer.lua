@@ -9,7 +9,7 @@ local frameCreationSpecifiers = {
 
 --Widget Handlers
 function CompactRaidFrameContainer_OnLoad(self)
-    FlowContainer_Initialize(self)
+    CUFFlowContainer_Initialize(self)
 
     self:SetClampRectInsets(0, 200 - self:GetWidth(), 10, 0);
 
@@ -74,7 +74,7 @@ function CompactRaidFrameContainer_OnEvent(self, event, ...)
 end
 
 function CompactRaidFrameContainer_OnSizeChanged(self)
-    FlowContainer_DoLayout(self);
+    CUFFlowContainer_DoLayout(self);
     CompactRaidFrameContainer_UpdateBorder(self);
 end
 --Externally used functions
@@ -153,7 +153,7 @@ function CompactRaidFrameContainer_ReadyToUpdate(self)
 end
 
 function CompactRaidFrameContainer_UpdateDisplayedUnits(self)
-    if ( IsInRaid() ) then
+    if ( CUFIsInRaid() ) then
         self.units = self.raidUnits;
     else
         self.units = self.partyUnits;
@@ -167,14 +167,14 @@ function CompactRaidFrameContainer_LayoutFrames(self)
             self.flowFrames[i]:unusedFunc();
         end
     end
-    FlowContainer_RemoveAllObjects(self);
+    CUFFlowContainer_RemoveAllObjects(self);
 
-    FlowContainer_PauseUpdates(self);	--We don't want to update it every time we add an item.
+    CUFFlowContainer_PauseUpdates(self);	--We don't want to update it every time we add an item.
 
 
     if ( self.displayFlaggedMembers ) then
         CompactRaidFrameContainer_AddFlaggedUnits(self);
-        FlowContainer_AddLineBreak(self);
+        CUFFlowContainer_AddLineBreak(self);
     end
 
     if ( self.groupMode == "discrete" ) then
@@ -189,7 +189,7 @@ function CompactRaidFrameContainer_LayoutFrames(self)
         CompactRaidFrameContainer_AddPets(self);
     end
 
-    FlowContainer_ResumeUpdates(self);
+    CUFFlowContainer_ResumeUpdates(self);
 
     CompactRaidFrameContainer_UpdateBorder(self);
 
@@ -197,7 +197,7 @@ function CompactRaidFrameContainer_LayoutFrames(self)
 end
 
 function CompactRaidFrameContainer_UpdateBorder(self)
-    local usedX, usedY = FlowContainer_GetUsedBounds(self);
+    local usedX, usedY = CUFFlowContainer_GetUsedBounds(self);
     if ( self.showBorder and self.groupMode ~= "discrete" and usedX > 0 and usedY > 0 ) then
         self.borderFrame:SetSize(usedX + 11, usedY + 13);
         self.borderFrame:Show();
@@ -210,7 +210,7 @@ do
     local usedGroups = {}; --Enclosure to make sure usedGroups isn't used anywhere else.
     function CompactRaidFrameContainer_AddGroups(self)
 
-        if ( IsInRaid() ) then
+        if ( CUFIsInRaid() ) then
             RaidUtil_GetUsedGroups(usedGroups);
 
             for groupNum, isUsed in ipairs(usedGroups) do
@@ -221,7 +221,7 @@ do
         else
             CompactRaidFrameContainer_AddGroup(self, "PARTY");
         end
-        FlowContainer_SetOrientation(self, "+")
+        CUFFlowContainer_SetOrientation(self, "+")
     end
 
 end
@@ -245,7 +245,7 @@ function CompactRaidFrameContainer_AddGroup(self, id)
         tinsert(self.frameUpdateList.group, groupFrame);
     end
 
-    FlowContainer_AddObject(self, groupFrame);
+    CUFFlowContainer_AddObject(self, groupFrame);
 
     groupFrame:Show();
 end
@@ -264,11 +264,11 @@ function CompactRaidFrameContainer_AddPlayers(self)
         end
     end
 
-    FlowContainer_SetOrientation(self, "vertical")
+    CUFFlowContainer_SetOrientation(self, "vertical")
 end
 
 function CompactRaidFrameContainer_AddPets(self)
-    if ( IsInRaid() ) then
+    if ( CUFIsInRaid() ) then
         for i=1, MAX_RAID_MEMBERS do
             local unit = "raidpet"..i;
             if ( UnitExists(unit) ) then
@@ -280,7 +280,7 @@ function CompactRaidFrameContainer_AddPets(self)
         if ( UnitExists("pet") ) then
             CompactRaidFrameContainer_AddUnitFrame(self, "pet", "pet");
         end
-        for i=1, GetNumSubgroupMembers() do
+        for i=1, CUFGetNumSubgroupMembers() do
             local unit = "partypet"..i;
             if ( UnitExists(unit) ) then
                 CompactRaidFrameContainer_AddUnitFrame(self, unit, "pet");
@@ -291,7 +291,7 @@ end
 
 local flaggedRoles = { "MAINTANK", "MAINASSIST" };
 function CompactRaidFrameContainer_AddFlaggedUnits(self)
-    if ( not IsInRaid() ) then
+    if ( not CUFIsInRaid() ) then
         return;
     end
     for roleIndex = 1, #flaggedRoles do
@@ -300,7 +300,7 @@ function CompactRaidFrameContainer_AddFlaggedUnits(self)
             local unit = "raid"..i;
             local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i);
             if ( role == desiredRole ) then
-                FlowContainer_BeginAtomicAdd(self);	--We want each unit to be right next to its target and target of target.
+                CUFFlowContainer_BeginAtomicAdd(self);	--We want each unit to be right next to its target and target of target.
 
                 CompactRaidFrameContainer_AddUnitFrame(self, unit, "flagged");
 
@@ -313,9 +313,9 @@ function CompactRaidFrameContainer_AddFlaggedUnits(self)
                 CompactUnitFrame_SetUpdateAllOnUpdate(targetOfTargetFrame, true);
 
                 --Add some space before the next one.
-                --FlowContainer_AddSpacer(self, 36);
+                --CUFFlowContainer_AddSpacer(self, 36);
 
-                FlowContainer_EndAtomicAdd(self);
+                CUFFlowContainer_EndAtomicAdd(self);
             end
         end
     end
@@ -326,7 +326,7 @@ function CompactRaidFrameContainer_AddUnitFrame(self, unit, frameType)
     local frame = CompactRaidFrameContainer_GetUnitFrame(self, unit, frameType);
 
     CompactUnitFrame_SetUnit(frame, unit);
-    FlowContainer_AddObject(self, frame);
+    CUFFlowContainer_AddObject(self, frame);
 
     return frame;
 end
@@ -378,7 +378,7 @@ function RaidUtil_GetUsedGroups(tab)	--Fills out the table with which groups hav
     for i=1, MAX_RAID_GROUPS do
         tab[i] = false;
     end
-    if ( IsInRaid() ) then
+    if ( CUFIsInRaid() ) then
         for i=1, GetNumRaidMembers() do
             local name, rank, subgroup = GetRaidRosterInfo(i);
             tab[subgroup] = true;

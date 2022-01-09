@@ -44,7 +44,7 @@ function CompactRaidFrameManager_OnLoad(self)
     CompactRaidFrameManager_Collapse(self);
 
     --Set up the options flow container
-    FlowContainer_Initialize(self.displayFrame.optionsFlowContainer);
+    CUFFlowContainer_Initialize(self.displayFrame.optionsCUFFlowContainer);
 end
 
 local settings = { --[["Managed",]] "Locked", "SortMode", "KeepGroupsTogether", "DisplayPets", "DisplayMainTankAndAssist", "IsShown", "ShowBorders" };
@@ -57,13 +57,13 @@ function CompactRaidFrameManager_OnEvent(self, event, ...)
     if ( event == "PLAYER_REGEN_ENABLED" ) then
         CompactRaidFrameManager_UpdateShown(self);
         CompactRaidFrameManager_UpdateDisplayCounts(self);
-        CompactRaidFrameManager_UpdateOptionsFlowContainer(self);
+        CompactRaidFrameManager_UpdateOptionsCUFFlowContainer(self);
         CompactRaidFrameManager_UpdateRaidIcons();
         self:UnregisterEvent("PLAYER_REGEN_ENABLED");
     elseif ( event == "DISPLAY_SIZE_CHANGED" or event == "UI_SCALE_CHANGED" ) then
         CompactRaidFrameManager_UpdateContainerBounds(self);
     elseif ( event == "PARTY_MEMBERS_CHANGED" or event == "UPDATE_ACTIVE_BATTLEFIELD" ) then
-        RaidOptionsFrame_UpdatePartyFrames();
+        CUFRaidOptionsFrame_UpdatePartyFrames();
         CompactRaidFrameManager_UpdateShown(self);
         CompactRaidFrameManager_UpdateDisplayCounts(self);
         CompactRaidFrameManager_UpdateLabel(self);
@@ -73,10 +73,10 @@ function CompactRaidFrameManager_OnEvent(self, event, ...)
     elseif ( event == "PLAYER_ENTERING_WORLD" ) then
         CompactRaidFrameManager_UpdateShown(self);
         CompactRaidFrameManager_UpdateDisplayCounts(self);
-        CompactRaidFrameManager_UpdateOptionsFlowContainer(self);
+        CompactRaidFrameManager_UpdateOptionsCUFFlowContainer(self);
         CompactRaidFrameManager_UpdateRaidIcons();
     elseif ( event == "PARTY_LEADER_CHANGED" ) then
-        CompactRaidFrameManager_UpdateOptionsFlowContainer(self);
+        CompactRaidFrameManager_UpdateOptionsCUFFlowContainer(self);
     elseif ( event == "RAID_TARGET_UPDATE" ) then
         CompactRaidFrameManager_UpdateRaidIcons();
     elseif ( event == "PLAYER_TARGET_CHANGED" ) then
@@ -92,13 +92,13 @@ end
 function CompactRaidFrameManagerDisplayFrameProfileSelector_Initialize()
     local info = UIDropDownMenu_CreateInfo();
 
-    for i=1, GetNumRaidProfiles() do
-        local name = GetRaidProfileName(i);
+    for i=1, CUFGetNumRaidProfiles() do
+        local name = CUFGetRaidProfileName(i);
         info.text = name;
         info.value = name;
         info.func = CompactRaidFrameManagerDisplayFrameProfileSelector_OnClick;
         info.disabled  = UnitAffectingCombat("player");
-        info.checked = GetActiveRaidProfile() == info.value;
+        info.checked = CUFGetActiveRaidProfile() == info.value;
         info.isRadio = true;
         UIDropDownMenu_AddButton(info);
     end
@@ -110,17 +110,17 @@ function CompactRaidFrameManagerDisplayFrameProfileSelector_OnClick(self)
 end
 
 function CompactRaidFrameManager_UpdateShown(self)
-    if ( GetDisplayedAllyFrames() ) then
+    if ( CUFGetDisplayedAllyFrames() ) then
         self:Show();
     else
         self:Hide();
     end
-    CompactRaidFrameManager_UpdateOptionsFlowContainer(self);
+    CompactRaidFrameManager_UpdateOptionsCUFFlowContainer(self);
     CompactRaidFrameManager_UpdateContainerVisibility();
 end
 
 function CompactRaidFrameManager_UpdateLabel(self)
-    if ( IsInRaid() ) then
+    if ( CUFIsInRaid() ) then
         self.displayFrame.label:SetText(RAID_MEMBERS);
     else
         self.displayFrame.label:SetText(PARTY_MEMBERS);
@@ -149,78 +149,78 @@ function CompactRaidFrameManager_Collapse(self)
     self.toggleButton:GetNormalTexture():SetTexCoord(0, 0.5, 0, 1);
 end
 
-function CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
-    local container = self.displayFrame.optionsFlowContainer;
+function CompactRaidFrameManager_UpdateOptionsCUFFlowContainer(self)
+    local container = self.displayFrame.optionsCUFFlowContainer;
 
-    FlowContainer_RemoveAllObjects(container);
-    FlowContainer_PauseUpdates(container);
+    CUFFlowContainer_RemoveAllObjects(container);
+    CUFFlowContainer_PauseUpdates(container);
 
-    if ( GetDisplayedAllyFrames() == "raid" ) then
-        FlowContainer_AddObject(container, self.displayFrame.profileSelector);
+    if ( CUFGetDisplayedAllyFrames() == "raid" ) then
+        CUFFlowContainer_AddObject(container, self.displayFrame.profileSelector);
         self.displayFrame.profileSelector:Show();
     else
         self.displayFrame.profileSelector:Hide();
     end
 
-    if ( IsInRaid() ) then
-        FlowContainer_AddObject(container, self.displayFrame.filterOptions);
+    if ( CUFIsInRaid() ) then
+        CUFFlowContainer_AddObject(container, self.displayFrame.filterOptions);
         self.displayFrame.filterOptions:Show();
     else
         self.displayFrame.filterOptions:Hide();
     end
 
-    if ( not IsInRaid() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") ) then
-        FlowContainer_AddObject(container, self.displayFrame.raidMarkers);
+    if ( not CUFIsInRaid() or CUFUnitIsGroupLeader("player") or CUFUnitIsGroupAssistant("player") ) then
+        CUFFlowContainer_AddObject(container, self.displayFrame.raidMarkers);
         self.displayFrame.raidMarkers:Show();
     else
         self.displayFrame.raidMarkers:Hide();
     end
 
-    if ( not IsInRaid() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") ) then
-        FlowContainer_AddObject(container, self.displayFrame.leaderOptions);
+    if ( not CUFIsInRaid() or CUFUnitIsGroupLeader("player") or CUFUnitIsGroupAssistant("player") ) then
+        CUFFlowContainer_AddObject(container, self.displayFrame.leaderOptions);
         self.displayFrame.leaderOptions:Show();
     else
         self.displayFrame.leaderOptions:Hide();
     end
 
-    if ( not IsInRaid() and UnitIsGroupLeader("player") and not HasLFGRestrictions() ) then
-        FlowContainer_AddLineBreak(container);
-        FlowContainer_AddSpacer(container, 20);
-        FlowContainer_AddObject(container, self.displayFrame.convertToRaid);
+    if ( not CUFIsInRaid() and CUFUnitIsGroupLeader("player") and not HasLFGRestrictions() ) then
+        CUFFlowContainer_AddLineBreak(container);
+        CUFFlowContainer_AddSpacer(container, 20);
+        CUFFlowContainer_AddObject(container, self.displayFrame.convertToRaid);
         self.displayFrame.convertToRaid:Show();
     else
         self.displayFrame.convertToRaid:Hide();
     end
 
-    if ( GetDisplayedAllyFrames() == "raid" ) then
-        FlowContainer_AddLineBreak(container);
-        FlowContainer_AddSpacer(container, 20);
-        FlowContainer_AddObject(container, self.displayFrame.lockedModeToggle);
-        FlowContainer_AddObject(container, self.displayFrame.hiddenModeToggle);
+    if ( CUFGetDisplayedAllyFrames() == "raid" ) then
+        CUFFlowContainer_AddLineBreak(container);
+        CUFFlowContainer_AddSpacer(container, 20);
+        CUFFlowContainer_AddObject(container, self.displayFrame.lockedModeToggle);
+        CUFFlowContainer_AddObject(container, self.displayFrame.hiddenModeToggle);
         self.displayFrame.lockedModeToggle:Show();
         self.displayFrame.hiddenModeToggle:Show();
     else
         self.displayFrame.lockedModeToggle:Hide();
         self.displayFrame.hiddenModeToggle:Hide();
     end
-    if ( IsInRaid() and UnitIsGroupLeader("player") ) then
-        FlowContainer_AddLineBreak(container);
-        FlowContainer_AddSpacer(container, 20);
-        FlowContainer_AddObject(container, self.displayFrame.everyoneIsAssistButton);
+    if ( CUFIsInRaid() and CUFUnitIsGroupLeader("player") ) then
+        CUFFlowContainer_AddLineBreak(container);
+        CUFFlowContainer_AddSpacer(container, 20);
+        CUFFlowContainer_AddObject(container, self.displayFrame.everyoneIsAssistButton);
         self.displayFrame.everyoneIsAssistButton:Show();
     else
         self.displayFrame.everyoneIsAssistButton:Hide();
     end
 
-    FlowContainer_ResumeUpdates(container);
+    CUFFlowContainer_ResumeUpdates(container);
 
-    local usedX, usedY = FlowContainer_GetUsedBounds(container);
+    local usedX, usedY = CUFFlowContainer_GetUsedBounds(container);
     self:SetHeight(usedY + 40);
 
     --Then, we update which specific buttons are enabled.
 
     --Raid leaders and assistants and leaders of non-dungeon finder parties may initiate a role poll. and
-    if ( IsInGroup() and not HasLFGRestrictions() and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) ) then
+    if ( CUFIsInGroup() and not HasLFGRestrictions() and (CUFUnitIsGroupLeader("player") or CUFUnitIsGroupAssistant("player")) ) then
         self.displayFrame.leaderOptions.rolePollButton:Enable();
         self.displayFrame.leaderOptions.rolePollButton:SetAlpha(1);
     else
@@ -229,7 +229,7 @@ function CompactRaidFrameManager_UpdateOptionsFlowContainer(self)
     end
 
     --Any sort of leader may initiate a ready check.
-    if ( IsInGroup() and (UnitIsGroupLeader("player") or UnitIsGroupAssistant("player")) ) then
+    if ( CUFIsInGroup() and (CUFUnitIsGroupLeader("player") or CUFUnitIsGroupAssistant("player")) ) then
         self.displayFrame.leaderOptions.readyCheckButton:Enable();
         self.displayFrame.leaderOptions.readyCheckButton:SetAlpha(1);
         self.displayFrame.leaderOptions.countdownButton:Enable(); 
@@ -350,15 +350,15 @@ end
 
 function CompactRaidFrameManager_UpdateRaidIcons()
     local unit = "target";
-    local disableAll = not CanBeRaidTarget(unit);
+    local disableAll = not CUFCanBeRaidTarget(unit);
     for i=1, NUM_RAID_ICONS do
         local button = _G["CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarker"..i];	--.... /cry
         if ( disableAll or button:GetID() == GetRaidTargetIndex(unit) ) then
-            button:GetNormalTexture():SetDesaturated(true);
+            button:GetNormalTexture():CUFSetDesaturated(true);
             button:SetAlpha(0.7);
             button:Disable();
         else
-            button:GetNormalTexture():SetDesaturated(false);
+            button:GetNormalTexture():CUFSetDesaturated(false);
             button:SetAlpha(1);
             button:Enable();
         end
@@ -366,10 +366,10 @@ function CompactRaidFrameManager_UpdateRaidIcons()
 
     local removeButton = CompactRaidFrameManagerDisplayFrameRaidMarkersRaidMarkerRemove;
     if ( not GetRaidTargetIndex(unit) ) then
-        removeButton:GetNormalTexture():SetDesaturated(true);
+        removeButton:GetNormalTexture():CUFSetDesaturated(true);
         removeButton:Disable();
     else
-        removeButton:GetNormalTexture():SetDesaturated(false);
+        removeButton:GetNormalTexture():CUFSetDesaturated(false);
         removeButton:Enable();
     end
 end
@@ -536,7 +536,7 @@ end
 
 function CompactRaidFrameManager_UpdateContainerVisibility()
     local manager = CompactRaidFrameManager;
-    if ( GetDisplayedAllyFrames() == "raid" and manager.container.enabled ) then
+    if ( CUFGetDisplayedAllyFrames() == "raid" and manager.container.enabled ) then
         manager.container:Show();
     else
         manager.container:Hide();
@@ -575,7 +575,7 @@ function CompactRaidFrameManager_UpdateContainerBounds(self) --Hah, "Bounds" ins
 end
 
 function CompactRaidFrameManager_UpdateContainerLockVisibility(self)
-    if ( GetDisplayedAllyFrames() ~= "raid" or not CompactRaidFrameManagerDisplayFrameLockedModeToggle.lockMode ) then
+    if ( CUFGetDisplayedAllyFrames() ~= "raid" or not CompactRaidFrameManagerDisplayFrameLockedModeToggle.lockMode ) then
         CompactRaidFrameManager_LockContainer(self);
     else
         CompactRaidFrameManager_UnlockContainer(self);
@@ -657,7 +657,7 @@ end
 
 function CompactRaidFrameManager_ResizeFrame_SavePosition(manager)
     if ( manager.dynamicContainerPosition ) then
-        SetRaidProfileSavedPosition(GetActiveRaidProfile(), true);
+        CUFSetRaidProfileSavedPosition(CUFGetActiveRaidProfile(), true);
         return;
     end
 
@@ -701,11 +701,11 @@ function CompactRaidFrameManager_ResizeFrame_SavePosition(manager)
         end
     end
 
-    SetRaidProfileSavedPosition(GetActiveRaidProfile(), false, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset);
+    CUFSetRaidProfileSavedPosition(CUFGetActiveRaidProfile(), false, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset);
 end
 
 function CompactRaidFrameManager_ResizeFrame_LoadPosition(manager)
-    local dynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = GetRaidProfileSavedPosition(GetActiveRaidProfile());
+    local dynamic, topPoint, topOffset, bottomPoint, bottomOffset, leftPoint, leftOffset = CUFGetRaidProfileSavedPosition(CUFGetActiveRaidProfile());
     if ( dynamic ) then	--We are automatically placed.
         manager.dynamicContainerPosition = true;
         CompactRaidFrameManager_UpdateContainerBounds(manager);
@@ -755,7 +755,7 @@ end
 -------------Utility functions-------------
 --Functions used for sorting and such
 function CRFSort_Group(token1, token2)
-    if ( IsInRaid() ) then
+    if ( CUFIsInRaid() ) then
         local id1 = tonumber(string.sub(token1, 5));
         local id2 = tonumber(string.sub(token2, 5));
 
@@ -793,8 +793,8 @@ function CRFSort_Role(token1, token2)
         role2 = select(10, GetRaidRosterInfo(id2));
     end
 
-    role1 = role1 or UnitGroupRoles(token1);
-    role2 = role2 or UnitGroupRoles(token2);
+    role1 = role1 or CUFUnitGroupRoles(token1);
+    role2 = role2 or CUFUnitGroupRoles(token2);
 
     local value1, value2 = roleValues[role1], roleValues[role2];
     if ( value1 ~= value2 ) then
@@ -855,11 +855,11 @@ function CRFFlowFilterFunc(token)
         return false;
     end
 
-    if ( not IsInRaid() ) then	--We don't filter unless we're in a raid.
+    if ( not CUFIsInRaid() ) then	--We don't filter unless we're in a raid.
         return true;
     end
 
-    local role = UnitGroupRoles(token);
+    local role = CUFUnitGroupRoles(token);
     if ( not filterOptions["displayRole"..role] ) then
         return false;
     end
@@ -906,19 +906,19 @@ end
 
 function CRF_CountStuff()
     CRF_ResetCountedStuff();
-    if ( IsInRaid() ) then
-        for i=1, GetNumGroupMembers() do
+    if ( CUFIsInRaid() ) then
+        for i=1, CUFGetNumGroupMembers() do
             local name, rank, subgroup, level, class, fileName, zone, online, isDead, role, isML = GetRaidRosterInfo(i);  --Weird that we have 2 role return values, but... oh well
-            local assignedRole = UnitGroupRoles("raid"..i)
+            local assignedRole = CUFUnitGroupRoles("raid"..i)
             if ( rank ) then
                 CRF_AddToCount(isDead, assignedRole);
             end
         end
     else
-        CRF_AddToCount(UnitIsDeadOrGhost("player"), UnitGroupRoles("player"));
-        for i=1, GetNumSubgroupMembers() do
+        CRF_AddToCount(UnitIsDeadOrGhost("player"), CUFUnitGroupRoles("player"));
+        for i=1, CUFGetNumSubgroupMembers() do
             local unit = "party"..i;
-            CRF_AddToCount(UnitIsDeadOrGhost(unit), UnitGroupRoles(unit));
+            CRF_AddToCount(UnitIsDeadOrGhost(unit), CUFUnitGroupRoles(unit));
         end
     end
 end

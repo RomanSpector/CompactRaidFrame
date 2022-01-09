@@ -28,14 +28,14 @@ hooksecurefunc("UIDropDownMenu_AddButton", function(info, level)
         local check = _G[listFrameName.."Button"..index.."Check"];
         local uncheck = _G[listFrameName.."Button"..index.."UnCheck"];
         if ( info.disabled ) then
-            check:SetDesaturated(true);
+            check:CUFSetDesaturated(true);
             check:SetAlpha(0.5);
-            uncheck:SetDesaturated(true);
+            uncheck:CUFSetDesaturated(true);
             uncheck:SetAlpha(0.5);
         else
-            check:SetDesaturated(false);
+            check:CUFSetDesaturated(false);
             check:SetAlpha(1);
-            uncheck:SetDesaturated(false);
+            uncheck:CUFSetDesaturated(false);
             uncheck:SetAlpha(1);
         end
 

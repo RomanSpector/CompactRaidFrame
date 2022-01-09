@@ -29,45 +29,45 @@ hooksecurefunc("BlizzardOptionsPanel_OnEvent", function(self, event, ...)
     end
 end)
 
-function PassClickToParent(self, ...)
+function CUFPassClickToParent(self, ...)
     self:GetParent():Click(...);
 end
 
-function IsInGroup()
+function CUFIsInGroup()
     return GetNumRaidMembers() > 0 or GetNumPartyMembers() > 0;
 end
 
-function IsInRaid()
+function CUFIsInRaid()
     return GetNumRaidMembers() > 0;
 end
 
-function GetNumSubgroupMembers()
+function CUFGetNumSubgroupMembers()
     return GetNumPartyMembers();
 end
 
-function GetNumGroupMembers()
-    return IsInRaid() and GetNumRaidMembers() or GetNumPartyMembers();
+function CUFGetNumGroupMembers()
+    return CUFIsInRaid() and GetNumRaidMembers() or GetNumPartyMembers();
 end
 
-function GetDisplayedAllyFrames()
+function CUFGetDisplayedAllyFrames()
     local useCompact = CUF_CVar:GetCVarBool("useCompactPartyFrames");
     if ( IsActiveBattlefieldArena() and not useCompact ) then
         return "party";
-    elseif ( IsInGroup() and ( IsInRaid() or useCompact ) ) then
+    elseif ( CUFIsInGroup() and ( CUFIsInRaid() or useCompact ) ) then
         return "raid";
-    elseif ( IsInGroup() ) then
+    elseif ( CUFIsInGroup() ) then
         return "party";
     else
         return nil;
     end
 end
 
-function UnitIsGroupLeader(unit)
+function CUFUnitIsGroupLeader(unit)
     local isLeader = false;
-    if ( not IsInGroup() ) then
+    if ( not CUFIsInGroup() ) then
         isLeader = false;
     elseif ( unit == "player" ) then
-        isLeader = IsInRaid() and IsRaidLeader() or IsPartyLeader();
+        isLeader = CUFIsInRaid() and IsRaidLeader() or IsPartyLeader();
     else
         local index = unit:match("%d+");
         isLeader = index and GetPartyLeaderIndex() == index;
@@ -75,27 +75,27 @@ function UnitIsGroupLeader(unit)
     return isLeader;
 end
 
-function UnitIsGroupAssistant(unit)
+function CUFUnitIsGroupAssistant(unit)
     local isAssistant = false;
-    if ( not IsInRaid() ) then
+    if ( not CUFIsInRaid() ) then
         isAssistant = false;
     else
         -- UnitIsRaidOfficer return correctly also for party
-        isAssistant = UnitIsRaidOfficer(unit) and not UnitIsGroupLeader(unit);
+        isAssistant = UnitIsRaidOfficer(unit) and not CUFUnitIsGroupLeader(unit);
     end
     return isAssistant;
 end
 
-function UnitDistanceSquared(unit)
+function CUFUnitDistanceCUFSquared(unit)
     if ( UnitIsConnected(unit) ) then
         local px, py = GetPlayerMapPosition("player");
         local ux, uy = GetPlayerMapPosition(unit);
-        return CalculateDistance(px, py, ux, uy) * 100000, true;
+        return CUFCalculateDistance(px, py, ux, uy) * 100000, true;
     end
     return 0, false;
 end
 
-function CanBeRaidTarget(unit)
+function CUFCanBeRaidTarget(unit)
     if ( not unit ) then
         return;
     end
@@ -119,16 +119,16 @@ local CrossLocation = {
     ["Кратер Азшары"] = true,
 };
 
-C_PvP = C_PvP or {};
-function C_PvP.IsRatedBattleground()
+CUF_PvP = CUF_PvP or {};
+function CUF_PvP.IsRatedBattleground()
     return false;
 end
 
-function C_PvP.IsWarModeDesired()
+function CUF_PvP.IsWarModeDesired()
     return false;
 end
 
-function C_PvP.IsPvPMap()
+function CUF_PvP.IsPvPMap()
     local inInstance, instanceType = IsInInstance();
     if ( not inInstance ) then
         return;
@@ -137,12 +137,12 @@ function C_PvP.IsPvPMap()
     return instanceType == "pvp" or instanceType == "arena";
 end
 
-function UnitPhaseReason(unit)
-    if ( C_PvP.IsPvPMap() or UnitIsUnit("player", unit) ) then
+function CUFUnitPhaseReason(unit)
+    if ( CUF_PvP.IsPvPMap() or UnitIsUnit("player", unit) ) then
         return;
     end
 
-    if not ( IsInRaid() and UnitIsConnected(unit) ) then
+    if not ( CUFIsInRaid() and UnitIsConnected(unit) ) then
         return;
     end
 
@@ -159,12 +159,12 @@ function UnitPhaseReason(unit)
 
 end
 
-function GetMaxUnitNumberBattleground()
+function CUFGetMaxUnitNumberBattleground()
     return MAX_BATTLEGOUND_UNIT[GetMapInfo()];
 end
 
-C_Map = C_Map or {};
-C_Map.WorldMap = {};
+CUF_Map = CUF_Map or {};
+CUF_Map.WorldMap = {};
 
 local function LoadZones(obj, ...)
     local n = select('#', ...);
@@ -175,36 +175,36 @@ local function LoadZones(obj, ...)
 end
 
 for continentIndex = 1, 4 do
-    LoadZones(C_Map.WorldMap, GetMapZones(continentIndex));
+    LoadZones(CUF_Map.WorldMap, GetMapZones(continentIndex));
 end
 
-function C_Map.IsWorldMap(uiMap)
-    for _, value in pairs(C_Map.WorldMap) do
+function CUF_Map.IsWorldMap(uiMap)
+    for _, value in pairs(CUF_Map.WorldMap) do
         if ( value == uiMap ) then
             return true;
         end
     end
 end
 
-function UnitInOtherParty(unit)
-    if not C_Map.IsWorldMap(GetZoneText()) or UnitPhaseReason(unit) then
+function CUFUnitInOtherParty(unit)
+    if not CUF_Map.IsWorldMap(GetZoneText()) or CUFUnitPhaseReason(unit) then
         return false;
     end
 
-    if not ( IsInRaid() and UnitIsConnected(unit) ) then
+    if not ( CUFIsInRaid() and UnitIsConnected(unit) ) then
         return;
     end
 
     for i = 1, GetRealNumRaidMembers() do
         local name, rank, subgroup, level, class, fileName, zone = GetRaidRosterInfo(i);
         if ( name == UnitName(unit) ) then
-            return not C_Map.IsWorldMap(zone);
+            return not CUF_Map.IsWorldMap(zone);
         end
     end
 
 end
 
-function GetTexCoordsForRoleSmallCircle(role)
+function CUFCUFGetTexCoordsForRoleSmallCircle(role)
     if ( role == "TANK" ) then
         return 0, 19/64, 22/64, 41/64;
     elseif ( role == "HEALER" ) then
@@ -216,46 +216,46 @@ function GetTexCoordsForRoleSmallCircle(role)
     end
 end
 
-function CooldownFrame_Clear(self)
+function CUFCooldownFrame_Clear(self)
     self:Hide();
 end
 
-Enum = Enum or {};
-Enum.SummonStatus = {
+CUFEnum = CUFEnum or {};
+CUFEnum.SummonStatus = {
     None = 0,
     Pending = 1,
     Accepted = 2,
     Declined = 3
 };
 
-Enum.PhaseReason = {
+CUFEnum.PhaseReason = {
     Phasing = 0,
     Sharding = 1,
     WarMode = 2,
     ChromieTime = 3
 };
 
-C_IncomingSummon = C_IncomingSummon or {};
-C_IncomingSummon.HasIncomingSummon = function(unit)
+CUF_IncomingSummon = CUF_IncomingSummon or {};
+CUF_IncomingSummon.HasIncomingSummon = function(unit)
     return false;
 end
 
-C_IncomingSummon.IncomingSummonStatus = function(unit)
+CUF_IncomingSummon.IncomingSummonStatus = function(unit)
     return 0;
 end
 
 
-C_PartyInfo = C_PartyInfo or {};
+CUF_PartyInfo = CUF_PartyInfo or {};
 
 do
 
     local countdownTicker;
-    C_PartyInfo.DoCountdown = function(count)
+    CUF_PartyInfo.DoCountdown = function(count)
         if ( countdownTicker ) then
             return;
         end
 
-        local channel = IsInRaid() and "RAID_WARNING" or "PARTY";
+        local channel = CUFIsInRaid() and "RAID_WARNING" or "PARTY";
         local countdown = count;
 
         local func = function()
@@ -272,14 +272,14 @@ do
     end
 
     local isAllAssistant = false;
-    function IsEveryoneAssistant()
+    function CUFIsEveryoneAssistant()
         return isAllAssistant;
     end
 
     CUF_SET_ASSIST_DELAY = 0.15;
 
     local assistantTicker;
-    function SetEveryoneIsAssistant(enable)
+    function CUFSetEveryoneIsAssistant(enable)
         if ( assistantTicker ) then
             assistantTicker:Cancel();
             assistantTicker = nil;
@@ -290,7 +290,7 @@ do
 
         local func = function()
             local unit = "raid"..index;
-            if ( IsEveryoneAssistant() ) then
+            if ( CUFIsEveryoneAssistant() ) then
                 PromoteToAssistant(unit);
             else
                 DemoteAssistant(unit);
@@ -322,11 +322,11 @@ local function ShowPartyFrame()
     end
 end
 
-function RaidOptionsFrame_UpdatePartyFrames()
+function CUFRaidOptionsFrame_UpdatePartyFrames()
     if ( InCombatLockdown() ) then
         return;
     end
-    if ( GetDisplayedAllyFrames() ~= "party" ) then
+    if ( CUFGetDisplayedAllyFrames() ~= "party" ) then
         HidePartyFrame();
     else
         HidePartyFrame();
@@ -437,7 +437,7 @@ do
     end
 end
 
-function UnitHasIncomingResurrection(unit)
+function CUFUnitHasIncomingResurrection(unit)
     if not ( unit and LibResComm ) then
         return;
     end
@@ -445,7 +445,7 @@ function UnitHasIncomingResurrection(unit)
     return LibResComm:IsUnitBeingRessed(UnitName(unit));
 end
 
-function UnitGetIncomingHeals(unit, healer)
+function CUFUnitGetIncomingHeals(unit, healer)
     if not ( unit and HealComm ) then
         return;
     end
@@ -457,7 +457,7 @@ function UnitGetIncomingHeals(unit, healer)
     end
 end
 
-function UnitGetTotalAbsorbs(unit)
+function CUFUnitGetTotalAbsorbs(unit)
     if not ( unit and LibAbsorb ) then
         return;
     end
@@ -465,7 +465,7 @@ function UnitGetTotalAbsorbs(unit)
     return LibAbsorb.UnitTotal(UnitGUID(unit));
 end
 
-function UnitGetTotalHealAbsorbs(unit) -- there is nothing like this in the WotLK patch
+function CUFUnitGetTotalHealAbsorbs(unit) -- there is nothing like this in the WotLK patch
     return 0;
 end
 
@@ -476,7 +476,7 @@ local LibGTConvertRole = {
     ["tank"]    = "TANK",
 };
 
-function GetSpecializationRole(specIndex)
+function CUFGetSpecializationRole(specIndex)
     if ( not LibGT ) then
         return "NONE";
     end
@@ -484,11 +484,11 @@ function GetSpecializationRole(specIndex)
     return LibGTConvertRole[LibGT:GetUnitRole("player")] or "NONE";
 end
 
-function UnitGroupRoles(unit)
+function CUFUnitGroupRoles(unit)
     local role;
-    -- For 3.3.5 roles are assigned only for LFG, so the API UnitGroupRolesAssigned works only for LFG
+    -- For 3.3.5 roles are assigned only for LFG, so the API CUFUnitGroupRolesAssigned works only for LFG
     -- For LFG, do not need to use third-party methods to define a role that is not always defined correctly.
-    local isTank, isHealer, isDamage = UnitGroupRolesAssigned(unit);
+    local isTank, isHealer, isDamage = CUFUnitGroupRolesAssigned(unit);
     if ( isTank ) then
         role = "TANK";
     elseif ( isHealer ) then
@@ -509,15 +509,15 @@ function UnitGroupRoles(unit)
     return role or "NONE";
 end
 
-function UnitShouldDisplayName(unitToken)
+function CUFUnitShouldDisplayName(unitToken)
     return unitToken;
 end
 
-function UnitNameplateShowsWidgetsOnly(unitToken)
+function CUFUnitNameplateShowsWidgetsOnly(unitToken)
     return not unitToken;
 end
 
-function SpellIsPriorityAura(spellId)
+function CUFSpellIsPriorityAura(spellId)
     if ( not LOSS_OF_CONTROL_STORAGE ) then
         return false;
     end
@@ -526,7 +526,7 @@ function SpellIsPriorityAura(spellId)
     return LOSS_OF_CONTROL_STORAGE[spellName] and true;
 end
 
-function SpellIsSelfBuff(spellId)
+function CUFSpellIsSelfBuff(spellId)
     local info = LibAura:SpellIsSelfBuff(spellId)
     if ( not info ) then
         return false;
@@ -535,7 +535,7 @@ function SpellIsSelfBuff(spellId)
     return info.appliesOnlyYourself;
 end
 
-function SpellGetVisibilityInfo(spellId, visType)
+function CUFSpellGetVisibilityInfo(spellId, visType)
     if ( not LibAura ) then
         return false;
     end
@@ -543,7 +543,7 @@ function SpellGetVisibilityInfo(spellId, visType)
     return LibAura:SpellGetVisibilityInfo(spellId, visType)
 end
 
-function UnitAuraBySlot(unit, slot)
+function CUFUnitAuraBySlot(unit, slot)
     if not ( unit and LibAura ) then
         return;
     end
@@ -551,7 +551,7 @@ function UnitAuraBySlot(unit, slot)
     return LibAura:UnitAuraBySlot(unit, slot);
 end
 
-function UnitAuraSlots(unit, filter, maxCount, continuationToken)
+function CUFUnitAuraSlots(unit, filter, maxCount, continuationToken)
     if not ( unit and LibAura ) then
         return;
     end
