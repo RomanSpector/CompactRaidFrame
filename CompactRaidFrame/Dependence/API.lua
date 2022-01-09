@@ -486,9 +486,9 @@ end
 
 function CUFUnitGroupRoles(unit)
     local role;
-    -- For 3.3.5 roles are assigned only for LFG, so the API CUFUnitGroupRolesAssigned works only for LFG
+    -- For 3.3.5 roles are assigned only for LFG, so the API UnitGroupRolesAssigned works only for LFG
     -- For LFG, do not need to use third-party methods to define a role that is not always defined correctly.
-    local isTank, isHealer, isDamage = CUFUnitGroupRolesAssigned(unit);
+    local isTank, isHealer, isDamage = UnitGroupRolesAssigned(unit);
     if ( isTank ) then
         role = "TANK";
     elseif ( isHealer ) then
