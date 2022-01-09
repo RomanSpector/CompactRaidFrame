@@ -1,4 +1,4 @@
-local function UIDropDownMenu_CreateUnChecked(object)
+local function CUFUIDropDownMenu_CreateUnChecked(object)
     local uncheck = _G[object:GetName().."UnCheck"];
     if ( uncheck ) then
         return;
@@ -22,20 +22,20 @@ hooksecurefunc("UIDropDownMenu_AddButton", function(info, level)
     local listFrameName = listFrame:GetName();
 
     local button = _G[listFrameName.."Button"..index];
-    UIDropDownMenu_CreateUnChecked(button);
+    CUFUIDropDownMenu_CreateUnChecked(button);
 
     if ( not info.notCheckable ) then
         local check = _G[listFrameName.."Button"..index.."Check"];
         local uncheck = _G[listFrameName.."Button"..index.."UnCheck"];
         if ( info.disabled ) then
-            check:CUFSetDesaturated(true);
+            check:SetDesaturated(true);
             check:SetAlpha(0.5);
-            uncheck:CUFSetDesaturated(true);
+            uncheck:SetDesaturated(true);
             uncheck:SetAlpha(0.5);
         else
-            check:CUFSetDesaturated(false);
+            check:SetDesaturated(false);
             check:SetAlpha(1);
-            uncheck:CUFSetDesaturated(false);
+            uncheck:SetDesaturated(false);
             uncheck:SetAlpha(1);
         end
 
