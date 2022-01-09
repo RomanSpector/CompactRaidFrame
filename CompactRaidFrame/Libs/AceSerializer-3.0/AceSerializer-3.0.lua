@@ -142,7 +142,7 @@ local function DeserializeStringHelper(escape)
 	error("DeserializeStringHelper got called for '"..escape.."'?!?")  -- can't be reached unless regex is screwed up
 end
 
-local function DeserializCUFEnumberHelper(number)
+local function DeserializeNumberHelper(number)
 	if number == serNaN then
 		return 0/0
 	elseif number == serNegInf then
@@ -183,7 +183,7 @@ local function DeserializeValue(iter,single,ctl,data)
 	if ctl=="^S" then
 		res = gsub(data, "~.", DeserializeStringHelper)
 	elseif ctl=="^N" then
-		res = DeserializCUFEnumberHelper(data)
+		res = DeserializeNumberHelper(data)
 		if not res then
 			error("Invalid serialized number: '"..tostring(data).."'")
 		end

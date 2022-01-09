@@ -255,7 +255,7 @@ function NewModule(self, name, prototype, ...)
 	local module = AceAddon:NewAddon(fmt("%s_%s", self.name or tostring(self), name))
 	
 	module.IsModule = IsModuleTrue
-	module:CUFSetEnabledState(self.defaultModuleState)
+	module:SetEnabledState(self.defaultModuleState)
 	module.moduleName = name
 
 	if type(prototype) == "string" then
@@ -303,7 +303,7 @@ end
 -- MyModule = MyAddon:GetModule("MyModule")
 -- MyModule:Enable()
 function Enable(self)
-	self:CUFSetEnabledState(true)
+	self:SetEnabledState(true)
 	return AceAddon:EnableAddon(self)
 end
 
@@ -318,7 +318,7 @@ end
 -- MyAddon = LibStub("AceAddon-3.0"):GetAddon("MyAddon")
 -- MyAddon:Disable()
 function Disable(self)
-	self:CUFSetEnabledState(false)
+	self:SetEnabledState(false)
 	return AceAddon:DisableAddon(self)
 end
 
@@ -424,7 +424,7 @@ end
 
 --- Set the state of an addon or module
 -- This should only be called before any enabling actually happend, e.g. in/before OnInitialize.
--- @name //addon//:CUFSetEnabledState
+-- @name //addon//:SetEnabledState
 -- @paramsig state
 -- @param state the state of an addon or module  (enabled=true, disabled=false)
 function SetEnabledState(self, state)

@@ -378,7 +378,7 @@ local function removeAllRecords(guid)
 	end
 end
 
--- These are not public APIs and are purely for the Wrapper to use
+-- These are not public APIs and are purely for the wrapper to use
 HealComm.removeRecordList = removeRecordList
 HealComm.removeRecord = removeRecord
 HealComm.getRecord = getRecord
