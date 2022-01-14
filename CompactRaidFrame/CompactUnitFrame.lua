@@ -149,6 +149,7 @@ function CompactUnitFrame_OnUpdate(self, elapsed)
     CompactUnitFrame_UpdateDistance(self);
     CompactUnitFrame_CheckReadyCheckDecay(self, elapsed);
 end
+
 --Externally accessed functions
 function CompactUnitFrame_SetUnit(frame, unit)
     if ( unit ~= frame.unit or frame.hideCastbar ~= frame.optionTable.hideCastbar ) then
@@ -281,7 +282,7 @@ end
 --Internally accessed functions
 --Update Functions
 function CompactUnitFrame_UpdateAll(frame)
-    CompactUnitFrame_UpdateInVehicle(frame);
+    -- CompactUnitFrame_UpdateInVehicle(frame);
     CompactUnitFrame_UpdateVisible(frame);
     if ( UnitExists(frame.displayedUnit) ) then
         CompactUnitFrame_UpdateMaxHealth(frame);

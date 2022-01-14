@@ -29,7 +29,7 @@ function CompactRaidFrameManager_OnLoad(self)
     self:RegisterEvent("RAID_TARGET_UPDATE");
     self:RegisterEvent("PLAYER_TARGET_CHANGED");
 
-    RegisterStateDriver(self, "showParty", "[group:party] show; [group:raid] show; [nogroup:party] hide");
+    RegisterStateDriver(self, "visibility", "[group:party] show; [group:raid] show; [nogroup:party] hide");
 
     self.containerResizeFrame:SetMinResize(self.container:GetWidth(), MINIMUM_RAID_CONTAINER_HEIGHT + RESIZE_VERTICAL_OUTSETS * 2 + 1);
     self.dynamicContainerPosition = true;

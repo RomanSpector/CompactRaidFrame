@@ -360,7 +360,7 @@ function CompactRaidFrameContainer_GetUnitFrame(self, unit, frameType)
         tinsert(self.frameUpdateList[info.updateList], frame);
         CompactRaidFrameReservation_RegisterReservation(self.frameReservations[frameType], frame, mapping);
 
-        RegisterStateDriver(frame, "shownState", "[group:party] show; [group:raid] show; [nogroup:party] hide");
+        RegisterStateDriver(frame, "visibility", "[group:party] show; [group:raid] show; [nogroup:party] hide");
         RegisterUnitWatch(frame);
     end
 

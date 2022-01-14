@@ -11,9 +11,9 @@ local UnitGUID             = UnitGUID;
 local UnitExists           = UnitExists;
 local CLASS_AURAS          = lib.CLASS_AURAS;
 local GetSpellInfo         = GetSpellInfo;
+local CanApplyAuras        = lib.UNIT_CAN_APPLY_AURAS[select(2, UnitClass("player"))];
 local GetNumRaidMembers    = GetNumRaidMembers;
 local UnitAffectingCombat  = UnitAffectingCombat;
-local UNIT_CAN_APPLY_AURAS = lib.UNIT_CAN_APPLY_AURAS[select(2, UnitClass("player"))];
 
 lib.CASHE = {};
 lib.callbacksUsed = {};
@@ -22,13 +22,13 @@ function lib.callbacks:OnUsed(target, eventname)
     lib.callbacksUsed[eventname] = lib.callbacksUsed[eventname] or {};
     tinsert(lib.callbacksUsed[eventname], #lib.callbacksUsed[eventname] + 1, target);
 
-    lib.handler:RegisterEvent("UNIT_AURA");
-    lib.handler:RegisterEvent("UNIT_TARGET");
-    lib.handler:RegisterEvent("PLAYER_ENTERING_WORLD");
-    lib.handler:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
-    lib.handler:RegisterEvent("PLAYER_TARGET_CHANGED");
-    lib.handler:RegisterEvent("PLAYER_REGEN_DISABLED");
-    lib.handler:RegisterEvent("PLAYER_REGEN_ENABLED");
+    lib.events:RegisterEvent("UNIT_AURA");
+    lib.events:RegisterEvent("UNIT_TARGET");
+    lib.events:RegisterEvent("PLAYER_ENTERING_WORLD");
+    lib.events:RegisterEvent("UPDATE_MOUSEOVER_UNIT");
+    lib.events:RegisterEvent("PLAYER_TARGET_CHANGED");
+    lib.events:RegisterEvent("PLAYER_REGEN_DISABLED");
+    lib.events:RegisterEvent("PLAYER_REGEN_ENABLED");
 end
 
 function lib.callbacks:OnUnused(target, eventname)
@@ -46,39 +46,44 @@ function lib.callbacks:OnUnused(target, eventname)
         end
     end
 
-    lib.handler:UnregisterEvent("UNIT_AURA");
-    lib.handler:UnregisterEvent("UNIT_TARGET");
-    lib.handler:UnregisterEvent("PLAYER_ENTERING_WORLD");
-    lib.handler:UnregisterEvent("UPDATE_MOUSEOVER_UNIT");
-    lib.handler:UnregisterEvent("PLAYER_TARGET_CHANGED");
-    lib.handler:UnregisterEvent("PLAYER_REGEN_DISABLED");
-    lib.handler:UnregisterEvent("PLAYER_REGEN_ENABLED");
+    lib.events:UnregisterEvent("UNIT_AURA");
+    lib.events:UnregisterEvent("UNIT_TARGET");
+    lib.events:UnregisterEvent("PLAYER_ENTERING_WORLD");
+    lib.events:UnregisterEvent("UPDATE_MOUSEOVER_UNIT");
+    lib.events:UnregisterEvent("PLAYER_TARGET_CHANGED");
+    lib.events:UnregisterEvent("PLAYER_REGEN_DISABLED");
+    lib.events:UnregisterEvent("PLAYER_REGEN_ENABLED");
 end
 
 local function ResetUnitAuras(unitID)
     lib:RemoveAllAurasFromGUID(UnitGUID(unitID));
 end
 
-local function GetAuraPriority(name)
-    if ( UNIT_CAN_APPLY_AURAS[name] ) then
-        if ( UNIT_CAN_APPLY_AURAS[name].appliesOnlyYourself ) then
+local function GetAuraPriority(name, spellId)
+    if CanApplyAuras[name] then
+        if CanApplyAuras[name].appliesOnlyYourself then
             return 1;
-        else
-            return UnitAffectingCombat("player") and 1 or 2;
         end
-    elseif ( LOSS_OF_CONTROL_STORAGE[name] ) then
-        return LOSS_OF_CONTROL_STORAGE[name][2];
-    else
-        return 0;
+        return UnitAffectingCombat("player") and 1 or 2;
     end
+
+    if ( LOSS_OF_CONTROL_STORAGE[spellId] ) then
+        return LOSS_OF_CONTROL_STORAGE[spellId][2];
+    end
+
+    if lib.HealingTakenEffect[spellId] then
+        return 1;
+    end
+
+    return 0;
 end
 
 local sortPriorFunc = function (a,b)
-    if ( a.priorityIndex == b.priorityIndex ) then
+    if a.priorityIndex == b.priorityIndex then
         return a.expirationTime > b.expirationTime;
-    else
-        return a.priorityIndex > b.priorityIndex;
     end
+
+    return a.priorityIndex > b.priorityIndex;
 end
 
 function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
@@ -88,7 +93,7 @@ function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
     tinsert(tracker, #tracker + 1, {
         index = index,
         filterType = filterType,
-        priorityIndex = GetAuraPriority(spellName),
+        priorityIndex = GetAuraPriority(spellID),
         name = spellName,
         texture = texture,
         stackCount = stackCount,
@@ -128,7 +133,7 @@ end
                                 canStealOrPurge,
                                 shouldConsolidate,
                                 spellID,
-                                ( UNIT_CAN_APPLY_AURAS[name] and UNIT_CAN_APPLY_AURAS[name].canApplyAura )
+                                ( CanApplyAuras[name] and CanApplyAuras[name].canApplyAura )
                             );
         index = index + 1;
     end
@@ -144,7 +149,7 @@ local function UnitAurasUpdate(unitID)
     CheckUnitAuras(unitID, "HARMFUL|RAID");
 end
 
-function lib.handler:UNIT_AURA(_, unitID)
+function lib.events:UNIT_AURA(_, unitID)
     if not unitID then return; end
     UnitAurasUpdate(unitID);
 end
@@ -173,15 +178,15 @@ local function UnitsAurasUpdate()
     end
 end
 
-function lib.handler:PLAYER_ENTERING_WORLD()
+function lib.events:PLAYER_ENTERING_WORLD()
     UnitsAurasUpdate();
 end
 
-function lib.handler:PLAYER_REGEN_ENABLED()
+function lib.events:PLAYER_REGEN_ENABLED()
     UnitsAurasUpdate();
 end
 
-function lib.handler:PLAYER_REGEN_DISABLED()
+function lib.events:PLAYER_REGEN_DISABLED()
     UnitsAurasUpdate();
 end
 
@@ -268,5 +273,5 @@ function lib:SpellIsSelfBuff(spellID)
     spellID = tonumber(spellID);
     assert(type(spellID)=="number", "spellID is not number value");
 
-    return UNIT_CAN_APPLY_AURAS[GetSpellInfo(spellID)];
+    return CanApplyAuras[GetSpellInfo(spellID)];
 end
