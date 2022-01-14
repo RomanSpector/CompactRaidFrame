@@ -60,6 +60,7 @@ local function ResetUnitAuras(unitID)
 end
 
 local function GetAuraPriority(name, spellId)
+
     if CanApplyAuras[name] then
         if CanApplyAuras[name].appliesOnlyYourself then
             return 1;
@@ -93,7 +94,7 @@ function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
     tinsert(tracker, #tracker + 1, {
         index = index,
         filterType = filterType,
-        priorityIndex = GetAuraPriority(spellID),
+        priorityIndex = GetAuraPriority(spellName, spellID),
         name = spellName,
         texture = texture,
         stackCount = stackCount,
@@ -243,19 +244,19 @@ function lib:UnitAuraBySlot(unit, slot)
     local tracker = self.CASHE[UnitGUID(unit)];
     local info = tracker and tracker[slot];
     if ( info ) then
-        return  info.name,              -- 1
-                info.texture,           -- 2
-                info.stackCount,        -- 3
-                info.debuffType,        -- 4
-                info.duration,          -- 5
-                info.expirationTime,    -- 6
-                info.unitCaster,        -- 7
-                info.shouldConsolidate, -- 8
-                info.spellID,           -- 9
-                info.spellID,           -- 10
-                info.canApplyAura,      -- 11
-                info.isBossDebuff,      -- 12
-                info.index;             -- 13
+        return info.name,              -- 1
+               info.texture,           -- 2
+               info.stackCount,        -- 3
+               info.debuffType,        -- 4
+               info.duration,          -- 5
+               info.expirationTime,    -- 6
+               info.unitCaster,        -- 7
+               info.shouldConsolidate, -- 8
+               info.spellID,           -- 9
+               info.spellID,           -- 10
+               info.canApplyAura,      -- 11
+               info.isBossDebuff,      -- 12
+               info.index;             -- 13
     end
 end
 
