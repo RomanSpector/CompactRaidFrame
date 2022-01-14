@@ -204,15 +204,15 @@ local function Companion_Inizialization()
     end
 end
 
-function lib.handler:PLAYER_LOGIN()
+function lib.events:PLAYER_LOGIN()
     Companion_Inizialization();
 end
 
-function lib.handler:COMPANION_UPDATE(_, arg1)
+function lib.events:COMPANION_UPDATE(_, arg1)
     if ( arg1 == companion ) then
         Companion_Inizialization();
     end
 end
 
-lib.handler:RegisterEvent("COMPANION_UPDATE");
-lib.handler:RegisterEvent("PLAYER_LOGIN");
+lib.events:RegisterEvent("COMPANION_UPDATE");
+lib.events:RegisterEvent("PLAYER_LOGIN");

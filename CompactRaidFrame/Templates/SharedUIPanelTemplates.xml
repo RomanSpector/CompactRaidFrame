@@ -2,18 +2,6 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-  <Frame name="CUF_SecureHandlerStateTemplate" setAllPoints="true" inherits="SecureHandlerStateTemplate" virtual="true">
-    <Attributes>
-      <Attribute name="_onstate-foo" value="if newstate == 'show' then self:Show(); else self:Hide(); end" />
-    </Attributes>
-    <Scripts>
-      <OnLoad>
-        SecureHandler_OnLoad(self); -- Our OnLoad handler overwrites this one, so execute it now.
-        RegisterStateDriver(self, "foo", "[group:party] show; hide");
-      </OnLoad>
-    </Scripts>
-  </Frame>
-
   <CheckButton name="UICheckButtonTemplate" virtual="true">
     <NormalTexture file="Interface\Buttons\UI-CheckBox-Up" />
     <PushedTexture file="Interface\Buttons\UI-CheckBox-Down" />

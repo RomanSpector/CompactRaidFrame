@@ -4,6 +4,7 @@
 
   <Script file="init.lua" />
   <Script file="CanApplyAura.lua" />
+  <Script file="HealingTarkenEffect.lua" />
   <Script file="SpellGetVisibilityInfo.lua" />
   <Script file="LibCUFAuras-1.0.lua" />
 
