@@ -106,7 +106,7 @@ function lib:AddAuraFromUnitID(index, filterType, dstGUID, ...)
         shouldConsolidate = shouldConsolidate,
         spellID = spellID,
         canApplyAura = canApplyAura,
-        isBossDebuff = false,
+        isBossDebuff = LOSS_OF_CONTROL_STORAGE[spellID],
     });
 
     table.sort(tracker, sortPriorFunc);

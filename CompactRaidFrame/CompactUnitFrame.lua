@@ -1,6 +1,6 @@
 --Widget Handlers
 local OPTION_TABLE_NONE = {};
-BOSS_DEBUFF_SIZE_INCREASE = 9;
+BOSS_DEBUFF_SIZE_INCREASE = 18;
 CUF_READY_CHECK_DECAY_TIME = 11;
 DISTANCE_THRESHOLD_SQUARED = 250*250;
 CUF_NAME_SECTION_SIZE = 15;
@@ -848,34 +848,35 @@ end
 --WARNING: This function is very similar to the function UnitFrameUtil_UpdateFillBar in UnitFrame.lua.
 --If you are making changes here, it is possible you may want to make changes there as well.
 function CompactUnitFrameUtil_UpdateFillBar(frame, previousTexture, bar, amount, barOffsetXPercent)
-	local totalWidth, totalHeight = frame.healthBar:GetSize();
+    local totalWidth, totalHeight = frame.healthBar:GetSize();
 
-	if ( totalWidth == 0 or amount == 0 ) then
-		bar:Hide();
-		if ( bar.overlay ) then
-			bar.overlay:Hide();
-		end
-		return previousTexture;
-	end
+    if ( totalWidth == 0 or amount == 0 ) then
+        bar:Hide();
+        if ( bar.overlay ) then
+            bar.overlay:Hide();
+        end
+        return previousTexture;
+    end
 
-	local barOffsetX = 0;
-	if ( barOffsetXPercent ) then
-		barOffsetX = totalWidth * barOffsetXPercent;
-	end
+    local barOffsetX = 0;
+    if ( barOffsetXPercent ) then
+        barOffsetX = totalWidth * barOffsetXPercent;
+    end
 
-	bar:SetPoint("TOPLEFT", previousTexture, "TOPRIGHT", barOffsetX, 0);
-	bar:SetPoint("BOTTOMLEFT", previousTexture, "BOTTOMRIGHT", barOffsetX, 0);
+    bar:SetPoint("TOPLEFT", previousTexture, "TOPRIGHT", barOffsetX, 0);
+    bar:SetPoint("BOTTOMLEFT", previousTexture, "BOTTOMRIGHT", barOffsetX, 0);
 
-	local _, totalMax = frame.healthBar:GetMinMaxValues();
+    local _, totalMax = frame.healthBar:GetMinMaxValues();
 
-	local barSize = (amount / totalMax) * totalWidth;
-	bar:SetWidth(barSize);
-	bar:Show();
-	if ( bar.overlay ) then
-		bar.overlay:SetTexCoord(0, barSize / bar.overlay.tileSize, 0, totalHeight / bar.overlay.tileSize);
-		bar.overlay:Show();
-	end
-	return bar;
+    local barSize = (amount / totalMax) * totalWidth;
+    bar:SetWidth(barSize);
+    bar:Show();
+
+    if ( bar.overlay ) then
+        bar.overlay:SetTexCoord(0, barSize / bar.overlay.tileSize, 0, totalHeight / bar.overlay.tileSize);
+        bar.overlay:Show();
+    end
+    return bar;
 end
 
 function CompactUnitFrame_UpdateRoleIcon(frame)
