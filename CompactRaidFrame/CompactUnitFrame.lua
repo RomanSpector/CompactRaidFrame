@@ -307,6 +307,7 @@ function CompactUnitFrame_UpdateAll(frame)
     end
 end
 
+--! SOMEBODY FIX ME!!! SOMEBODY FIX ME!!! SOMEBODY FIX ME!!! SOMEBODY FIX ME!!!
 function CompactUnitFrame_UpdateInVehicle(frame)
     local shouldTargetVehicle = UnitHasVehicleUI(frame.unit);
     local unitVehicleToken;
