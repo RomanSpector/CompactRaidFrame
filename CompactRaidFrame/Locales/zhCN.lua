@@ -89,3 +89,15 @@ COMPACT_UNIT_FRAME_PROFILE_SUBTYPE_ALL = "General Options";
 COMPACT_UNIT_FRAME_PROFILE_USECLASSCOLORS = "显示职业颜色";
 
 PARTY_IN_PUBLIC_GROUP_MESSAGE = "This player is currently in an instance group.";
+
+WORLD_MARKER = "위치 표시기 %d";
+WORLD_MARKER1 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070dd파란색|r 위치 표시기";
+WORLD_MARKER2 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00초록색|r 위치 표시기";
+WORLD_MARKER3 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335ee보라색|r 위치 표시기";
+WORLD_MARKER4 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020빨간색|r 위치 표시기";
+WORLD_MARKER5 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00노란색|r 위치 표시기";
+WORLD_MARKER6 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3f주황색|r 위치 표시기";
+WORLD_MARKER7 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaadd은색|r 위치 표시기";
+WORLD_MARKER8 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffff흰색|r 위치 표시기";
+
+REMOVE_WORLD_MARKERS = "모두 삭제";

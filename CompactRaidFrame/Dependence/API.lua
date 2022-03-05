@@ -29,6 +29,10 @@ hooksecurefunc("BlizzardOptionsPanel_OnEvent", function(self, event, ...)
     end
 end)
 
+function IsRaidMarkerActive(index)
+    return false;
+end
+
 function PassClickToParent(self, ...)
     self:GetParent():Click(...);
 end

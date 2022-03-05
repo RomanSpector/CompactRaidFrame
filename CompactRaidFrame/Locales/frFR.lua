@@ -90,3 +90,15 @@ COMPACT_UNIT_FRAME_PROFILE_SUBTYPE_ALL = "Options générales";
 COMPACT_UNIT_FRAME_PROFILE_USECLASSCOLORS = "Couleurs de classe";
 
 PARTY_IN_PUBLIC_GROUP_MESSAGE = "Ce joueur est actuellement dans un groupe d’instance.";
+
+WORLD_MARKER = "Marqueur de terrain %d";
+WORLD_MARKER1 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t Marqueur de terrain |cff0070ddbleu|r";
+WORLD_MARKER2 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t Marqueur de terrain |cff1eff00vert|r";
+WORLD_MARKER3 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t Marqueur de terrain |cffa335eeviolet|r";
+WORLD_MARKER4 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t Marqueur de terrain |cffff2020rouge|r";
+WORLD_MARKER5 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t Marqueur de terrain |cffffff00jaune|r";
+WORLD_MARKER6 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t Marqueur de terrain |cffff7f3forange|r";
+WORLD_MARKER7 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t Marqueur de terrain |cffaaaaddargenté|r";
+WORLD_MARKER8 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t Marqueur de terrain |cffffffffblanc|r";
+
+REMOVE_WORLD_MARKERS = "Tout effacer";

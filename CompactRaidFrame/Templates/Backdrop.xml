@@ -5,11 +5,11 @@
   <Frame name="BackdropTemplate" virtual="true">
     <Scripts>
       <OnLoad>
-        Mixin(self, BackdropTemplateMixin)
+        Mixin(self, BackdropTemplateMixin);
       </OnLoad>
       <OnSizeChanged>
-        self:OnBackdropLoaded()
-        self:OnBackdropSizeChanged()
+        self:OnBackdropLoaded();
+        self:OnBackdropSizeChanged();
       </OnSizeChanged>
     </Scripts>
   </Frame>

@@ -244,14 +244,14 @@ end
 
 local function RaidWorldMarker_OnClick(self, arg1, arg2, checked)
     if ( checked ) then
-        ClearRaidMarker(arg1);
+        -- ClearRaidMarker(arg1);
     else
-        PlaceRaidMarker(arg1);
+        -- PlaceRaidMarker(arg1);
     end
 end
 
 local function ClearRaidWorldMarker_OnClick(self, arg1, arg2, checked)
-    ClearRaidMarker();
+    -- ClearRaidMarker();
 end
 
 function CRFManager_RaidWorldMarkerDropDown_Update()

@@ -370,6 +370,7 @@
                   <OnLoad>
                     self.role = "TANK";
                     self.roleTexture = "|TInterface\\AddOns\\CompactRaidFrame\\Media\\LFGFrame\\LFGRole:14:14:0:0:64:16:32:48:0:16|t";
+                    Mixin(self, UIMenuButtonStretchMixin);
                   </OnLoad>
                 </Scripts>
               </Button>
@@ -381,6 +382,7 @@
                   <OnLoad>
                     self.role = "HEALER";
                     self.roleTexture = "|TInterface\\AddOns\\CompactRaidFrame\\Media\\LFGFrame\\LFGRole:14:14:0:0:64:16:48:64:0:16|t";
+                    Mixin(self, UIMenuButtonStretchMixin);
                   </OnLoad>
                 </Scripts>
               </Button>
@@ -392,6 +394,7 @@
                   <OnLoad>
                     self.role = "DAMAGER";
                     self.roleTexture = "|TInterface\\AddOns\\CompactRaidFrame\\Media\\LFGFrame\\LFGRole:14:14:0:0:64:16:16:32:0:16|t";
+                    Mixin(self, UIMenuButtonStretchMixin);
                   </OnLoad>
                 </Scripts>
               </Button>
@@ -570,7 +573,7 @@
                   </OnClick>
                 </Scripts>
               </Button>
-              <DropDownToggleButton name="$parentRaidWorldMarkerButton" inherits="UIMenuButtonStretchTemplate">
+              <Button name="$parentRaidWorldMarkerButton" inherits="UIMenuButtonStretchTemplate">
                 <Size x="40" y="20" />
                 <Anchors>
                   <Anchor point="TOPLEFT" relativeTo="$parentInitiateReadyCheck" relativePoint="TOPRIGHT" x="0" y="0" />
@@ -597,7 +600,7 @@
                     <Anchor point="CENTER" x="0" y="-1" />
                   </Anchors>
                 </NormalTexture>
-              </DropDownToggleButton>
+              </Button>
             </Frames>
           </Frame>
           <CheckButton name="$parentEveryoneIsAssistButton" parentKey="everyoneIsAssistButton" hidden="true" inherits="UICheckButtonTemplate">

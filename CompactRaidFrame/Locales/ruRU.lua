@@ -93,3 +93,15 @@ COMPACT_UNIT_FRAME_PROFILE_SUBTYPE_ALL = "Общие настройки";
 COMPACT_UNIT_FRAME_PROFILE_USECLASSCOLORS = "Цвета классов";
 
 PARTY_IN_PUBLIC_GROUP_MESSAGE = "Этот игрок сейчас находится в группе для прохождения подземелья.";
+
+WORLD_MARKER = "%d метка";
+WORLD_MARKER1 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:14:14|t |cff0070ddСиняя|r метка";
+WORLD_MARKER2 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_4:14:14|t |cff1eff00Зеленая|r метка";
+WORLD_MARKER3 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:14:14|t |cffa335eeЛиловая|r метка";
+WORLD_MARKER4 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:14:14|t |cffff2020Красная|r метка";
+WORLD_MARKER5 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_1:14:14|t |cffffff00Желтая|r метка";
+WORLD_MARKER6 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:14:14|t |cffff7f3fОранжевая|r метка";
+WORLD_MARKER7 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:14:14|t |cffaaaaddСеребряная|r метка";
+WORLD_MARKER8 = "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:14:14|t |cffffffffБелая|r метка";
+
+REMOVE_WORLD_MARKERS = "Убрать все метки";

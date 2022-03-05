@@ -22,5 +22,4 @@
   <Include file="Libs\LibHealComm-4.0\LibHealComm-4.0.xml" />
   <Include file="Libs\SpecializedAbsorbs-1.0\SpecializedAbsorbs-1.0.xml" />
 
-  <Include file="Libs\LibBabble-Zone-3.0\lib.xml" />
 </Ui>

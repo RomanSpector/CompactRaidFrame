@@ -2,6 +2,8 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
+  <Script file="SharedUIPanelTemplates.lua" />
+
   <CheckButton name="UICheckButtonTemplate" virtual="true">
     <NormalTexture file="Interface\Buttons\UI-CheckBox-Up" />
     <PushedTexture file="Interface\Buttons\UI-CheckBox-Down" />
@@ -72,9 +74,9 @@
   <Frame name="DialogBorderNoCenterTemplate" useParentLevel="true" frameLevel="15" setAllPoints="true" virtual="true">
     <Scripts>
       <OnLoad>
-        self.layoutType = "Dialog"
-        Mixin(self, NineSlicePanelMixin)
-        self:OnLoad()
+        self.layoutType = "Dialog";
+        Mixin(self, NineSlicePanelMixin);
+        self:OnLoad();
       </OnLoad>
     </Scripts>
   </Frame>
@@ -108,10 +110,10 @@
     </Layers>
     <Scripts>
       <OnMouseDown>
-				self.texture:SetPoint("TOPLEFT", 1, -1);
+        self.texture:SetPoint("TOPLEFT", 1, -1);
       </OnMouseDown>
       <OnMouseUp>
-				self.texture:SetPoint("TOPLEFT", 0, 0);
+        self.texture:SetPoint("TOPLEFT", 0, 0);
       </OnMouseUp>
     </Scripts>
     <HighlightTexture file="Interface\AddOns\CompactRaidFrame\Media\FriendsFrame\InformationIcon-Highlight" alphaMode="ADD">
@@ -198,78 +200,26 @@
     </Layers>
     <Scripts>
       <OnMouseDown>
-				if self:IsEnabled() ~= 0 then
-					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Down")
-					if ( self.Icon ) then
-						if ( not self.Icon.oldPoint ) then
-							local point, relativeTo, relativePoint, x, y = self.Icon:GetPoint(1)
-							self.Icon.oldPoint = point
-							self.Icon.oldX = x
-							self.Icon.oldY = y
-						end
-						self.Icon:SetPoint(self.Icon.oldPoint, self.Icon.oldX + 1, self.Icon.oldY - 1)
-					end
-				end
+        self:OnMouseDown();
       </OnMouseDown>
       <OnMouseUp>
-				if self:IsEnabled() ~= 0 then
-					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					if ( self.Icon ) then
-						self.Icon:SetPoint(self.Icon.oldPoint, self.Icon.oldX, self.Icon.oldY)
-					end
-				end
+        self:OnMouseUp();
       </OnMouseUp>
       <OnShow>
-				if self:IsEnabled() ~= 0 then
-					-- we need to reset our textures just in case we were hidden before a mouse up fired
-					self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-					self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				end
+        self:OnShow();
       </OnShow>
       <OnEnable>
-				self.TopLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.TopRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.BottomLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.BottomRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.TopMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.MiddleLeft:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.MiddleRight:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.BottomMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
-				self.MiddleMiddle:SetTexture("Interface\\AddOns\\CompactRaidFrame\\Media\\Buttons\\UI-Silver-Button-Up")
+        self:OnEnable();
       </OnEnable>
       <OnEnter>
-				if(self.tooltipText ~= nil) then
-					GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, self.newbieText)
-				end
+        self:OnEnter();
       </OnEnter>
       <OnLeave>
-				if(self.tooltipText ~= nil) then
-					GameTooltip:Hide()
-				end
+        self:OnLeave();
       </OnLeave>
+      <OnLoad>
+        Mixin(self, UIMenuButtonStretchMixin);
+      </OnLoad>
     </Scripts>
     <ButtonText parentKey="Text" name="$parentText">
       <Anchors>
