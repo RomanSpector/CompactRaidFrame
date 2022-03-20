@@ -522,8 +522,7 @@ function CUFSpellIsPriorityAura(spellId)
         return false;
     end
 
-    local spellName = GetSpellInfo(spellId);
-    return LOSS_OF_CONTROL_STORAGE[spellName] and true;
+    return LOSS_OF_CONTROL_STORAGE[spellId] and true;
 end
 
 function CUFSpellIsSelfBuff(spellId)
