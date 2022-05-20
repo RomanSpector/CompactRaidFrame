@@ -37,6 +37,10 @@ function PassClickToParent(self, ...)
     self:GetParent():Click(...);
 end
 
+function ApplyCoordFix(v, default)
+    return ( v > 10001 or v < -10001 ) and ( default or 1 ) or v;
+end
+
 function IsInGroup()
     return GetNumRaidMembers() > 0 or GetNumPartyMembers() > 0;
 end

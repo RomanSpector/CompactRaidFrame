@@ -40,6 +40,27 @@ local function Method_SetEnabled(self, ...)
     end
 end
 
+local function Method_SetColorTexture(self, r, g, b, a)
+    local rType, gType, bType, aType = type(r), type(g), type(b), type(a);
+
+    if rType ~= "number" then
+        error("Invalid type r: " .. rType);
+    end
+    if gType ~= "number" then
+        error("Invalid type g: " .. gType);
+    end
+    if bType ~= "number" then
+        error("Invalid type b: " .. bType);
+    end
+    if aType ~= "number" and aType ~= "nil" then
+        error("Invalid type a: " .. aType);
+    end
+
+    local texture = self:SetTexture(r, g, b, a or 1);
+
+    return texture;
+end
+
 local function Method_SetRemainingTime(self, _time, daysformat)
     local time = _time
     local dayInSeconds = 86400
@@ -193,12 +214,14 @@ function Frame.__index:SetShown( ... ) Method_SetShown( self, ... ) end
 function Frame.__index:FixOpenPanel( ... ) Method_FixOpenPanel( self, ... ) end
 function Frame.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
 function Frame.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Frame.__index:SetColorTexture( ... ) Method_SetColorTexture(self,... ) end
 
 -- Button Method
 function Button.__index:SetShown( ... ) Method_SetShown( self, ... ) end
 function Button.__index:SetEnabled( ... ) Method_SetEnabled( self, ... ) end
 function Button.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
 function Button.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function Button.__index:SetColorTexture( ... ) Method_SetColorTexture(self,... ) end
 function Button.__index:SetNormalAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetNormalTexture(), atlasName, useAtlasSize, filterMode )  end
 function Button.__index:SetPushedAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetPushedTexture(), atlasName, useAtlasSize, filterMode )  end
 function Button.__index:SetDisabledAtlas( atlasName, useAtlasSize, filterMode ) Method_SetAtlas( self:GetDisabledTexture(), atlasName, useAtlasSize, filterMode )  end
@@ -223,6 +246,7 @@ function StatusBar.__index:SetShown( ... ) Method_SetShown( self, ... ) end
 function StatusBar.__index:SmoothSetValue( value ) Method_SmoothSetValue( self, value ) end
 function StatusBar.__index:SetParentArray( arrayName, element, setInSelf ) Method_SetParentArray( self, arrayName, element, setInSelf ) end
 function StatusBar.__index:ClearAndSetPoint( ... ) Method_ClearAndSetPoint( self, ... ) end
+function StatusBar.__index:SetColorTexture( ... ) Method_SetColorTexture(self,... ) end
 
 -- FontString Method
 function FontString.__index:SetShown( ... ) Method_SetShown( self, ... ) end

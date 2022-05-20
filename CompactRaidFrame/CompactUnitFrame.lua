@@ -874,7 +874,7 @@ function CompactUnitFrameUtil_UpdateFillBar(frame, previousTexture, bar, amount,
     bar:Show();
 
     if ( bar.overlay ) then
-        bar.overlay:SetTexCoord(0, barSize / bar.overlay.tileSize, 0, totalHeight / bar.overlay.tileSize);
+        bar.overlay:SetTexCoord(0, ApplyCoordFix(barSize / bar.overlay.tileSize), 0, ApplyCoordFix(totalHeight / bar.overlay.tileSize));
         bar.overlay:Show();
     end
     return bar;
