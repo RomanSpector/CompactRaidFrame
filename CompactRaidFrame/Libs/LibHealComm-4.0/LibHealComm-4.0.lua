@@ -2487,13 +2487,13 @@ function HealComm:UNIT_SPELLCAST_START(unit, spellName, spellRank, id)
 	castID = id
 
 	-- Figure out who we are healing and for how much
-	local type, amount, ticks, localTicks = CalculateHealing(castGUID, spellName, spellRank)
-	local targets, amount = GetHealTargets(type, castGUID, max(amount, 0), spellName)
+	local healType, amount, ticks, localTicks = CalculateHealing(castGUID, spellName, spellRank)
+	local targets, amount = GetHealTargets(healType, castGUID, max(amount, 0), spellName)
 
-	if( type == DIRECT_HEALS ) then
+	if( healType == DIRECT_HEALS ) then
 		parseDirectHeal(playerGUID, self.spellToID[nameID], amount, split(",", targets))
 		sendMessage(format("D::%d:%d:%s", self.spellToID[nameID] or 0, amount or "", targets))
-	elseif( type == CHANNEL_HEALS ) then
+	elseif( healType == CHANNEL_HEALS ) then
 		parseChannelHeal(playerGUID, self.spellToID[nameID], amount, localTicks, split(",", targets))
 		sendMessage(format("C::%d:%d:%s:%s", self.spellToID[nameID] or 0, amount, ticks, targets))
 	end
