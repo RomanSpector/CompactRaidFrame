@@ -6,14 +6,8 @@ local pairs   = pairs;
 local tinsert = table.insert;
 local tremove = table.remove;
 
-local UnitAura             = UnitAura;
-local UnitGUID             = UnitGUID;
-local UnitExists           = UnitExists;
 local CLASS_AURAS          = lib.CLASS_AURAS;
-local GetSpellInfo         = GetSpellInfo;
 local CanApplyAuras        = lib.UNIT_CAN_APPLY_AURAS[select(2, UnitClass("player"))];
-local GetNumRaidMembers    = GetNumRaidMembers;
-local UnitAffectingCombat  = UnitAffectingCombat;
 
 lib.CASHE = {};
 lib.callbacksUsed = {};

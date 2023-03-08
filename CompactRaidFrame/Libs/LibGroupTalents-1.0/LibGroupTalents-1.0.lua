@@ -66,7 +66,7 @@ Events:
 
 local TalentQuery = LibStub("LibTalentQuery-1.0")
 
-local MAJOR, MINOR = "LibGroupTalents-1.0", tonumber(("$Rev: 55 $"):match("(%d+)"))
+local MAJOR, MINOR = "LibGroupTalents-1.0", tonumber(("$Rev: 56 $"):match("(%d+)"))
 local lib = LibStub:NewLibrary(MAJOR, MINOR)
 if not lib then return end
 
@@ -960,7 +960,7 @@ function lib:GetGUIDGlyphs(guid, group)
 		end
 	end
 end
-                                        
+
 -- UnitHasGlyph
 function lib:UnitHasGlyph(unit, glyphID, group)
 	return lib:GUIDHasGlyph(UnitGUID(unit), glyphID, group)
@@ -1303,11 +1303,10 @@ function lib:GetGUIDTalents(guid, refetch)
 
 		elseif ((UnitInRaid(unit) or UnitInParty(unit)) and UnitIsConnected(unit)) then
 			TalentQuery:Query(unit)
-
+			local skipGlyphs
 			local namerealm = UnitFullName(unit)
 			if (not r.talents and not r.requested) then
 				-- Don't need to query on a 'refetch' because they'll send changes anyway via comms
-				local skipGlyphs
 				if (not UnitIsVisible(unit) or not CanInspect(unit)) then
 					if (r.version) then
 						if (CanCommQuery(guid)) then
@@ -1404,14 +1403,14 @@ function lib:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			end
 
 		elseif (cmd == "GLYPHS") then
-			local invalid
+			local invalid = false
 			local pages = new(strsplit(";", str))
 			local glyphs = new()
 			for page,info in ipairs(pages) do
 				local list = new(strsplit(",", info))
-				local tab = tonumber(tremove(list, 1))
-				if (tab) then
-					glyphs[tab] = table.concat(list, ",")
+				local number = tonumber(tremove(list, 1))
+				if (number) then
+					glyphs[number] = table.concat(list, ",")
 					del(list)
 				else
 					invalid = true
@@ -1494,10 +1493,11 @@ function lib:SendMyGlyphs(sender)
 	if (sender or self:UserCount() > 0) then
 		local r = self.roster[UnitGUID("player")]
 		if (r and r.glyphs) then
+			-- for k, v in pairs(r.glyphs) do print(1501, k, v) end
 			local str = "GLYPHS "
 			local i = 1
-			for tab,g in pairs(r.glyphs) do
-				local temp = format("%d,%s", tab, g)
+			for it,g in pairs(r.glyphs) do
+				local temp = format("%d,%s", it, g)
 				str = str .. (i > 1 and ";" or "") .. temp
 				i = i + 1
 			end
