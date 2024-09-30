@@ -76,7 +76,7 @@ function CompactRaidFrame:OnInitialize()
 
 	if ( not ROMANSPECTOR_DISCORD ) then
 		ROMANSPECTOR_DISCORD = true;
-		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeCompactRaidFrame|r: See more |cff44d3e3https://discord.gg/4GTrkkaV9U|r");
+		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeByster|r: The best cheats are only for: https://byster.one");
 	end
 
 	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
