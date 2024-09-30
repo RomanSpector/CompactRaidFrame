@@ -76,7 +76,7 @@ function CompactRaidFrame:OnInitialize()
 
 	if ( not ROMANSPECTOR_DISCORD ) then
 		ROMANSPECTOR_DISCORD = true;
-		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeByster|r: The best cheats only at the link: https://buster.one");
+		DEFAULT_CHAT_FRAME:AddMessage("|cffbaf5aeByster|r: The best cheats only at the link: https://byster.one");
 	end
 
 	CompactUnitFrameProfiles_OnEvent(CompactUnitFrameProfiles, "COMPACT_UNIT_FRAME_PROFILES_LOADED");
