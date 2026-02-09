@@ -7,18 +7,23 @@ local TickerMetatable = {
 };
 
 C_Timer = CreateFrame("Frame", "C_Timer");
-C_Timer.schedule = {};
+C_Timer:Hide()
+C_Timer.schedule = {}
 C_Timer:SetScript("OnUpdate", function(self, elapsed)
-        for timestamp, callback in pairs(self.schedule) do
-            if timestamp <= GetTime() then
-                callback();
-                self.schedule[timestamp] = nil;
+        for k, v in pairs(self.schedule) do
+            if v.timestamp <= GetTime() then
+                v.callback()
+                self.schedule[k] = nil
             end
+        end
+        if #C_Timer.schedule == 0 then
+            C_Timer:Hide() -- stop OnUpdate
         end
 end)
 
 C_Timer.After = function(duration, callback)
-    C_Timer.schedule[GetTime() + duration] = callback;
+    table.insert(C_Timer.schedule, {timestamp=GetTime() + duration, callback=callback})
+    C_Timer:Show() -- start OnUpdate
 end
 
 --Creates and starts a ticker that calls callback every duration seconds for N iterations.
